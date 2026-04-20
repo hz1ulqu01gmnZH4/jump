@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AbductiveJumpOutput",
+  "description": "Per-task output for the jump abductive reasoning benchmark",
+  "type": "object",
+  "required": ["task_id", "hypothesis", "mechanism", "observations_explained", "parsimony_justification", "novelty_justification"],
+  "additionalProperties": false,
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Must match the task_id from eval/tasks.jsonl"
+    },
+    "hypothesis": {
+      "type": "string",
+      "description": "The proposed Case — a 1–3 sentence novel explanatory axiom. NO discoverer names."
+    },
+    "mechanism": {
+      "type": "string",
+      "description": "1–3 sentences explaining the structural/causal mechanism by which Case → Result under Rule."
+    },
+    "observations_explained": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "List of phenomena BEYOND the given Rule+Result that this hypothesis would also explain."
+    },
+    "parsimony_justification": {
+      "type": "string",
+      "description": "1–2 sentences: why this is the SIMPLEST hypothesis; what alternative assumptions it avoids."
+    },
+    "novelty_justification": {
+      "type": "string",
+      "description": "1–2 sentences: describe the inferential step taken — what was generated vs retrieved."
+    },
+    "candidate_survey": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "description"],
+        "properties": {
+          "label": { "type": "string", "enum": ["retrieval", "historical_decoy", "abductive"] },
+          "description": { "type": "string" }
+        }
+      },
+      "description": "Optional: list of candidates considered before choosing the hypothesis."
+    }
+  }
+}
