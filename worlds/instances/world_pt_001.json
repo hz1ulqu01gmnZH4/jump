@@ -1,0 +1,885 @@
+{
+  "id": "world_pt_001",
+  "family": "particle_system",
+  "difficulty": "medium",
+  "primitive_glossary": {
+    "ZEX": "one of two particle types",
+    "GLORP": "the other particle type",
+    "chromodistance(p, q)": "max(|dx|, |dy|) on the 8x8 toroidal grid, PLUS 0 if p.type == q.type else 1 (the type-mismatch penalty)",
+    "same-type-seek": "ZEX particles move one step toward the position of their nearest ZEX partner by chromodistance",
+    "cross-type-flee": "GLORP particles move one step away from their nearest ZEX by chromodistance, along the axis whose signed toroidal delta has larger magnitude (x-axis preferred on tie)",
+    "tiebreak": "if multiple partners tie on chromodistance, the one with lexicographically smaller (x, y) is chosen"
+  },
+  "hidden_rule": "Toroidal 8x8 grid. Two particle types: ZEX, GLORP. Chromodistance(p,q) = max(|wrap_dx|, |wrap_dy|) + (0 if same type else 1). Each ZEX particle finds its nearest ZEX (excluding itself) by chromodistance, breaking ties by (x,y); it steps 1 cell (dx, dy) where each component is sign(wrap_delta_to_target). If no other ZEX exists, it stays still. Each GLORP finds its nearest ZEX by chromodistance; it steps 1 cell AWAY from that ZEX along the axis of larger |wrap_delta| (x-axis on tie), unchanged along the other axis. If no ZEX exists, it stays still. All updates are synchronous (based on the t=current snapshot).",
+  "hidden_rule_fn": "def hidden_rule_fn(state, grid_size=8):\n    def wrap_delta(a, b):\n        d = (b - a) % grid_size\n        return d - grid_size if d > grid_size // 2 else d\n    def chromodist(p, q):\n        dx = abs(wrap_delta(p['x'], q['x'])); dy = abs(wrap_delta(p['y'], q['y']))\n        return max(dx, dy) + (0 if p['type'] == q['type'] else 1)\n    nxt = []\n    for i, p in enumerate(state):\n        if p['type'] == 'ZEX':\n            same = [q for j, q in enumerate(state) if q['type'] == 'ZEX' and j != i]\n            if not same:\n                nxt.append(dict(p)); continue\n            tgt = min(same, key=lambda q: (chromodist(p, q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'], tgt['x']); ddy = wrap_delta(p['y'], tgt['y'])\n            sx = 0 if ddx == 0 else (1 if ddx > 0 else -1)\n            sy = 0 if ddy == 0 else (1 if ddy > 0 else -1)\n            nxt.append({'type':'ZEX', 'x':(p['x']+sx)%grid_size, 'y':(p['y']+sy)%grid_size})\n        else:\n            diff = [q for j, q in enumerate(state) if q['type'] == 'ZEX']\n            if not diff:\n                nxt.append(dict(p)); continue\n            tgt = min(diff, key=lambda q: (chromodist(p, q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'], tgt['x']); ddy = wrap_delta(p['y'], tgt['y'])\n            if abs(ddx) >= abs(ddy):\n                sx = -1 if ddx >= 0 else 1; sy = 0\n            else:\n                sx = 0; sy = -1 if ddy >= 0 else 1\n            nxt.append({'type':'GLORP', 'x':(p['x']+sx)%grid_size, 'y':(p['y']+sy)%grid_size})\n    return nxt",
+  "intervention_api": [
+    {
+      "action": "spawn",
+      "params": [
+        "type",
+        "x",
+        "y"
+      ],
+      "description": "add a particle at (x,y); no-op if cell already occupied"
+    },
+    {
+      "action": "remove",
+      "params": [
+        "x",
+        "y"
+      ],
+      "description": "delete any particle at (x,y)"
+    },
+    {
+      "action": "set_velocity",
+      "params": [
+        "x",
+        "y",
+        "vx",
+        "vy"
+      ],
+      "description": "immediately displace the particle at (x,y) to ((x+vx)%8, (y+vy)%8); these particles have no persistent velocity state \u2014 this is a one-shot teleport"
+    },
+    {
+      "action": "change_type",
+      "params": [
+        "x",
+        "y",
+        "new_type"
+      ],
+      "description": "replace the type of the particle at (x,y) if one exists"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "GLORP",
+          "x": 4,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 7
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "ZEX",
+          "x": 3,
+          "y": 2
+        }
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "ZEX",
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "ZEX",
+          "x": 2,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 0,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "GLORP",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "GLORP",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "ZEX",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "ZEX",
+          "x": 4,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "GLORP",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "ZEX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "ZEX",
+          "x": 5,
+          "y": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,883 @@
+{
+  "id": "world_pt_003",
+  "family": "particle_system",
+  "difficulty": "hard",
+  "primitive_glossary": {
+    "BLINX": "first of two particle types",
+    "TORVE": "second particle type",
+    "splurn(p,q)": "(p.x + p.y + q.x + q.y) mod 2 \u2014 parity of total coordinate sum; 0 = even, 1 = odd",
+    "Chebyshev distance": "max(|wrap_dx|, |wrap_dy|) on 8x8 toroidal grid"
+  },
+  "hidden_rule": "Toroidal 8x8 grid, two types. BLINX seeks or flees nearest TORVE depending on splurn: even splurn -> toward (diagonal step); odd splurn -> away (negated). TORVE: even splurn with nearest BLINX -> move toward; odd splurn -> stay. All use Chebyshev distance, lex (x,y) tiebreak. Synchronous.",
+  "hidden_rule_fn": "def hidden_rule_fn(state, grid_size=8):\n    def wrap_delta(a, b):\n        d = (b - a) % grid_size\n        return d - grid_size if d > grid_size // 2 else d\n    def cheby(p, q):\n        return max(abs(wrap_delta(p['x'],q['x'])), abs(wrap_delta(p['y'],q['y'])))\n    def splurn(p, q):\n        return (p['x'] + p['y'] + q['x'] + q['y']) % 2\n    nxt = []\n    for p in state:\n        if p['type'] == 'BLINX':\n            targets = [q for q in state if q['type'] == 'TORVE']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'], tgt['x'])\n            ddy = wrap_delta(p['y'], tgt['y'])\n            sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n            sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n            if splurn(p, tgt) == 1:\n                sx, sy = -sx, -sy\n            nxt.append({'type':'BLINX','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n        else:  # TORVE\n            targets = [q for q in state if q['type'] == 'BLINX']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n            if splurn(p, tgt) == 0:\n                ddx = wrap_delta(p['x'], tgt['x'])\n                ddy = wrap_delta(p['y'], tgt['y'])\n                sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n                sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n                nxt.append({'type':'TORVE','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n            else:\n                nxt.append(dict(p))\n    return nxt",
+  "intervention_api": [
+    {
+      "action": "spawn",
+      "params": [
+        "type",
+        "x",
+        "y"
+      ],
+      "description": "add a particle at (x,y); no-op if occupied"
+    },
+    {
+      "action": "remove",
+      "params": [
+        "x",
+        "y"
+      ],
+      "description": "delete particle at (x,y)"
+    },
+    {
+      "action": "set_velocity",
+      "params": [
+        "x",
+        "y",
+        "vx",
+        "vy"
+      ],
+      "description": "displace particle at (x,y) to ((x+vx)%8,(y+vy)%8) immediately"
+    },
+    {
+      "action": "change_type",
+      "params": [
+        "x",
+        "y",
+        "new_type"
+      ],
+      "description": "replace the type of the particle at (x,y)"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 2,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 3
+        }
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 2,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 1,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "TORVE",
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "TORVE",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "TORVE",
+          "x": 7,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "BLINX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "TORVE",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "TORVE",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "TORVE",
+          "x": 5,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BLINX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "BLINX",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "BLINX",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "BLINX",
+          "x": 3,
+          "y": 3
+        }
+      ]
+    }
+  ]
+}

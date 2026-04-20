@@ -1,0 +1,1063 @@
+{
+  "id": "world_pt_005",
+  "family": "particle_system",
+  "difficulty": "medium",
+  "primitive_glossary": {
+    "VEXON": "first of three particle types",
+    "BRANT": "second particle type",
+    "CLORF": "third particle type",
+    "krelon_dist(p,q)": "|dx|^2 + |dy|^2 + (0 if same type else |dx-dy|) on 8x8 toroidal grid"
+  },
+  "hidden_rule": "Toroidal 8x8, three types, krelon_dist metric. VEXON repels (moves away from) nearest BRANT. BRANT attracts toward nearest CLORF. CLORF attracts toward nearest VEXON. Diagonal steps, lex (x,y) tiebreak. Synchronous.",
+  "hidden_rule_fn": "def hidden_rule_fn(state, grid_size=8):\n    def wrap_delta(a, b):\n        d = (b - a) % grid_size\n        return d - grid_size if d > grid_size // 2 else d\n    def krelon_dist(p, q):\n        dx = abs(wrap_delta(p['x'], q['x']))\n        dy = abs(wrap_delta(p['y'], q['y']))\n        return dx*dx + dy*dy + (0 if p['type']==q['type'] else abs(dx-dy))\n    def step_toward(p, tgt):\n        ddx = wrap_delta(p['x'], tgt['x'])\n        ddy = wrap_delta(p['y'], tgt['y'])\n        sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n        sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n        return sx, sy\n    nxt = []\n    for p in state:\n        t = p['type']\n        if t == 'VEXON':\n            targets = [q for q in state if q['type']=='BRANT']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (krelon_dist(p,q), q['x'],q['y']))\n            sx, sy = step_toward(p, tgt)\n            sx, sy = -sx, -sy  # repel = move away\n            nxt.append({'type':'VEXON','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n        elif t == 'BRANT':\n            targets = [q for q in state if q['type']=='CLORF']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (krelon_dist(p,q), q['x'],q['y']))\n            sx, sy = step_toward(p, tgt)\n            nxt.append({'type':'BRANT','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n        else:  # CLORF\n            targets = [q for q in state if q['type']=='VEXON']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (krelon_dist(p,q), q['x'],q['y']))\n            sx, sy = step_toward(p, tgt)\n            nxt.append({'type':'CLORF','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n    return nxt",
+  "intervention_api": [
+    {
+      "action": "spawn",
+      "params": [
+        "type",
+        "x",
+        "y"
+      ],
+      "description": "add a particle at (x,y); no-op if occupied"
+    },
+    {
+      "action": "remove",
+      "params": [
+        "x",
+        "y"
+      ],
+      "description": "delete particle at (x,y)"
+    },
+    {
+      "action": "set_velocity",
+      "params": [
+        "x",
+        "y",
+        "vx",
+        "vy"
+      ],
+      "description": "displace particle at (x,y) to ((x+vx)%8,(y+vy)%8) immediately"
+    },
+    {
+      "action": "change_type",
+      "params": [
+        "x",
+        "y",
+        "new_type"
+      ],
+      "description": "replace the type of the particle at (x,y)"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 5
+        }
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "BRANT",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "BRANT",
+          "x": 7,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "VEXON",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "CLORF",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 1,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "CLORF",
+          "x": 6,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "BRANT",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "BRANT",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 3,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "VEXON",
+          "x": 2,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "BRANT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "VEXON",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "CLORF",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "CLORF",
+          "x": 2,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "BRANT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "BRANT",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "VEXON",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "CLORF",
+          "x": 3,
+          "y": 5
+        }
+      ]
+    }
+  ]
+}

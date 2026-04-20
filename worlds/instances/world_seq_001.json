@@ -1,0 +1,317 @@
+{
+  "id": "world_seq_001",
+  "family": "pattern_puzzle",
+  "difficulty": "medium",
+  "primitive_glossary": {
+    "kreels": "the values in the sequence; integers in [0,6]",
+    "zark-index": "the position n in the sequence (starting at 0)",
+    "thraxgate-index": "a zark-index that is a prime number",
+    "ploon-XOR": "bitwise XOR of two kreels, then mod 7",
+    "grolp-sum": "arithmetic sum of two kreels plus 3, then mod 7",
+    "back-double": "twice the value at zark-index n-2, plus 1, then mod 7"
+  },
+  "hidden_rule": "Given a sequence (list) of at least 2 kreels, produce the next kreel at zark-index n = len(state). If n is a thraxgate-index (prime), the next kreel = ploon-XOR(state[n-1], state[n-2]). Else if n is even, next kreel = grolp-sum(state[n-1], state[n-2]). Else (n odd and composite), next kreel = back-double(state[n-2]). The returned next_state is the input state with this next kreel appended.",
+  "hidden_rule_fn": "def hidden_rule_fn(state):\n    def is_prime(k):\n        if k < 2: return False\n        if k == 2: return True\n        if k % 2 == 0: return False\n        for i in range(3, int(k**0.5)+1, 2):\n            if k % i == 0: return False\n        return True\n    n = len(state)\n    if n < 2:\n        raise ValueError('state must have at least 2 initial elements')\n    if is_prime(n):\n        nxt = (state[n-1] ^ state[n-2]) % 7\n    elif n % 2 == 0:\n        nxt = (state[n-1] + state[n-2] + 3) % 7\n    else:\n        nxt = (state[n-2] * 2 + 1) % 7\n    return state + [nxt]",
+  "intervention_api": [
+    {
+      "action": "set_element",
+      "params": [
+        "index",
+        "value"
+      ],
+      "description": "overwrite state[index] with value"
+    },
+    {
+      "action": "insert",
+      "params": [
+        "index",
+        "value"
+      ],
+      "description": "insert value at position index, shifting later elements"
+    },
+    {
+      "action": "apply_perturbation",
+      "params": [
+        "index",
+        "delta"
+      ],
+      "description": "state[index] = (state[index] + delta) % 7"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        2,
+        5
+      ],
+      "next_state": [
+        2,
+        5,
+        0
+      ]
+    },
+    {
+      "state": [
+        2,
+        5,
+        0
+      ],
+      "next_state": [
+        2,
+        5,
+        0,
+        5
+      ]
+    },
+    {
+      "state": [
+        2,
+        5,
+        0,
+        5
+      ],
+      "next_state": [
+        2,
+        5,
+        0,
+        5,
+        1
+      ]
+    },
+    {
+      "state": [
+        2,
+        5,
+        0,
+        5,
+        1
+      ],
+      "next_state": [
+        2,
+        5,
+        0,
+        5,
+        1,
+        4
+      ]
+    },
+    {
+      "state": [
+        2,
+        5,
+        0,
+        5,
+        1,
+        4
+      ],
+      "next_state": [
+        2,
+        5,
+        0,
+        5,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "state": [
+        2,
+        5,
+        0,
+        5,
+        1,
+        4,
+        1
+      ],
+      "next_state": [
+        2,
+        5,
+        0,
+        5,
+        1,
+        4,
+        1,
+        5
+      ]
+    },
+    {
+      "state": [
+        1,
+        3
+      ],
+      "next_state": [
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "state": [
+        1,
+        3,
+        2
+      ],
+      "next_state": [
+        1,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "state": [
+        1,
+        3,
+        2,
+        1
+      ],
+      "next_state": [
+        1,
+        3,
+        2,
+        1,
+        6
+      ]
+    },
+    {
+      "state": [
+        1,
+        3,
+        2,
+        1,
+        6
+      ],
+      "next_state": [
+        1,
+        3,
+        2,
+        1,
+        6,
+        0
+      ]
+    },
+    {
+      "state": [
+        4,
+        0
+      ],
+      "next_state": [
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "state": [
+        4,
+        0,
+        4
+      ],
+      "next_state": [
+        4,
+        0,
+        4,
+        4
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        6,
+        6
+      ],
+      "next_state": [
+        6,
+        6,
+        0
+      ]
+    },
+    {
+      "state": [
+        6,
+        6,
+        0
+      ],
+      "next_state": [
+        6,
+        6,
+        0,
+        6
+      ]
+    },
+    {
+      "state": [
+        6,
+        6,
+        0,
+        6
+      ],
+      "next_state": [
+        6,
+        6,
+        0,
+        6,
+        2
+      ]
+    },
+    {
+      "state": [
+        6,
+        6,
+        0,
+        6,
+        2
+      ],
+      "next_state": [
+        6,
+        6,
+        0,
+        6,
+        2,
+        4
+      ]
+    },
+    {
+      "state": [
+        6,
+        6,
+        0,
+        6,
+        2,
+        4
+      ],
+      "next_state": [
+        6,
+        6,
+        0,
+        6,
+        2,
+        4,
+        2
+      ]
+    },
+    {
+      "state": [
+        6,
+        6,
+        0,
+        6,
+        2,
+        4,
+        2
+      ],
+      "next_state": [
+        6,
+        6,
+        0,
+        6,
+        2,
+        4,
+        2,
+        6
+      ]
+    }
+  ]
+}

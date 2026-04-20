@@ -1,0 +1,243 @@
+{
+  "id": "world_seq_003",
+  "family": "pattern_puzzle",
+  "difficulty": "medium",
+  "primitive_glossary": {
+    "luxels": "integers mod 11 in the sequence",
+    "noxel-index": "the position n (starting at 0); the index whose digit-sum governs the next step",
+    "splid-sum": "the sum of decimal digits of the noxel-index n",
+    "blorf-add": "append (last + second-last) mod 11 \u2014 used when splid-sum mod 3 == 0",
+    "blorf-XOR": "append (last XOR second-last) mod 11 \u2014 used when splid-sum mod 3 == 1",
+    "blorf-mul": "append (last * second-last) mod 11 \u2014 used when splid-sum mod 3 == 2"
+  },
+  "hidden_rule": "Sequence of luxels (mod 11). At each step appending position n = len(state): compute splid-sum S = digit_sum(n). If S%3==0: blorf-add. If S%3==1: blorf-XOR. If S%3==2: blorf-mul. Result appended to state.",
+  "hidden_rule_fn": "def hidden_rule_fn(state):\n    def digit_sum(n):\n        return sum(int(d) for d in str(n))\n    n = len(state)\n    S = digit_sum(n)\n    if S % 3 == 0:\n        nxt = (state[-1] + state[-2]) % 11\n    elif S % 3 == 1:\n        nxt = (state[-1] ^ state[-2]) % 11\n    else:\n        nxt = (state[-1] * state[-2]) % 11\n    return state + [nxt]",
+  "intervention_api": [
+    {
+      "action": "set_element",
+      "params": [
+        "index",
+        "value"
+      ],
+      "description": "overwrite state[index] with value (0..10)"
+    },
+    {
+      "action": "insert",
+      "params": [
+        "index",
+        "value"
+      ],
+      "description": "insert value at position index"
+    },
+    {
+      "action": "apply_perturbation",
+      "params": [
+        "index",
+        "delta"
+      ],
+      "description": "state[index] = (state[index] + delta) % 11"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        4,
+        9
+      ],
+      "next_state": [
+        4,
+        9,
+        3
+      ]
+    },
+    {
+      "state": [
+        5,
+        1
+      ],
+      "next_state": [
+        5,
+        1,
+        5
+      ]
+    },
+    {
+      "state": [
+        10,
+        10
+      ],
+      "next_state": [
+        10,
+        10,
+        1
+      ]
+    },
+    {
+      "state": [
+        1,
+        3
+      ],
+      "next_state": [
+        1,
+        3,
+        3
+      ]
+    },
+    {
+      "state": [
+        4,
+        0
+      ],
+      "next_state": [
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "state": [
+        7,
+        7
+      ],
+      "next_state": [
+        7,
+        7,
+        5
+      ]
+    },
+    {
+      "state": [
+        2,
+        3
+      ],
+      "next_state": [
+        2,
+        3,
+        6
+      ]
+    },
+    {
+      "state": [
+        9,
+        9
+      ],
+      "next_state": [
+        9,
+        9,
+        4
+      ]
+    },
+    {
+      "state": [
+        3,
+        7
+      ],
+      "next_state": [
+        3,
+        7,
+        10
+      ]
+    },
+    {
+      "state": [
+        0,
+        4
+      ],
+      "next_state": [
+        0,
+        4,
+        0
+      ]
+    },
+    {
+      "state": [
+        8,
+        7
+      ],
+      "next_state": [
+        8,
+        7,
+        1
+      ]
+    },
+    {
+      "state": [
+        8,
+        3
+      ],
+      "next_state": [
+        8,
+        3,
+        2
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        0,
+        7
+      ],
+      "next_state": [
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "state": [
+        10,
+        3
+      ],
+      "next_state": [
+        10,
+        3,
+        8
+      ]
+    },
+    {
+      "state": [
+        0,
+        6
+      ],
+      "next_state": [
+        0,
+        6,
+        0
+      ]
+    },
+    {
+      "state": [
+        10,
+        2
+      ],
+      "next_state": [
+        10,
+        2,
+        9
+      ]
+    },
+    {
+      "state": [
+        2,
+        3
+      ],
+      "next_state": [
+        2,
+        3,
+        6
+      ]
+    },
+    {
+      "state": [
+        9,
+        5
+      ],
+      "next_state": [
+        9,
+        5,
+        1
+      ]
+    }
+  ]
+}

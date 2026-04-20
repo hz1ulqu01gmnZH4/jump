@@ -1,0 +1,1063 @@
+{
+  "id": "world_pt_002",
+  "family": "particle_system",
+  "difficulty": "medium",
+  "primitive_glossary": {
+    "VRIX": "first of three particle types",
+    "SPONT": "second particle type",
+    "KRAUL": "third particle type",
+    "grolp_dist(p,q)": "if types differ: |wrap_dx| + 2*|wrap_dy|; if same type: |wrap_dx|*|wrap_dy| + 1; on 8x8 toroidal grid"
+  },
+  "hidden_rule": "Toroidal 8x8 grid, three types: VRIX, SPONT, KRAUL. grolp_dist depends on type-match. VRIX moves toward nearest SPONT (by grolp_dist, tiebreak (x,y)), one diagonal step. SPONT moves away from nearest KRAUL along y-axis only (x unchanged). KRAUL moves toward nearest VRIX, one diagonal step. If the target type is absent, particle stays still. All synchronous.",
+  "hidden_rule_fn": "def hidden_rule_fn(state, grid_size=8):\n    def wrap_delta(a, b):\n        d = (b - a) % grid_size\n        return d - grid_size if d > grid_size // 2 else d\n    def grolp_dist(p, q):\n        dx = abs(wrap_delta(p['x'], q['x']))\n        dy = abs(wrap_delta(p['y'], q['y']))\n        if p['type'] != q['type']:\n            return dx + 2 * dy\n        else:\n            return dx * dy + 1\n    nxt = []\n    for i, p in enumerate(state):\n        t = p['type']\n        if t == 'VRIX':\n            targets = [q for q in state if q['type'] == 'SPONT']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (grolp_dist(p,q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'], tgt['x'])\n            ddy = wrap_delta(p['y'], tgt['y'])\n            sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n            sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n            nxt.append({'type':'VRIX','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n        elif t == 'SPONT':\n            targets = [q for q in state if q['type'] == 'KRAUL']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (grolp_dist(p,q), q['x'], q['y']))\n            ddy = wrap_delta(p['y'], tgt['y'])\n            sy = 0 if ddy==0 else (-1 if ddy>0 else 1)\n            nxt.append({'type':'SPONT','x':p['x'],'y':(p['y']+sy)%grid_size})\n        else:  # KRAUL\n            targets = [q for q in state if q['type'] == 'VRIX']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (grolp_dist(p,q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'], tgt['x'])\n            ddy = wrap_delta(p['y'], tgt['y'])\n            sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n            sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n            nxt.append({'type':'KRAUL','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n    return nxt",
+  "intervention_api": [
+    {
+      "action": "spawn",
+      "params": [
+        "type",
+        "x",
+        "y"
+      ],
+      "description": "add a particle at (x,y); no-op if occupied"
+    },
+    {
+      "action": "remove",
+      "params": [
+        "x",
+        "y"
+      ],
+      "description": "delete particle at (x,y)"
+    },
+    {
+      "action": "set_velocity",
+      "params": [
+        "x",
+        "y",
+        "vx",
+        "vy"
+      ],
+      "description": "displace particle at (x,y) to ((x+vx)%8, (y+vy)%8) immediately"
+    },
+    {
+      "action": "change_type",
+      "params": [
+        "x",
+        "y",
+        "new_type"
+      ],
+      "description": "replace the type of the particle at (x,y)"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "SPONT",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "SPONT",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "SPONT",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "SPONT",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "KRAUL",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "SPONT",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "KRAUL",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "SPONT",
+          "x": 5,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "SPONT",
+          "x": 5,
+          "y": 0
+        }
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "SPONT",
+          "x": 5,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "VRIX",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "SPONT",
+          "x": 5,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "VRIX",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "SPONT",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "KRAUL",
+          "x": 1,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "VRIX",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "VRIX",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "KRAUL",
+          "x": 2,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "KRAUL",
+          "x": 5,
+          "y": 7
+        },
+        {
+          "type": "VRIX",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "SPONT",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "type": "KRAUL",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "VRIX",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "SPONT",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "KRAUL",
+          "x": 7,
+          "y": 6
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1044 @@
+{
+  "id": "world_pt_004",
+  "family": "particle_system",
+  "difficulty": "hard",
+  "primitive_glossary": {
+    "PLEKT": "predator particle type",
+    "WOVVE": "prey particle type",
+    "wovve_dist(p,q)": "|wrap_dx|^2 + |wrap_dy| \u2014 squared horizontal component plus linear vertical",
+    "Chebyshev distance": "max(|wrap_dx|, |wrap_dy|) on 8x8 toroidal grid",
+    "anti-pole": "the cell at ((x+4)%8, (y+4)%8) \u2014 diametrically opposite on the 8x8 grid"
+  },
+  "hidden_rule": "Toroidal 8x8 grid, two types. PLEKT moves toward nearest WOVVE by wovve_dist (diagonal step). WOVVE: if any PLEKT within Chebyshev-1, flee along larger-|delta| axis; else cluster toward nearest WOVVE. WOVVE also spawns a copy at its anti-pole if no PLEKT is within Chebyshev-3 and the anti-pole is unoccupied. Spawned particles appended at end of state list. Synchronous (based on current snapshot).",
+  "hidden_rule_fn": "def hidden_rule_fn(state, grid_size=8):\n    def wrap_delta(a, b):\n        d = (b - a) % grid_size\n        return d - grid_size if d > grid_size // 2 else d\n    def cheby(p, q):\n        return max(abs(wrap_delta(p['x'],q['x'])), abs(wrap_delta(p['y'],q['y'])))\n    def wovve_dist(p, q):\n        dx = abs(wrap_delta(p['x'],q['x']))\n        dy = abs(wrap_delta(p['y'],q['y']))\n        return dx*dx + dy\n    occupied = {(p['x'],p['y']) for p in state}\n    nxt = []\n    spawns = []\n    for p in state:\n        if p['type'] == 'PLEKT':\n            targets = [q for q in state if q['type'] == 'WOVVE']\n            if not targets:\n                nxt.append(dict(p)); continue\n            tgt = min(targets, key=lambda q: (wovve_dist(p,q), q['x'], q['y']))\n            ddx = wrap_delta(p['x'],tgt['x']); ddy = wrap_delta(p['y'],tgt['y'])\n            sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n            sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n            nxt.append({'type':'PLEKT','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n        else:  # WOVVE\n            plekts = [q for q in state if q['type'] == 'PLEKT']\n            near_plekt = [q for q in plekts if cheby(p,q) <= 1]\n            if near_plekt:\n                threat = min(near_plekt, key=lambda q: (cheby(p,q), q['x'], q['y']))\n                ddx = wrap_delta(p['x'],threat['x']); ddy = wrap_delta(p['y'],threat['y'])\n                if abs(ddx) >= abs(ddy):\n                    sx = -1 if ddx>=0 else 1; sy = 0\n                else:\n                    sx = 0; sy = -1 if ddy>=0 else 1\n                nxt.append({'type':'WOVVE','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n            else:\n                others = [q for q in state if q['type']=='WOVVE' and (q['x'],q['y'])!=(p['x'],p['y'])]\n                if others:\n                    tgt2 = min(others, key=lambda q: (cheby(p,q), q['x'], q['y']))\n                    ddx = wrap_delta(p['x'],tgt2['x']); ddy = wrap_delta(p['y'],tgt2['y'])\n                    sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n                    sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n                    nxt.append({'type':'WOVVE','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n                else:\n                    nxt.append(dict(p))\n                # spawn check\n                plekts_all = [q for q in state if q['type']=='PLEKT']\n                safe = all(cheby(p,q) > 3 for q in plekts_all) if plekts_all else True\n                if safe:\n                    nx2 = (p['x']+4)%grid_size; ny2 = (p['y']+4)%grid_size\n                    if (nx2, ny2) not in occupied:\n                        spawns.append({'type':'WOVVE','x':nx2,'y':ny2})\n                        occupied.add((nx2,ny2))\n    return nxt + spawns",
+  "intervention_api": [
+    {
+      "action": "spawn",
+      "params": [
+        "type",
+        "x",
+        "y"
+      ],
+      "description": "add a particle at (x,y); no-op if occupied"
+    },
+    {
+      "action": "remove",
+      "params": [
+        "x",
+        "y"
+      ],
+      "description": "delete particle at (x,y)"
+    },
+    {
+      "action": "set_velocity",
+      "params": [
+        "x",
+        "y",
+        "vx",
+        "vy"
+      ],
+      "description": "displace particle at (x,y) to ((x+vx)%8,(y+vy)%8) immediately"
+    },
+    {
+      "action": "change_type",
+      "params": [
+        "x",
+        "y",
+        "new_type"
+      ],
+      "description": "replace the type of the particle at (x,y)"
+    }
+  ],
+  "train_obs": [
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 1
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 3
+        }
+      ],
+      "next_state": [
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 6,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 5
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 6
+        }
+      ]
+    }
+  ],
+  "test_obs": [
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 2
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 1
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 6
+        }
+      ],
+      "next_state": [
+        {
+          "type": "PLEKT",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "type": "PLEKT",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 4
+        }
+      ],
+      "next_state": [
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "type": "WOVVE",
+          "x": 1,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "state": [
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "type": "PLEKT",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 7
+        }
+      ],
+      "next_state": [
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "type": "WOVVE",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "type": "WOVVE",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 7
+        },
+        {
+          "type": "PLEKT",
+          "x": 7,
+          "y": 6
+        }
+      ]
+    }
+  ]
+}
