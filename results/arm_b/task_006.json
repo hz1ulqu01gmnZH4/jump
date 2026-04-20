@@ -1,0 +1,29 @@
+{
+  "task_id": "task_006",
+  "hypothesis": "The real numbers in [0,1] cannot be placed in bijection with the natural numbers because the set of infinite decimal sequences over a finite alphabet has a strictly greater cardinality than any countable set \u2014 not merely a larger finite or 'denser' extent, but a categorically different order of infinity. Specifically, any attempted enumeration of such sequences is defeated by a construction that exploits the infinitely many independent digit-positions to produce a sequence differing from every listed sequence in at least one coordinate.",
+  "mechanism": "Given any injection f: \u2115 \u2192 [0,1] (an enumeration candidate), one constructs a real number d whose n-th decimal digit is chosen to differ from the n-th digit of f(n). Because d differs from every f(n) at position n, d cannot appear anywhere in the list, violating surjectivity. This works because the product space {0,...,9}^\u2115 has 10^\u2135\u2080 elements: the infinity of independent digit-slots generates combinatorial branching that outruns any countable indexing. The rationals escape this fate because each rational has an eventually-periodic decimal \u2014 a finitely-describable structure \u2014 so their infinite expansions form only a countable subfamily of all infinite sequences.",
+  "observations_explained": [
+    "The power set of any countable set is uncountable, since subsets of \u2115 correspond to binary sequences, the same diagonal argument applies.",
+    "The continuum [0,1] has the same cardinality as the full real line \u211d and as \u211d^n for any finite n, all sharing cardinality 2^\u2135\u2080.",
+    "The set of all functions from \u2115 to {0,1} is uncountable, explaining why most real-valued functions are uncomputable.",
+    "There exist multiple distinct infinite cardinals (\u2135\u2080, 2^\u2135\u2080, 2^(2^\u2135\u2080), \u2026), implying an infinite hierarchy of infinities rather than a single undifferentiated 'infinite size'.",
+    "Transcendental numbers must vastly outnumber algebraic numbers, since algebraic numbers are countable yet reals are not.",
+    "Almost all real numbers are non-computable, because computable reals are enumerable by finite programs yet reals are not."
+  ],
+  "parsimony_justification": "The hypothesis introduces exactly one new structural entity: the distinction between countable and uncountable infinite cardinality, grounded in the combinatorial size of infinite Cartesian products. It does not require appeals to density, measure, topology, or any property of the reals beyond their representation as infinite digit sequences, avoiding all those additional conceptual layers.",
+  "novelty_justification": "Rather than simply retrieving 'the reals are uncountable,' the hypothesis frames the Case as the structural mismatch between two modes of infinity \u2014 the linear exhaustibility of countable sets versus the branching combinatorial explosion of infinite product spaces \u2014 and locates the diagonal construction as the mechanical witness of that mismatch, not merely a trick but a proof that coordinate-independence of infinitely many positions defeats any sequential indexing.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The real numbers are uncountable because the diagonal argument constructs, for any enumeration, a missing real by differing at each diagonal digit position. This is the standard textbook answer."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The reals form a continuum that is 'geometrically' larger than the discrete rationals because between any two rationals lie infinitely many irrationals, and the irrationals have no gaps \u2014 a topological/density argument. This was the intuitive pre-set-theoretic view that completeness (no gaps) distinguishes the reals, without invoking cardinality."
+    },
+    {
+      "label": "abductive",
+      "description": "The failure of enumeration is caused by infinite coordinate independence: a set whose members are individuated by infinitely many mutually independent discrete choices cannot be indexed by a single natural number, because the natural numbers supply only one dimension of variation while infinite sequences supply \u2135\u2080 independent dimensions simultaneously, generating a strictly larger combinatorial space."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "task_010",
+  "hypothesis": "Physicians' hands carried discrete, transferable material particles derived from cadaveric tissue that were the proximate cause of puerperal fever; these particles were chemically neutralizable and distinct from any miasmatic, atmospheric, or constitutional cause. The infectious agent was physically transported by direct contact from dead bodies to the reproductive tissues of living parturient women, making the physician's hand the necessary and sufficient vector.",
+  "mechanism": "Cadaveric dissection deposits particulate matter onto the physician's hands; when those hands contact the dilated cervix and birth canal during examination, the particles are introduced into the highly vascular, traumatized postpartum tissue, triggering the systemic inflammatory cascade clinically manifested as puerperal fever. Chlorinated lime chemically destroys or inactivates these particles on contact, severing the transfer chain and eliminating the differential mortality between the two wards.",
+  "observations_explained": [
+    "The obstetrician who died after an autopsy hand injury developed a syndrome clinically identical to puerperal fever, confirming the same transferable agent causes disease in both parturient women and individuals directly exposed to cadaveric material through wounds",
+    "Midwife wards had consistently lower mortality because midwives did not perform autopsies and therefore never acquired the cadaveric particles on their hands",
+    "Mortality dropped specifically and only when hand hygiene was applied between autopsy and examination, with no other variable changed, isolating hand contact as the sole operative vector",
+    "The intervention's efficacy was proportional to chemical neutralisation of the cadaveric odour-bearing substance, suggesting the infectious agent and the odoriferous cadaveric material share the same physical carrier",
+    "Geographic and seasonal variation in puerperal fever outbreaks in hospitals correlates with autopsy volume and physician examination frequency rather than with atmospheric conditions or patient population changes",
+    "Student physicians, who performed the most dissections and the most intimate examinations, were associated with the highest individual mortality clusters on physician wards"
+  ],
+  "parsimony_justification": "The hypothesis requires only one new entity\u2014a transferable cadaveric particle\u2014to explain the entire mortality differential, the obstetrician's death, the effectiveness of chemical neutralisation, and the ward-level disparity. It avoids positing miasma, atmospheric corruption, spontaneous constitutional disease, or multiple independent causes, and requires no mechanism beyond physical contact and chemical inactivation.",
+  "novelty_justification": "Rather than retrieving a named germ-theory framework, this inference treats the agent as a chemically defined transferable material particle identified by its inactivation profile (chlorine-labile, odour-associated) and vector specificity (hand contact), without presupposing microbial life. The structural leap is from correlation between occupational practice and mortality to a contact-vector model grounded in the chemical neutralisability of the agent as the operational criterion for its identity.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Pathogenic microorganisms (bacteria) from cadavers are mechanically transferred on unwashed hands to birth canal tissues, causing septicaemia; hand-washing kills them. This is the standard retrospective germ-theory account."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Miasmatic or atmospheric corruption in the autopsy-adjacent ward\u2014combined with a constitutional susceptibility of newly delivered women\u2014causes puerperal fever; the chlorinated lime works by purifying ward air rather than hands. This was the dominant competing hypothesis of the period, rejected because it cannot explain why the mortality difference is abolished by hand-washing alone without any air or ventilation change."
+    },
+    {
+      "label": "abductive",
+      "description": "A transferable cadaveric material particle, chemically labile to chlorinated lime, is the necessary and sufficient contact-vectored cause of puerperal fever; the physician's hand is the exclusive transmission pathway, and the agent's identity is operationally defined by its inactivation chemistry rather than by biological classification."
+    }
+  ]
+}

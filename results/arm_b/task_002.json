@@ -1,0 +1,28 @@
+{
+  "task_id": "task_002",
+  "hypothesis": "The nucleic acid molecule is composed of two antiparallel polynucleotide strands wound in a right-handed helix, held together by complementary hydrogen bonding between specific base pairs (A opposite T, G opposite C) such that each strand encodes identical sequence information to the other in complementary form. This base-pairing constraint is the structural basis of both the stoichiometric equality rules and the faithful transmission of sequence information.",
+  "mechanism": "The A=T and G=C molar equalities arise necessarily from obligate cross-strand pairing, making one strand a complete template for the other. During replication, strand separation allows each single strand to serve as a template for synthesis of a new complement, producing two hybrid molecules each retaining one original strand \u2014 precisely the semiconservative pattern seen in density-labelling experiments. The 3.4 \u00c5 axial spacing reflects successive stacked base pairs and the 34 \u00c5 pitch reflects ten base pairs per helical turn, consistent with diffraction data.",
+  "observations_explained": [
+    "Species-specific (A+T)/(G+C) ratios: sequence variation is unconstrained except by the pairing rule, allowing arbitrary information encoding across species",
+    "Chemical stability of the molecule across cell divisions: the interior hydrogen-bonded base-pair core is shielded from solvent by the sugar-phosphate backbone",
+    "Directionality and fidelity of transcription: one strand serves as template and the complementary sequence rule dictates which base is incorporated",
+    "Mutational heritability: a change in one base pair is preserved in both strands after the next replication cycle, propagating the mutation faithfully",
+    "The existence of repair mechanisms: mismatch between strands is detectable precisely because each strand independently encodes the correct complement"
+  ],
+  "parsimony_justification": "A single structural postulate \u2014 antiparallel complementary base pairing \u2014 simultaneously accounts for the molar equality rules, the diffraction geometry, semiconservative replication, and information storage without invoking any entity beyond the known chemical components of the nucleic acid itself.",
+  "novelty_justification": "Rather than merely restating known base-composition rules or diffraction parameters independently, the inferential step taken here is to unify them causally: the pairing constraint is identified as the single structural axiom from which the quantitative chemistry, the physical geometry, and the informational hereditary mechanism all follow as deductive consequences.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The double helix model: two complementary antiparallel strands, A-T and G-C hydrogen bonding, 10 base pairs per turn, semiconservative replication \u2014 the standard textbook answer extracted directly from accumulated biochemical evidence."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "A triple-stranded helix with bases on the outside and phosphate groups forming the core \u2014 proposed before the structure was resolved, consistent with some early diffraction data but incompatible with the base-ratio equalities and provides no obvious templating mechanism for replication."
+    },
+    {
+      "label": "abductive",
+      "description": "Complementary base pairing in an antiparallel double helix is not merely a structural feature but the minimal axiom that simultaneously constrains molar base ratios, encodes sequence information in a redundant dual form, and directly mandates a semiconservative copying mechanism \u2014 making the informational, chemical, and physical observations jointly necessary consequences of a single molecular geometry."
+    }
+  ]
+}

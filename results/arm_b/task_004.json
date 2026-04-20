@@ -1,0 +1,30 @@
+{
+  "task_id": "task_004",
+  "hypothesis": "The compound selectively targets an enzyme or enzymatic complex required exclusively during active cell division to synthesize or remodel a rigid, cross-linked structural polymer that exists in bacterial cell walls but has no counterpart in mammalian cell membranes or cytoskeleton. Inhibition of this cross-linking step prevents the wall from bearing turgor pressure, causing osmotic lysis without any direct effect on protein, nucleic acid, or energy metabolism.",
+  "mechanism": "Actively dividing bacteria must continuously incorporate new structural polymer into their cell wall to accommodate growth; the compound irreversibly blocks the final transpeptidation cross-linking step that confers tensile strength to this polymer. As internal osmotic pressure (turgor) is not balanced by an intact, cross-linked wall, the membrane is forced outward, the cell deforms into a sphere or irregular shape, and eventually the membrane ruptures, releasing cytoplasmic contents. Mammalian cells lack this polymer entirely and rely on a lipid bilayer plus cytoskeletal proteins for structural integrity, so no equivalent vulnerability exists; stationary-phase bacteria survive because wall-remodeling enzymes are inactive and no new polymer insertion is attempted.",
+  "observations_explained": [
+    "Bactericidal but not bacteriostatic outcome in dividing cells (lysis rather than mere growth arrest)",
+    "Reversibility of the block in stationary phase \u2014 polymer integrity is maintained when no new synthesis is attempted",
+    "Selective toxicity window between effective bacterial dose and mammalian no-effect dose (therapeutic index) explained by complete absence of target in host",
+    "Morphological progression from rod to sphere to ghost, consistent with loss of wall geometry before membrane failure",
+    "Gram-positive selectivity relative to gram-negative bacteria, explained by accessibility of the cross-linking enzyme through a thick, exposed peptidoglycan layer versus an outer membrane barrier",
+    "Efficacy unaffected by supplementing protein or nucleic acid synthesis inhibitors, confirming orthogonal mechanism",
+    "Hypertonic medium rescues bacteria from lysis without restoring wall integrity, consistent with osmotic rather than biochemical killing"
+  ],
+  "parsimony_justification": "Posits a single molecular target (the transpeptidase catalyzing cross-link formation in a bacterium-specific polymer) to explain all observations without invoking effects on metabolism, membrane lipids, or multiple pathways; requires no new entities beyond the known existence of bacterial cell-wall polymer and the turgor pressure differential.",
+  "novelty_justification": "Rather than merely asserting 'cell-wall inhibition' as a retrieved fact, the abductive step constructs the explanatory logic from the observations upward: division-dependence implies the target is engaged only during active polymer remodeling; morphological swelling and lysis imply structural rather than metabolic failure; mammalian sparing implies the target polymer is phylogenetically absent from the host \u2014 together these constrain the Case specifically to cross-link formation in a division-coupled, bacteria-exclusive structural polymer, a mechanistic framing derived from the evidence rather than retrieved from memory.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The compound inhibits cell-wall peptidoglycan synthesis, specifically the transpeptidase step, causing lysis in dividing bacteria; mammalian cells lack peptidoglycan."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The compound acts as a detergent-like surfactant that disrupts bacterial membranes selectively due to differences in membrane lipid composition between bacteria and mammalian cells; division-dependence arises because membrane surface area expands during growth, increasing susceptibility."
+    },
+    {
+      "label": "abductive",
+      "description": "The compound specifically inhibits the cross-linking enzyme that joins nascent polymer strands into a load-bearing network during active wall remodeling, a step uniquely required during division; the absence of this polymer class in mammalian cells and the mechanochemical (osmotic) rather than metabolic mode of killing together explain all observed selectivity, morphology, and reversibility data."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "task_id": "task_005",
+  "hypothesis": "When heritable variation in traits differentially affects survival and reproduction under local environmental conditions, those variants that confer higher fitness increase in frequency across generations within each population; because geographically isolated populations face distinct selective regimes, the trait distributions of separated lineages diverge independently, and the cumulative accumulation of such divergence eventually produces reproductively isolated, morphologically distinct lineages.",
+  "mechanism": "High offspring mortality combined with heritable trait variation means that individuals whose traits better match local environmental demands (seed hardness, substrate colour, thermal load) leave more descendants. Isolation prevents gene flow from homogenizing the two populations, so each population tracks its own selective optimum. Over generations, small incremental frequency shifts compound into large phenotypic and genetic gaps; when these gaps cross reproductive-compatibility thresholds, distinct species are formed. Repeated across many isolated populations and extended through geological time, the process generates a branching tree of lineages whose degree of similarity reflects recency of common ancestry, producing the nested hierarchical pattern visible in both living organisms and the fossil record.",
+  "observations_explained": [
+    "Morphological and genetic clines across continuous geographic gradients (variation tracks environmental gradients even without sharp isolation)",
+    "Vestigial structures in derived lineages that were functional in ancestral environments",
+    "Convergent trait evolution in unrelated lineages occupying analogous environments (e.g., streamlined body forms in aquatic vertebrates)",
+    "Differential extinction rates: lineages in highly variable environments show faster trait turnover in the fossil record",
+    "Molecular phylogenies recapitulating morphological classification, including relative branch lengths proportional to inferred selective pressure",
+    "Ring species complexes where terminal populations are reproductively isolated despite a chain of interbreeding intermediate populations",
+    "The success of artificial selection in compressing evolutionary change into short timescales, confirming that heritable variation is the raw material"
+  ],
+  "parsimony_justification": "The hypothesis requires only three already-stipulated ingredients \u2014 heritable variation, differential survival, and geographic isolation \u2014 with no appeal to directed mutation, vital forces, species-level selection, or saltational jumps. It avoids postulating any special creative mechanism; diversification is an automatic consequence of known population-level processes iterated through time.",
+  "novelty_justification": "Rather than simply labelling the phenomenon 'natural selection plus speciation', the hypothesis makes the inferential step of identifying geographic isolation as the specific condition that converts within-population selection (which alone would not split lineages) into between-lineage divergence, and then links the accumulation of such splits to the hierarchical nested structure of classification \u2014 connecting microevolutionary process to macroevolutionary pattern in a single causal chain rather than treating them as separate phenomena.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Differential survival of heritable variants (natural selection) drives adaptation of populations to local conditions; prolonged isolation plus selection yields new species; cumulative branching produces the tree of life \u2014 the standard textbook synthesis of selection, adaptation, and speciation."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Populations are transformed by use-inheritance: individuals develop traits in response to environmental demands and transmit those acquired modifications to offspring, so each isolated population acquires traits suited to its environment through directed organismal response rather than differential mortality among pre-existing variants."
+    },
+    {
+      "label": "abductive",
+      "description": "Geographic isolation acts as a filter that decouples each population's heritable-variation pool from gene flow, allowing local differential mortality to function as an independent optimization process; the branching, nested hierarchy of life is thus the structural fingerprint of iterated independent optimization events on a shared ancestral variance distribution, not a pre-ordained plan or a directed transformational force."
+    }
+  ]
+}

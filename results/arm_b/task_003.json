@@ -1,0 +1,34 @@
+{
+  "task_id": "task_003",
+  "hypothesis": "The outermost solid shell of the Earth is divided into a small number of rigid lithospheric plates that are continuously created at mid-ocean ridges by upwelling and solidification of mantle material, translated laterally across the surface, and systematically destroyed by sinking back into the mantle beneath island arcs and continental margins, with the plates themselves\u2014not continents alone\u2014constituting the fundamental kinematic units of global tectonics.",
+  "mechanism": "New oceanic lithosphere forms at ridge axes, recording the ambient geomagnetic polarity as it cools through the Curie temperature, and spreads symmetrically outward; this explains the mirror-image magnetic stripe sequences and the age-distance relationship of ocean-floor basalts. Where two plates converge, the denser oceanic plate descends at an angle into the mantle along a subduction zone, generating a inclined seismic zone to depths of ~700 km as the cold slab fractures under differential stress, and producing volcanic island arcs above; the finite sinking rate sets a maximum age (~200 Ma) for surviving ocean floor because older material has already been recycled, whereas buoyant, thick continental crust resists subduction and can preserve records going back ~4 Ga. Shallow seismicity at ridges and transform faults reflects extensional and strike-slip motion at plate boundaries rather than wholesale downwelling.",
+  "observations_explained": [
+    "Symmetric magnetic anomaly stripes parallel to and mirrored about ridge axes",
+    "Monotonic increase in ocean-floor basalt age with distance from ridges",
+    "Thickening of deep-ocean sediment cover away from ridge axes",
+    "Geometric complementarity of conjugate continental shelf margins across the Atlantic",
+    "Matching Precambrian basement terranes and fossil floras on now-separated continents",
+    "Confinement of deep-focus earthquakes to inclined Wadati-Benioff zones beneath arcs",
+    "Clustering of shallow seismicity at mid-ocean ridges and transform faults",
+    "Absence of ocean floor older than ~200 Ma despite continental rocks up to ~4 Ga",
+    "Arc volcanism and back-arc basin formation above subduction zones",
+    "Global heat-flow highs at ridges and lows in trench outer-rise regions",
+    "Wilson cycle of ocean opening and closing explaining orogenic belts within continents"
+  ],
+  "parsimony_justification": "A single kinematic rule\u2014rigid plates created at ridges and destroyed at subduction zones\u2014simultaneously accounts for seafloor spreading geometry, magnetic anomalies, seismicity distribution, and the age paradox of ocean vs. continental crust without invoking separate ad hoc mechanisms for each; it avoids independent explanations for continental drift, ocean-floor aging, and deep seismicity.",
+  "novelty_justification": "The inferential step moves beyond the observation that continents drift (a purely horizontal, continent-centric frame) to posit that oceanic lithosphere itself is the consumable medium of a convective cycle whose destruction zone is the direct cause of the deep seismic planes and the crustal age asymmetry; this unification of creation locus (ridge) and destruction locus (subduction zone) as conjugate boundaries of the same rigid unit is not a simple retrieval of continental drift but a structurally distinct plate-cycle architecture inferred from the joint constraint of the seismic depth distribution and the maximum ocean-floor age.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Continental drift: continents plow through oceanic crust driven by mantle convection, explaining geometric fit and matching geology across oceans, but does not naturally account for deep Benioff-zone seismicity, the age cap on ocean floor, or the symmetric magnetic anomalies."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Seafloor spreading alone (ridge-push, no explicit subduction): new crust forms at ridges and spreads outward, explaining magnetic stripes and ocean-floor age gradients, but leaves unresolved why no ocean floor exceeds ~200 Ma and does not mechanistically explain deep-focus earthquakes beneath arcs as a necessary consequence of the same process."
+    },
+    {
+      "label": "abductive",
+      "description": "The lithosphere is partitioned into a small number of rigid plates whose full life cycle\u2014birth at ridges, lateral translation, and consumption at subduction zones\u2014is the single governing Case: ridge processes and arc/trench processes are conjugate expressions of the same plate-scale convective loop, which simultaneously sets the maximum age of ocean floor, produces the mirror-image magnetic record, and generates the inclined deep-seismic zones as mechanical signatures of cold slab descent."
+    }
+  ]
+}

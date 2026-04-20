@@ -1,0 +1,31 @@
+{
+  "task_id": "task_009",
+  "hypothesis": "A species of matter exists that interacts gravitationally and weakly (or not at all) with the electromagnetic field, has negligible velocity dispersion relative to the gravitational potential wells it inhabits (pressure-less on cosmological scales), and was produced in sufficient abundance in the early universe to constitute roughly 85% of all matter by mass-energy density. This matter component forms extended quasi-spherical halos around luminous structures, with density profiles that fall off more slowly than the luminous disk, thereby maintaining flat rotation curves at large radii.",
+  "mechanism": "Because this matter couples to gravity but not to photons, it neither radiates nor scatters electromagnetic radiation, making it invisible in all EM bands while still sourcing spacetime curvature according to the geometric field equations. In the early universe, being pressure-less and non-baryonic, it decouples from the photon-baryon plasma before recombination, seeding potential wells into which baryons later fall. The resulting ratio of its energy density to baryonic density imprints a characteristic peak spacing and amplitude pattern on the CMB, while its extended halo distribution around galaxies and clusters supplies the additional gravitational mass needed to explain flat rotation curves, anomalous velocity dispersions, lensing convergence maps, and hydrostatic gas temperatures without modifying the geometric field equations or the inverse-square limit.",
+  "observations_explained": [
+    "Flat HI and optical rotation curves in spiral galaxies extending well beyond the luminous disk",
+    "Galaxy cluster velocity dispersions implying total masses 5\u201310\u00d7 luminous mass",
+    "Strong and weak gravitational lensing convergence profiles in clusters exceeding predictions from luminous matter alone",
+    "X-ray hydrostatic equilibrium temperatures of intracluster gas requiring deep potential wells with no luminous counterpart",
+    "Acoustic peak structure and relative peak heights in the CMB power spectrum",
+    "Primordial light-element abundances constraining baryonic density independently to ~15% of total matter",
+    "Large-scale structure power spectrum shape and baryon acoustic oscillation scale",
+    "Bullet Cluster offset between lensing mass centroid and hot-gas centroid during cluster merger"
+  ],
+  "parsimony_justification": "Introduces a single new entity class (non-baryonic, electromagnetically inert, gravitating, pressure-less matter) rather than separately modifying gravity at galactic scales, cluster scales, and cosmological scales. Avoids the need for three independent modifications to the gravitational field equations that would each require different functional forms at different regimes. The same entity simultaneously explains CMB peaks, rotation curves, and cluster masses without free parameters tuned independently per observation.",
+  "novelty_justification": "Rather than retrieving a named particle candidate or modifying dynamics, the inference posits the minimal abstract property set\u2014gravitational coupling, electromagnetic decoupling, pressure-lessness, cosmological abundance ratio\u2014as the Case, derived purely from the convergent discrepancy across galactic, cluster, and cosmological scales. The structural leap is recognizing that a single invariant density-ratio (~5:1) appearing independently in CMB, nucleosynthesis, and dynamical measurements constitutes a cosmic fingerprint of a distinct matter component, not a coincidence of scale-dependent force modifications.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Non-baryonic cold dark matter: an electromagnetically inert, gravitationally interacting, pressure-less particle species whose relic cosmological abundance is ~5\u00d7 baryonic density, forming extended halos that source flat rotation curves and deep cluster potentials."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Modified gravitational dynamics (MOND-type): the inverse-square force law breaks down below a characteristic acceleration threshold, transitioning to a 1/r force law, which naturally produces flat rotation curves without invoking additional matter. Extended to clusters and cosmology via relativistic tensor-vector-scalar generalizations."
+    },
+    {
+      "label": "abductive",
+      "description": "A matter species defined solely by three invariant properties\u2014electromagnetic transparency, gravitational sourcing identical to baryons per unit mass, and pressure-lessness on Hubble scales\u2014present at a universal density ratio of ~5:1 over baryons, inferred as the minimal explanatory entity that unifies the coincident mass discrepancy factor appearing independently across galactic dynamics, cluster thermodynamics, gravitational lensing geometry, CMB acoustic structure, and primordial nucleosynthesis."
+    }
+  ]
+}

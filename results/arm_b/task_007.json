@@ -1,0 +1,31 @@
+{
+  "task_id": "task_007",
+  "hypothesis": "The six carbon atoms form a planar, closed ring in which each carbon contributes one electron to a fully delocalized cyclic \u03c0-system spanning all six centers, producing a single quantum-mechanical ground state in which all positions are symmetrically equivalent and the cyclic delocalization itself constitutes a special energetic stabilization beyond simple bond-averaging.",
+  "mechanism": "Each carbon is sp2-hybridized, leaving one p-orbital perpendicular to the molecular plane; the six p-orbitals overlap continuously around the ring to form molecular orbitals that are delocalized over all six centers simultaneously. This full cyclic delocalization (a) equalizes all C\u2013C bond lengths and all C\u2013H environments, (b) lowers total electronic energy relative to any localized double-bond arrangement by an amount equal to the observed 'resonance energy', (c) makes electrophilic attack favorable only if the aromatic \u03c0-system is restored (substitution), not destroyed (addition), and (d) generates a macroscopic ring current when electrons circulate in an external magnetic field, shifting all ring protons to the same downfield frequency.",
+  "observations_explained": [
+    "Existence of exactly three disubstitution isomers (1,2-; 1,3-; 1,4-) consistent with hexagonal symmetry",
+    "Resistance to catalytic-free halogenation and hydration, contrasting alkene reactivity",
+    "Enthalpy of hydrogenation substantially less negative than predicted for a hypothetical localized triene, revealing stabilization energy",
+    "All six 1H-NMR signals coincide at a single downfield chemical shift due to ring-current diamagnetic anisotropy",
+    "X-ray and electron diffraction showing all C\u2013C bond lengths equal (~1.40 \u00c5), intermediate between single and double bonds",
+    "The molecule is planar, consistent with sp2 hybridization at every carbon",
+    "Electrophilic aromatic substitution mechanism proceeds through a sigma-complex intermediate that re-aromatizes by proton loss rather than nucleophile addition",
+    "Generalization: other planar monocyclic systems with 4n+2 \u03c0-electrons (n integer) show analogous stability, whereas 4n \u03c0-electron rings do not"
+  ],
+  "parsimony_justification": "Requires only one structural axiom\u2014full cyclic \u03c0-delocalization in a planar hexagonal ring\u2014to simultaneously account for symmetry equivalence, thermodynamic stability, substitution preference, NMR ring current, and isomer count; avoids positing multiple independent explanations for each phenomenon and avoids invoking any rapidly interconverting localized structures as real species.",
+  "novelty_justification": "Rather than retrieving the classical alternating single/double bond picture or the historical 'rapidly oscillating' localized structure, the hypothesis makes the inferential leap that the delocalization is a permanent quantum-mechanical ground state, not a dynamic average, and that cyclic topology itself\u2014not mere conjugation\u2014is the source of special stabilization; this predicts a discrete energetic criterion (electron count modulo 4) for aromaticity that goes beyond the original Rule+Result pair.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The molecule has alternating single and double C\u2013C bonds arranged in a hexagonal ring; the observed stability is due to resonance between two equivalent Kekul\u00e9 structures, treated as a weighted average of localized forms."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The molecule contains a central carbon atom bonded to six peripheral CH groups (prism or centric formula), explaining valence saturation and a single isomeric monosubstitution product, but failing to account for the three disubstitution isomers or the thermodynamic data."
+    },
+    {
+      "label": "abductive",
+      "description": "All six carbon p-orbitals overlap in a continuous closed ring to form fully delocalized molecular orbitals that are a permanent quantum ground state; cyclic topology with the correct electron count produces an intrinsic stabilization energy, ring-current magnetism, bond-length equalization, and a thermodynamic preference for reactions that restore rather than disrupt the \u03c0-system."
+    }
+  ]
+}

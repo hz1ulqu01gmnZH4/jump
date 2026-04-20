@@ -1,0 +1,29 @@
+{
+  "task_id": "task_008",
+  "hypothesis": "Each country possesses a distinct internal ratio of labour requirements across the two goods, and it is this ratio \u2014 not the absolute level of labour requirements \u2014 that determines productive advantage. When these internal ratios differ between countries, each country faces a lower opportunity cost for one good than the other, so specialising according to internal opportunity-cost ratios and exchanging at a terms of trade lying strictly between the two countries' internal ratios generates a net expansion of world output and mutual consumption gains.",
+  "mechanism": "Alpha's absolute efficiency advantage in both goods does not imply equal relative efficiency in both. If Alpha's labour-requirement ratio (wine:cloth) differs from Beta's ratio, then one good costs Alpha relatively less labour foregone per unit than it costs Beta, and vice versa for the other good. Under autarky each country produces both goods at its own internal cost ratio. Redirecting each country's entire labour stock toward the good for which its opportunity cost is lower raises total world output of both goods simultaneously. A terms-of-trade ratio set strictly between the two autarky price ratios allows each country to exchange its surplus specialised output for the other good at a rate better than it could achieve domestically, expanding both countries' consumption sets beyond their production-possibility frontiers under autarky.",
+  "observations_explained": [
+    "A high-wage, high-productivity nation and a low-wage, low-productivity nation can both gain from trade even when the former undersells the latter in every sector on absolute cost",
+    "The volume and direction of trade flows are predicted by relative price differences across countries, not by absolute productivity levels",
+    "Complete or partial specialisation emerges endogenously from voluntary exchange without any planner directing resource allocation",
+    "Poorer or technologically backward economies are not permanently excluded from beneficial international exchange by richer trading partners",
+    "Gains from trade can arise even when one party has no absolute advantage in any activity, paralleling gains from exchange between individuals of unequal overall ability",
+    "The equilibrium terms of trade settle in the interval between the two countries' autarky price ratios, with each country gaining more the further the terms of trade lie from its own autarky ratio"
+  ],
+  "parsimony_justification": "The hypothesis introduces no new entities beyond those already stipulated \u2014 fixed labour endowments, fixed per-unit labour requirements, and voluntary exchange. It requires only the observation that two ratios (Alpha's internal cost ratio and Beta's internal cost ratio) need not be equal even when one dominates the other in both absolute values, which follows from elementary arithmetic. It avoids appeals to capital, technology transfers, externalities, or any dynamic process.",
+  "novelty_justification": "The inferential step moves from the stipulated absolute rankings (Alpha beats Beta in both goods) to a latent relational structure \u2014 the cross-country ratio of ratios \u2014 that is invisible when one looks only at absolute magnitudes. The retrieval answer names a theory; this hypothesis reconstructs the structural axiom (differing internal opportunity-cost ratios as the operative causal primitive) without invoking any named framework, deriving mutual gain as a logical consequence of ratio divergence rather than absolute-cost divergence.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Comparative advantage: each country should specialise in the good for which its relative labour cost is lower, and trade allows consumption beyond the production frontier for both parties even when one has absolute advantage in all goods."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Absolute advantage sufficiency: the historically earlier view held that trade is beneficial only when each country is absolutely cheaper in at least one good, implying Beta gains nothing and Alpha loses nothing by trading \u2014 this was the position comparative advantage was formulated to refute."
+    },
+    {
+      "label": "abductive",
+      "description": "The internal opportunity-cost ratio (the rate at which producing one more unit of good A forces relinquishing units of good B within a single country) is the primitive determinant of trade direction and mutual gain. Divergence between countries' internal ratios, irrespective of absolute labour productivity levels, creates a latent arbitrage across borders: reallocating world labour along the grain of these ratio differences raises total world output, and a terms-of-trade price set in the interval between the two ratios distributes that surplus to both parties."
+    }
+  ]
+}
