@@ -1,0 +1,25 @@
+{
+  "task_id": "task_003",
+  "hypothesis": "The Earth's lithosphere is divided into rigid plates that move laterally relative to one another on a convecting asthenosphere, with new oceanic crust generated at divergent boundaries and consumed at convergent boundaries.",
+  "mechanism": "Seafloor spreading at mid-ocean ridges creates new oceanic crust that records geomagnetic reversals, while subduction zones at trenches recycle this crust back into the mantle, limiting ocean floor age and generating deep seismicity along dipping Benioff-Wadati planes.",
+  "observations_explained": [
+    "The existence of subduction zones recycling old oceanic crust explains why no ocean floor is older than ~200 million years.",
+    "Plate convergence at trenches generates the inclined planes of deep earthquakes observed beneath island arcs."
+  ],
+  "parsimony_justification": "This hypothesis unifies disparate observations (magnetism, seismicity, age distribution, continental fit) under a single dynamic mechanism of plate motion, avoiding the need for separate theories for seafloor formation and mountain building.",
+  "novelty_justification": "It infers the existence of a dynamic, moving lithospheric shell from static geological records and seismic data, rather than assuming a static Earth with localized crustal adjustments.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Continental drift proposes that continents move through the oceanic crust, but historically struggled to explain the mechanism and the symmetric magnetic stripes."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Expanding Earth theory suggests the planet grew, pushing continents apart, but fails to account for subduction zones and the lack of space for expansion."
+    },
+    {
+      "label": "abductive",
+      "description": "Plate tectonics posits that rigid plates move on a fluid mantle, linking seafloor spreading, subduction, and continental drift into a single coherent system."
+    }
+  ]
+}

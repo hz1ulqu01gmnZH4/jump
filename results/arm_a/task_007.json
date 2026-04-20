@@ -1,0 +1,25 @@
+{
+  "task_id": "task_007",
+  "hypothesis": "The molecule consists of a cyclic arrangement of six carbon atoms where each carbon is bonded to one hydrogen, and the carbon-carbon bonds are not fixed single or double bonds but are instead delocalized electron clouds forming a continuous, symmetrical ring system above and below the plane of the nuclei.",
+  "mechanism": "The delocalization of the pi-electrons over all six carbon atoms creates a uniform bond order intermediate between single and double bonds, rendering all carbon and hydrogen positions chemically and magnetically equivalent. This electron delocalization stabilizes the system by lowering its total potential energy (resonance energy), which accounts for the reduced enthalpy of hydrogenation compared to isolated double bonds, while the symmetric ring structure restricts substitution products to specific isomeric counts based on relative positions rather than fixed bond locations.",
+  "observations_explained": [
+    "The absence of distinct single/double bond lengths leading to identical reactivity at all positions",
+    "The diamagnetic anisotropy causing a ring current effect in NMR spectra due to circulating delocalized electrons"
+  ],
+  "parsimony_justification": "This hypothesis posits a single structural feature (electron delocalization) to explain stability, isomer counts, symmetry, and magnetic properties, avoiding the need for rapid tautomerization or multiple distinct bond types.",
+  "novelty_justification": "It infers a quantum mechanical electronic structure (delocalization) from classical chemical observations of equivalence and stability, moving beyond the static Kekul\u00e9 models that failed to explain the lack of isomers.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The molecule is benzene with alternating single and double bonds (Kekul\u00e9 structure) that rapidly interconvert, making positions appear equivalent on average."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Dewar benzene or other bicyclic isomers that might explain some stability but fail to account for the specific NMR ring current and isomer counts."
+    },
+    {
+      "label": "abductive",
+      "description": "A planar hexagonal ring with fully delocalized pi-electrons creating a symmetric aromatic system where bond order is uniform across all carbon-carbon connections."
+    }
+  ]
+}

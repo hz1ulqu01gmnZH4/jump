@@ -1,0 +1,25 @@
+{
+  "task_id": "task_006",
+  "hypothesis": "The set of real numbers possesses an intrinsic structural complexity that prevents a one-to-one correspondence with the natural numbers, constituting a strictly larger infinity than that of the rationals.",
+  "mechanism": "Any proposed enumeration of reals in [0,1] defines a mapping from N to R; by constructing a number that differs from the nth enumerated number in the nth decimal place, one creates an element that cannot be in the image of that mapping, thereby proving the mapping is not surjective and the sets are not bijective.",
+  "observations_explained": [
+    "The existence of uncountable sets despite the density of countable subsets like rationals",
+    "The failure of any algorithmic list to capture all real numbers in a continuum"
+  ],
+  "parsimony_justification": "This hypothesis relies solely on the definition of injection and the properties of infinite sequences without invoking ad-hoc restrictions or additional set-theoretic axioms beyond standard logic.",
+  "novelty_justification": "It infers the non-existence of a bijection through the constructive diagonal method, moving beyond the mere retrieval of definitions to a proof of structural disparity between discrete and continuous infinities.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Cantor's diagonal argument proves the real numbers are uncountable by showing any list misses at least one real."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The belief that all infinite sets are equivalent in size, often associated with pre-Cantorian intuition or certain forms of constructivism that reject actual infinities."
+    },
+    {
+      "label": "abductive",
+      "description": "The structural incompleteness of any countable enumeration when applied to a continuum defined by infinite decimal expansions."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "task_id": "task_008",
+  "hypothesis": "Absolute advantage is irrelevant to the gains from trade; comparative advantage determines specialization patterns. Each country should specialize in the good for which it has the lower relative opportunity cost (lower per-unit labor requirement ratio compared to the other good), allowing global production to shift to more efficient allocations.",
+  "mechanism": "By specializing according to comparative advantage, each country reallocates its fixed labor stock to the sector where its relative efficiency is highest. This reallocation increases total world output because the sum of labor hours required to produce any given bundle of goods is minimized. Trade at a mutually acceptable price ratio then allows both countries to consume bundles that lie outside their individual production possibility frontiers, benefiting even the less efficient country (Beta) through access to cheaper imports than its own domestic production costs.",
+  "observations_explained": [
+    "Beta gains from trade despite having absolute disadvantages in both goods, as it exports the good with the smaller relative disadvantage.",
+    "Total world output increases because labor is redirected from less efficient uses to more efficient uses globally, rather than being duplicated inefficiently in both countries."
+  ],
+  "parsimony_justification": "This hypothesis requires only the assumption of rational specialization based on relative costs, avoiding ad-hoc explanations for why an inefficient country benefits. It reduces the complex interaction of two economies to a single principle of opportunity cost minimization.",
+  "novelty_justification": "The inferential step is recognizing that trade benefits arise from relative, not absolute, efficiency differences. This moves beyond the naive view that trade only benefits the 'stronger' party by introducing the geometric concept of comparative cost ratios as the determinant of gain.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Ricardian model of comparative advantage: specialization based on relative labor productivity ratios leads to mutual gains."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Mercantilist view: trade is a zero-sum game where only the surplus-producing nation gains, and the less efficient nation loses."
+    },
+    {
+      "label": "abductive",
+      "description": "Gains from trade are derived from the convexity of production possibility frontiers and the ability to exploit relative efficiency gaps, allowing the less efficient agent to participate by focusing on its least inefficient output."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "task_id": "task_001",
+  "hypothesis": "Gravitational fields induce a local dilation of proper time, where the rate of time flow is determined by the local gravitational potential. This temporal gradient acts as a refractive index for light propagation, causing frequency shifts that mimic kinematic Doppler effects but arise from geometric curvature of spacetime.",
+  "mechanism": "The invariant speed of light interacts with the variable rate of time flow across different gravitational potentials. As the photon climbs, the emitter's time interval (wavelength definition) is slower relative to the absorber's time interval (clock definition), resulting in a lower observed frequency. The equivalence principle ensures this redshift is locally indistinguishable from acceleration, linking the mechanical definition of mass/inertia to the geometric structure of the potential.",
+  "observations_explained": [
+    "The deflection of starlight by massive bodies due to spacetime curvature acting as a lens.",
+    "The precession of Mercury's perihelion arising from non-Euclidean orbital geometry in a curved metric."
+  ],
+  "parsimony_justification": "This hypothesis unifies electromagnetism and mechanics under a single geometric framework (metric tensor) without requiring ad-hoc forces or separate laws for light and matter, leveraging the existing equivalence of inertial and gravitational mass.",
+  "novelty_justification": "Instead of treating gravity as a force field within flat spacetime (Newtonian) or merely modifying electrodynamics (ether drift), this infers that the 'stage' itself (spacetime intervals) is dynamic and malleable, making time dilation a fundamental geometric property rather than a mechanical side-effect.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "General Relativity: Gravity is the curvature of spacetime caused by mass-energy, described by the Einstein field equations."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Newtonian Corpuscular Theory with Variable Light Speed: Light particles lose kinetic energy climbing against gravity, slowing down and redshifting, violating the invariant speed postulate."
+    },
+    {
+      "label": "abductive",
+      "description": "Metric-Time Coupling: The gravitational potential directly modulates the local metric tensor component g_00, causing proper time to run at different rates, which geometrically necessitates both gravitational redshift and light bending without invoking force-mediated interactions."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "task_id": "task_005",
+  "hypothesis": "Heritable morphological and physiological variations arise continuously and stochastically during reproduction, while environmental pressures act as a non-random sieve that preserves variants conferring reproductive advantages and eliminates those that do not, leading to the gradual accumulation of adaptive traits in isolated populations.",
+  "mechanism": "The Rule establishes the inputs: overproduction creates competition, variation provides raw material, and environmental difference sets the selection criteria. The Case posits the mechanism of differential survival and reproduction (natural selection) where heritable traits linked to environmental fit are retained across generations. This iterative filtering process causes isolated populations to diverge directionally toward local adaptations, eventually resulting in speciation and the observed nested hierarchy of life.",
+  "observations_explained": [
+    "The existence of vestigial structures (anatomical features that served a function in ancestors but are reduced or useless in descendants)",
+    "The geographic distribution of species (biogeography) where related species are found in proximity to one another and to their ancestors' habitats"
+  ],
+  "parsimony_justification": "This hypothesis avoids ad-hoc creation events by relying on a single, continuous mechanism (selection on variation) to explain both micro-evolutionary changes within populations and macro-evolutionary patterns of speciation and diversification.",
+  "novelty_justification": "Unlike retrieval models that might invoke teleological design or sudden mutation, this abductive step infers a cumulative, non-directional generation of variation coupled with a directional, deterministic filtering process, explaining the 'design-like' fit of organisms to environments without invoking foresight.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Natural selection acting on random genetic variation is the standard textbook explanation for the observed divergence and speciation patterns."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Lamarckian inheritance of acquired characteristics, which was historically proposed to explain adaptation but fails to account for the fidelity of heritable traits and the lack of directed change in response to use/disuse."
+    },
+    {
+      "label": "abductive",
+      "description": "A mechanistic model where variation is generated independently of environmental need, and selection acts as a statistical filter over reproductive success, creating a feedback loop that shapes lineage trajectories without teleology."
+    }
+  ]
+}

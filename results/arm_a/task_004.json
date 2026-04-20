@@ -1,0 +1,25 @@
+{
+  "task_id": "task_004",
+  "hypothesis": "The compound selectively disrupts the synthesis of the bacterial cell wall peptidoglycan layer by inhibiting the cross-linking enzymes (transpeptidases) responsible for maintaining structural integrity during active growth.",
+  "mechanism": "During active division, bacteria require continuous remodeling and synthesis of the peptidoglycan sacculus to withstand internal turgor pressure. By blocking the cross-linking of peptidoglycan precursors, the cell wall becomes structurally weak and unable to contain osmotic pressure, leading to swelling, loss of shape, and eventual lysis. Since mammalian cells lack peptidoglycan and have different membrane structures, they remain unaffected.",
+  "observations_explained": [
+    "The specific lethality to actively dividing bacteria correlates with the high demand for peptidoglycan synthesis during cell division.",
+    "The lack of effect on stationary phase bacteria occurs because cell wall synthesis is minimal or halted when division stops, allowing existing walls to remain intact despite the presence of the inhibitor."
+  ],
+  "parsimony_justification": "This hypothesis relies on a single, specific enzymatic target (peptidoglycan cross-linking) rather than multiple disparate metabolic failures, explaining both the bactericidal nature and the phase-specific activity through one structural mechanism.",
+  "novelty_justification": "Instead of assuming general metabolic inhibition (like protein or energy synthesis) which contradicts the negative observations, this inference deduces a structural target unique to bacteria, bridging the gap between metabolic quiescence and physical lysis.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The compound inhibits penicillin-binding proteins (transpeptidases) involved in peptidoglycan cross-linking."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The compound disrupts bacterial cell membrane permeability directly, causing leakage without specific enzyme inhibition."
+    },
+    {
+      "label": "abductive",
+      "description": "The compound interferes with the assembly of the cell wall matrix itself, creating a structural weakness that manifests only when mechanical stress from turgor pressure is applied during growth."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "task_id": "task_010",
+  "hypothesis": "Maternal mortality was caused by the transmission of invisible, particulate 'cadaveric matter' from dissected corpses via the physicians' hands to the birthing women, where it induced a systemic toxic or infectious reaction.",
+  "mechanism": "The physicians acted as mechanical vectors, carrying the specific infectious agent or toxin from the autopsy room to the maternity ward; the chlorinated lime solution chemically neutralized or removed this agent, thereby breaking the chain of transmission and preventing the disease.",
+  "observations_explained": [
+    "The higher mortality rate in physician-staffed wards compared to midwife-staffed wards, despite identical hospital infrastructure.",
+    "The physician's death from an accidental self-inoculation during an autopsy, presenting symptoms identical to puerperal fever."
+  ],
+  "parsimony_justification": "This hypothesis posits a single physical mechanism (vector-borne transmission of a specific agent) rather than invoking multiple unconnected factors like ventilation, diet, or admission criteria, which were explicitly controlled for or unchanged.",
+  "novelty_justification": "It infers the existence of a transmissible, non-visible pathological agent carried on inanimate objects (hands) rather than relying on traditional miasma theories or innate constitutional weaknesses, shifting the focus from the patient's environment to the provider's actions.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "Semmelweis's hypothesis that 'cadaverous particles' are the specific cause of puerperal fever, transmitted by medical students and doctors."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The miasma theory, suggesting that the 'bad air' or foul smell from the autopsy room drifted into the maternity ward, causing the fever."
+    },
+    {
+      "label": "abductive",
+      "description": "The hypothesis that the disease is an iatrogenic infection caused by the direct mechanical transfer of a specific pathogenic substance from decomposing tissue to open wounds or mucous membranes."
+    }
+  ]
+}

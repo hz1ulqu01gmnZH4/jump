@@ -1,0 +1,25 @@
+{
+  "task_id": "task_009",
+  "hypothesis": "A dominant population of non-baryonic, collisionless particles with negligible thermal velocities constitutes the majority of the universe's matter density, forming extensive spherical halos around visible structures. These particles interact primarily via gravity and do not emit, absorb, or reflect electromagnetic radiation, rendering them effectively invisible to standard astronomical surveys.",
+  "mechanism": "The gravitational potential of these invisible particles extends far beyond the luminous disk, providing the additional centripetal force required to maintain flat rotation curves at large radii. In clusters, this extra mass accounts for the high velocity dispersions and lensing signals, while in the early universe, its pressure-less nature allows it to clump and drive the formation of the acoustic peak structure observed in the CMB.",
+  "observations_explained": [
+    "The missing baryon problem in galaxy clusters (mass discrepancy between hot gas/lensing and luminous matter)",
+    "The formation of large-scale structure and CMB acoustic peaks requiring cold, non-interacting matter"
+  ],
+  "parsimony_justification": "This hypothesis introduces a single class of particle that explains dynamics across solar system, galactic, cluster, and cosmological scales without modifying the fundamental laws of gravity or requiring ad-hoc corrections to General Relativity.",
+  "novelty_justification": "Instead of retrieving standard Modified Gravity theories or historical decoys like MACHOs, this inference posits a fundamental particle physics solution that unifies galactic rotation anomalies with cosmological parameter constraints through a single physical entity.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The standard Lambda-CDM model postulates Cold Dark Matter (CDM), specifically Weakly Interacting Massive Particles (WIMPs) or axions, which are collisionless and non-baryonic."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "Modified Newtonian Dynamics (MOND) or TeVeS, which propose changing the laws of inertia or gravity at low accelerations rather than adding mass."
+    },
+    {
+      "label": "abductive",
+      "description": "A specific non-baryonic particle species with weak-scale interactions that decouples early in the universe, allowing it to form the gravitational scaffolding for structure formation while remaining electromagnetically silent."
+    }
+  ]
+}

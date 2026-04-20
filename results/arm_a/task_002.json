@@ -1,0 +1,25 @@
+{
+  "task_id": "task_002",
+  "hypothesis": "The nucleic acid adopts a double-helical architecture where two antiparallel polynucleotide chains are held together by specific hydrogen-bonding interactions between complementary base pairs, creating a uniform structural width that accommodates the helical geometry.",
+  "mechanism": "The Rule establishes Chargaff's parity and diffraction data indicative of a regular helix; the Case posits that complementary base pairing (A-T and G-C) provides the chemical specificity for replication, while the double-stranded nature explains the helical pitch and axial spacing. This structure allows for semi-conservative replication because each strand serves as a template for the synthesis of a new complementary strand, preserving the base-pairing rule in daughter molecules.",
+  "observations_explained": [
+    "The uniform diameter of the DNA helix is maintained regardless of sequence because purine-pyrimidine pairing ensures consistent width.",
+    "The stability of the double helix against thermal denaturation correlates with the number of hydrogen bonds and base stacking interactions."
+  ],
+  "parsimony_justification": "This hypothesis avoids ad-hoc assumptions about separate replication machinery by deriving the copying mechanism directly from the structural complementarity of the molecule itself.",
+  "novelty_justification": "It infers a specific tertiary structural arrangement (double helix with H-bonds) from secondary chemical data (base ratios) and physical measurements (diffraction), rather than merely describing the chemical composition.",
+  "candidate_survey": [
+    {
+      "label": "retrieval",
+      "description": "The Watson-Crick double helix model with specific base pairing."
+    },
+    {
+      "label": "historical_decoy",
+      "description": "The polymeric chain model where bases are on the exterior, proposed by Pauling, which failed to explain Chargaff's rules and replication fidelity."
+    },
+    {
+      "label": "abductive",
+      "description": "A double-stranded antiparallel helix where genetic information is encoded by the sequence of bases, and replication is driven by the thermodynamic preference for complementary base pairing."
+    }
+  ]
+}
