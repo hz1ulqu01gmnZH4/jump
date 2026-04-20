@@ -180,3 +180,95 @@ The reviewer MUST follow this order:
 Reviewer bias note: if the reviewer knows which arm is which (A = baseline, B =
 intervention), they must still score tasks in the ORDER specified above and
 justify each axis score in one line so their calibration is auditable.
+
+---
+
+## 6. Mandatory Verdict File Requirements (all future verdicts)
+
+Introduced 2026-04-20 after v1.5 review established that global arm-level
+axis constants (e.g., uniform (d)=1 for every Arm A task) obscure per-task
+evidence and make cross-arm gaps unauditable. All future verdict files
+(`verdicts/vN.md`, `verdicts/vN_M.md`) MUST satisfy the following format
+requirements in addition to the rubric and protocol above.
+
+### 6.1 Verbatim excerpts per task
+
+Every per-task block (in every arm) MUST include at least three verbatim
+excerpts from the task's output JSON, quoted exactly:
+
+- `hypothesis` field (full or substantial excerpt)
+- `mechanism` field (full or substantial excerpt)
+- `novelty_justification` field (full or substantial excerpt)
+
+Excerpts MUST be introduced with the field name and be copy-exact from the
+JSON (modulo Unicode normalisation of Å/ℕ/π/ℵ). Paraphrases are NOT
+acceptable. The purpose is to make the reviewer's evidence auditable.
+
+### 6.2 Per-axis scoring-process paragraphs
+
+Every per-task block MUST include one brief paragraph per axis explaining
+the score assigned. For axes where the score **deviates from the arm's
+median score on that axis**, the paragraph MUST expand to cite specific
+textual evidence from the output JSON and explain why the deviation is
+warranted.
+
+For axis (d) specifically, every per-task (d) score MUST cite at least one
+specific phrase from the output JSON as evidence (e.g., "mechanism names
+'Chargaff's parity'", or "hypothesis uses abstract 'rigid cross-linked
+structural polymer' in place of technical name"), because (d) is the most
+interpretation-dependent axis in the rubric.
+
+### 6.3 Side-by-side full output requirement
+
+At least **two tasks per verdict** MUST include both arms' complete JSON
+outputs reproduced in full (not excerpted), followed by independent
+per-axis scoring for each arm. Recommended defaults:
+
+- task_001 (first task) — serves as a reviewer calibration anchor.
+- task_010 (last task, or another task where both arms are expected to
+  diverge) — serves as a discriminator anchor.
+
+These side-by-side sections are in addition to, not a substitute for, the
+per-task blocks under Sections 6.1 and 6.2.
+
+### 6.4 Prohibition on uniform axis scores without per-task defence
+
+If after per-task analysis every task in one arm receives the *same* score
+on some axis, the reviewer MUST include a dedicated paragraph listing the
+per-task textual evidence that justified the uniform score. A sentence
+per task is sufficient but the paragraph MUST be present and enumerate
+all N tasks.
+
+Uniformity is permitted when the evidence supports it, but it is never
+permitted *without* explicit per-task textual defence — because a blanket
+"the arm always scores X on this axis" formulation is exactly the failure
+mode v1.5 was introduced to correct.
+
+### 6.5 Aggregate table format specification
+
+Each arm's aggregate table MUST include, as the final rows:
+
+```
+| **Mean** | <mean a> | <mean b> | <mean c> | <mean d> | <mean e> | <mean total> |
+| **Median** | <med a> | <med b> | <med c> | <med d> | <med e> | <med total> |
+| **≥8 count** | — | — | — | — | — | <N tasks ≥ 8> |
+```
+
+Means and medians MUST be given to one decimal place. The `≥8 count` row
+is the tally of tasks with Total ≥ 8 (used directly for the verdict
+threshold test).
+
+### 6.6 Changes-from-previous-verdict section
+
+Each verdict that supersedes or amends a prior verdict MUST include a
+"Changes from vN" section listing every axis score that differs from the
+prior verdict, with a brief textual rationale citing the rubric check
+that drove the change. Verdicts that are not amendments (first-time
+reviews) may omit this section.
+
+### 6.7 Enforcement
+
+These requirements are mandatory. A verdict file that fails any of
+6.1–6.6 (where applicable) is considered incomplete and should be
+returned to the reviewer for revision before being accepted as the
+authoritative verdict.
