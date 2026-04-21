@@ -1,0 +1,264 @@
+Loaded 17 instances
+
+[01/17] world_ca_001 (cellular_automata, medium)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=7  turns=10  15s
+
+[02/17] world_ca_002 (cellular_automata, hard)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis ARGS_PARSE_ERR: Unterminated string starting at: line 1 column 22 (char 21)
+    LLM call failed (attempt 1): 500 Server Error: Internal Server Error for url: http://localhost:8080/v1/chat/completions, retrying in 5s...
+    LLM error on turn 10: 500 Server Error: Internal Server Error for url: http://localhost:8080/v1/chat/completions
+    Fallback submit for world_ca_002
+    acc=0.000  interventions=7  turns=10  40s
+
+[03/17] world_ca_003 (cellular_automata, medium)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=7  turns=10  12s
+
+[04/17] world_ca_004 (cellular_automata, hard)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=7  turns=10  10s
+
+[05/17] world_ca_005 (cellular_automata, easy)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=7  turns=10  12s
+
+[06/17] world_ca_006 (cellular_automata, hard)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: 'value'
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=7  turns=10  13s
+
+[07/17] world_pt_001 (particle_system, medium)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.500
+    acc=0.500  interventions=8  turns=10  14s
+
+[08/17] world_pt_002 (particle_system, medium)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=8  turns=10  18s
+
+[09/17] world_pt_003 (particle_system, hard)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.333
+    acc=0.333  interventions=8  turns=10  13s
+
+[10/17] world_pt_004 (particle_system, hard)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=8  turns=10  14s
+
+[11/17] world_pt_005 (particle_system, medium)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=8  turns=10  14s
+
+[12/17] world_seq_001 (pattern_puzzle, medium)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=1.000
+    acc=1.000  interventions=8  turns=10  25s
+
+[13/17] world_seq_002 (pattern_puzzle, easy)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=0.000
+    acc=0.000  interventions=8  turns=10  10s
+
+[14/17] world_seq_003 (pattern_puzzle, medium)
+    turn 0: get_train_obs
+    turn 1: intervene ERROR: list assignment index out of range
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=1.000
+    acc=1.000  interventions=7  turns=10  7s
+
+[15/17] world_seq_004 (pattern_puzzle, medium)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene ERROR: list assignment index out of range
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=1.000
+    acc=1.000  interventions=7  turns=10  7s
+
+[16/17] world_seq_005 (pattern_puzzle, easy)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=1.000
+    acc=1.000  interventions=8  turns=10  20s
+
+[17/17] world_seq_006 (pattern_puzzle, hard)
+    turn 0: get_train_obs
+    turn 1: intervene
+    turn 2: intervene
+    turn 3: intervene
+    turn 4: intervene
+    turn 5: intervene
+    turn 6: intervene
+    turn 7: intervene
+    turn 8: intervene
+    turn 9: submit_hypothesis → acc=1.000
+    acc=1.000  interventions=8  turns=10  13s
+
+======================================================================
+Instance             Family               Diff          Acc
+----------------------------------------------------------------------
+world_ca_001         cellular_automata    medium      0.000
+world_ca_002         cellular_automata    hard        0.000
+world_ca_003         cellular_automata    medium      0.000
+world_ca_004         cellular_automata    hard        0.000
+world_ca_005         cellular_automata    easy        0.000
+world_ca_006         cellular_automata    hard        0.000
+world_pt_001         particle_system      medium      0.500
+world_pt_002         particle_system      medium      0.000
+world_pt_003         particle_system      hard        0.333
+world_pt_004         particle_system      hard        0.000
+world_pt_005         particle_system      medium      0.000
+world_seq_001        pattern_puzzle       medium      1.000
+world_seq_002        pattern_puzzle       easy        0.000
+world_seq_003        pattern_puzzle       medium      1.000
+world_seq_004        pattern_puzzle       medium      1.000
+world_seq_005        pattern_puzzle       easy        1.000
+world_seq_006        pattern_puzzle       hard        1.000
+----------------------------------------------------------------------
+MEAN                                                  0.343
+
+  cellular_automata: mean=0.000  n=6
+  particle_system: mean=0.167  n=5
+  pattern_puzzle: mean=0.833  n=6
+
+  easy: mean=0.333  n=3
+  hard: mean=0.222  n=6
+  medium: mean=0.438  n=8
+
+  C-random  = 0.010
+  C-induce  = 0.127
+  C-retrieval = 1.000
+  Arm A mean  = 0.343
+======================================================================
+
+Results written to /home/ak/tmux-agents/projects/jump/repo/arm_a/results_v2.json
