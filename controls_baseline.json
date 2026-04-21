@@ -1,0 +1,87 @@
+{
+  "world_ca_001": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_ca_002": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_ca_003": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_ca_004": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_ca_005": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_ca_006": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_pt_001": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_pt_002": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_pt_003": {
+    "C-random": 0.0,
+    "C-induce": 0.3333333333333333,
+    "C-retrieval": 1.0
+  },
+  "world_pt_004": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_pt_005": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_seq_001": {
+    "C-random": 0.0,
+    "C-induce": 0.16666666666666666,
+    "C-retrieval": 1.0
+  },
+  "world_seq_002": {
+    "C-random": 0.0,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_seq_003": {
+    "C-random": 0.16666666666666666,
+    "C-induce": 0.0,
+    "C-retrieval": 1.0
+  },
+  "world_seq_004": {
+    "C-random": 0.0,
+    "C-induce": 1.0,
+    "C-retrieval": 1.0
+  },
+  "world_seq_005": {
+    "C-random": 0.0,
+    "C-induce": 0.16666666666666666,
+    "C-retrieval": 1.0
+  },
+  "world_seq_006": {
+    "C-random": 0.0,
+    "C-induce": 0.5,
+    "C-retrieval": 1.0
+  }
+}
