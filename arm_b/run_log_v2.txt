@@ -1,0 +1,66 @@
+Arm B (claude -p + jump_v2 skill) — 17 instances, MAX_TURNS=12
+  world_ca_001 (cellular_automata, medium)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_ca_002 (cellular_automata, hard)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_ca_003 (cellular_automata, medium)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_ca_004 (cellular_automata, hard)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_ca_005 (cellular_automata, easy)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_ca_006 (cellular_automata, hard)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_pt_001 (particle_system, medium)... acc=1.000 n_int=0 turns=2
+  world_pt_002 (particle_system, medium)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_pt_003 (particle_system, hard)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.333 n_int=0 turns=2
+  world_pt_004 (particle_system, hard)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.333 n_int=0 turns=2
+  world_pt_005 (particle_system, medium)...
+    [retry turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+
+    [fail turn 1]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=0.000 n_int=0 turns=2
+  world_seq_001 (pattern_puzzle, medium)... acc=1.000 n_int=1 turns=3
+  world_seq_002 (pattern_puzzle, easy)... acc=1.000 n_int=0 turns=2
+  world_seq_003 (pattern_puzzle, medium)... acc=1.000 n_int=0 turns=2
+  world_seq_004 (pattern_puzzle, medium)... acc=1.000 n_int=0 turns=2
+  world_seq_005 (pattern_puzzle, easy)...
+    [retry turn 8]: Command '['env', '-u', 'CLAUDECODE', '-u', 'ANTHROPIC_API_KEY', 'claude', '-p', '--dangerously-skip-permissions', '--output-format', 'stream-json', '--verbose']' timed out after 300 seconds
+ acc=1.000 n_int=7 turns=10
+  world_seq_006 (pattern_puzzle, hard)... acc=1.000 n_int=0 turns=2
+
+=== Arm B mean accuracy: 0.451 (Arm A: 0.343) ===
+Controls: C-random=0.010, C-induce=0.127, C-retrieval=1.000
+  cellular_automata: Arm B=0.000  Arm A=0.000
+  particle_system: Arm B=0.333  Arm A=0.167
+  pattern_puzzle: Arm B=1.000  Arm A=0.833
