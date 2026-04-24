@@ -1,0 +1,41 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_TIMEOUT",
+    "n_interventions": 0,
+    "n_turns": 2,
+    "fallback": true,
+    "timeout_turn": 1,
+    "timeout_attempts": 3
+  },
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_TIMEOUT",
+    "n_interventions": 0,
+    "n_turns": 2,
+    "fallback": true,
+    "timeout_turn": 1,
+    "timeout_attempts": 3
+  },
+  {
+    "instance_id": "world_ca_003",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_TIMEOUT",
+    "n_interventions": 0,
+    "n_turns": 2,
+    "fallback": true,
+    "timeout_turn": 1,
+    "timeout_attempts": 3
+  }
+]
