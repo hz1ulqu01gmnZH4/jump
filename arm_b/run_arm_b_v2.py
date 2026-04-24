@@ -6,7 +6,7 @@ Runs all 17 v2 instances with MAX_TURNS=12 (same as Arm A for fair comparison).
 NOTE: --resume hangs in nested claude process context. We use fresh calls each
 turn with accumulated interaction history baked into the prompt instead.
 """
-import argparse, subprocess, json, sys, re, time, statistics
+import argparse, os, signal, subprocess, json, sys, re, time, statistics
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -19,10 +19,39 @@ CLAUDE_CMD = [
 ]
 SKILL = Path.home() / ".claude" / "skills" / "jump_v2.md"
 MAX_TURNS = 12
-INSTANCE_CAP_SEC = 1800
-TIMEOUT_TURN1 = 900
-TIMEOUT_TURN_N = 600
+INSTANCE_HARD_CAP = 7200
+TIMEOUT_TURN1 = 1800
+TIMEOUT_TURN_N = 1200
 RETRY_BACKOFFS = [0, 30, 60]  # 3 attempts total
+
+
+def run_claude_subprocess(cmd, prompt, timeout, cwd="/tmp"):
+    """Run claude -p with proper process group cleanup on timeout."""
+    t_start = time.monotonic()
+    proc = subprocess.Popen(
+        cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        cwd=cwd,
+        start_new_session=True,
+    )
+    try:
+        stdout, stderr = proc.communicate(input=prompt, timeout=timeout)
+        wall_s = time.monotonic() - t_start
+        return stdout, stderr, proc.returncode, wall_s
+    except subprocess.TimeoutExpired:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError):
+            proc.kill()
+        try:
+            proc.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            pass  # best-effort cleanup
+        wall_s = time.monotonic() - t_start
+        raise subprocess.TimeoutExpired(cmd, timeout)
 
 
 def load_skill_body() -> str:
@@ -79,19 +108,16 @@ def run_claude(prompt: str, timeout: int = TIMEOUT_TURN1) -> tuple[list, str]:
     """Fresh claude -p call (no --resume). Returns (tool_calls, final_text).
     Runs from /tmp to avoid loading tmux-agents/CLAUDE.md (huge system prompt).
     """
-    proc = subprocess.run(
-        CLAUDE_CMD, input=prompt, capture_output=True, text=True,
-        timeout=timeout, cwd="/tmp"
-    )
+    stdout, stderr, returncode, _ = run_claude_subprocess(CLAUDE_CMD, prompt, timeout)
 
-    if proc.returncode != 0:
-        raise RuntimeError(f"claude -p rc={proc.returncode}: {proc.stderr[:400]}")
+    if returncode != 0:
+        raise RuntimeError(f"claude -p rc={returncode}: {stderr[:400]}")
 
     tool_calls = []
     final_text = ""
     assistant_texts = []
 
-    for line in proc.stdout.splitlines():
+    for line in stdout.splitlines():
         line = line.strip()
         if not line:
             continue
@@ -196,30 +222,57 @@ def run_arm_b_on_instance(instance: dict) -> dict:
         n_turns = turn + 1
 
         # Per-instance hard cap
-        if time.monotonic() - instance_start > INSTANCE_CAP_SEC:
+        if time.monotonic() - instance_start > INSTANCE_HARD_CAP:
             timeout_turn = turn
             print(f"\n    [instance cap exceeded @ turn {turn}]", flush=True)
             break
 
         prompt = build_prompt(skill_body, instance, history, turn)
         turn_timeout = TIMEOUT_TURN1 if turn == 0 else TIMEOUT_TURN_N
+        prompt_chars = len(prompt)
 
         tool_calls = None
         last_err = None
         for attempt, delay in enumerate(RETRY_BACKOFFS):
             if delay:
                 time.sleep(delay)
+            t_attempt_start_mono = time.monotonic()
+            t_attempt_start_wall = time.time()
             try:
                 tool_calls, _ = run_claude(prompt, timeout=turn_timeout)
+                wall_s = time.monotonic() - t_attempt_start_mono
+                t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(t_attempt_start_wall))
+                t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
+                print(
+                    f"[ATTEMPT instance={instance['id']} turn={turn+1} "
+                    f"attempt={attempt+1}/{len(RETRY_BACKOFFS)} prompt_chars={prompt_chars} "
+                    f"start={t_start_iso} end={t_end_iso} wall_s={wall_s:.1f} status=OK]",
+                    flush=True
+                )
                 break
             except subprocess.TimeoutExpired as e:
                 timeout_attempts += 1
                 last_err = e
-                print(f"\n    [timeout turn={turn} attempt={attempt+1}/3 after {turn_timeout}s]",
-                      flush=True)
+                wall_s = time.monotonic() - t_attempt_start_mono
+                t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(t_attempt_start_wall))
+                t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
+                print(
+                    f"[ATTEMPT instance={instance['id']} turn={turn+1} "
+                    f"attempt={attempt+1}/{len(RETRY_BACKOFFS)} prompt_chars={prompt_chars} "
+                    f"start={t_start_iso} end={t_end_iso} wall_s={wall_s:.1f} status=TIMEOUT]",
+                    flush=True
+                )
             except Exception as e:
                 last_err = e
-                print(f"\n    [error turn={turn} attempt={attempt+1}/3]: {e}", flush=True)
+                wall_s = time.monotonic() - t_attempt_start_mono
+                t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(t_attempt_start_wall))
+                t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
+                print(
+                    f"[ATTEMPT instance={instance['id']} turn={turn+1} "
+                    f"attempt={attempt+1}/{len(RETRY_BACKOFFS)} prompt_chars={prompt_chars} "
+                    f"start={t_start_iso} end={t_end_iso} wall_s={wall_s:.1f} status=ERR]",
+                    flush=True
+                )
 
         if tool_calls is None:
             # All attempts failed — record FAIL_TIMEOUT, abort instance. No identity fallback.
@@ -318,10 +371,13 @@ def main():
     )
 
     results = []
-    fail_timeout_count = 0
-    ESCALATION_THRESHOLD = 3
+    family_fail_counts = {"cellular_automata": 0, "particle_system": 0, "pattern_puzzle": 0}
+    skipped_families = set()
+    ESCALATION_THRESHOLD_PER_FAMILY = 3
 
     for inst in instances:
+        if inst["family"] in skipped_families:
+            continue
         print(f"  {inst['id']} ({inst['family']}, {inst['difficulty']})...", end="", flush=True)
         try:
             r = run_arm_b_on_instance(inst)
@@ -348,7 +404,7 @@ def main():
             flush=True
         )
 
-        # Machine-parseable log tag
+        # Machine-parseable log tag + per-family escalation
         if status == "FAIL_TIMEOUT":
             total_wait = r.get("timeout_attempts", 0) * (TIMEOUT_TURN1 + TIMEOUT_TURN_N)
             print(
@@ -356,23 +412,28 @@ def main():
                 f"attempts={r.get('timeout_attempts')} total_wait_s={total_wait}]",
                 flush=True
             )
-            fail_timeout_count += 1
+            fam = r.get("family", "")
+            if fam in family_fail_counts:
+                family_fail_counts[fam] += 1
+                if family_fail_counts[fam] >= ESCALATION_THRESHOLD_PER_FAMILY:
+                    skipped_families.add(fam)
+                    print(
+                        f"[FAMILY_ESCALATION family={fam} FAIL_TIMEOUT={family_fail_counts[fam]}]",
+                        flush=True
+                    )
+                    if fam == "pattern_puzzle":
+                        print(
+                            f"\n[GLOBAL_STOP] pattern_puzzle FAIL_TIMEOUT={family_fail_counts[fam]} "
+                            f"— stopping entire run.",
+                            flush=True
+                        )
+                        break
         elif status == "FAIL_NO_SUBMIT":
             print(f"[FAIL_NO_SUBMIT instance={r['instance_id']} turn={r['n_turns']}]", flush=True)
         elif status == "FAIL_EXCEPTION":
             print(f"[FAIL_EXCEPTION instance={r['instance_id']} err={r.get('error', '')}]", flush=True)
         else:
             print(f"[OK instance={r['instance_id']} turns={r['n_turns']} acc={acc_str}]", flush=True)
-
-        # Escalation check — stop if too many FAIL_TIMEOUT (structural hang, not fluke)
-        if fail_timeout_count >= ESCALATION_THRESHOLD:
-            print(
-                f"\n[ESCALATION] {fail_timeout_count} FAIL_TIMEOUT instances detected. "
-                f"Stopping run. Completed {len(results)}/{len(instances)} instances. "
-                f"Structural hang suspected — investigate root cause before retrying.",
-                flush=True
-            )
-            break
 
     # Write completed results regardless of escalation
     output_path.write_text(json.dumps(results, indent=2))
@@ -415,10 +476,10 @@ def main():
         f"exception={statuses.count('FAIL_EXCEPTION')}"
     )
 
-    if fail_timeout_count >= ESCALATION_THRESHOLD:
+    if skipped_families:
         print(
-            f"\nESCALATION: {fail_timeout_count} FAIL_TIMEOUT — re-run blocked. "
-            f"Investigate claude -p hang before v2-P6c."
+            f"\nESCALATION: skipped_families={skipped_families}, "
+            f"family_fail_counts={family_fail_counts} — investigate claude -p hang before v2-P6c."
         )
 
 
