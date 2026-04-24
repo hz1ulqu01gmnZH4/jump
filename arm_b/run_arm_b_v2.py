@@ -6,7 +6,7 @@ Runs all 17 v2 instances with MAX_TURNS=12 (same as Arm A for fair comparison).
 NOTE: --resume hangs in nested claude process context. We use fresh calls each
 turn with accumulated interaction history baked into the prompt instead.
 """
-import subprocess, json, sys, re, time, statistics
+import argparse, subprocess, json, sys, re, time, statistics
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -19,6 +19,10 @@ CLAUDE_CMD = [
 ]
 SKILL = Path.home() / ".claude" / "skills" / "jump_v2.md"
 MAX_TURNS = 12
+INSTANCE_CAP_SEC = 1800
+TIMEOUT_TURN1 = 900
+TIMEOUT_TURN_N = 600
+RETRY_BACKOFFS = [0, 30, 60]  # 3 attempts total
 
 
 def load_skill_body() -> str:
@@ -71,7 +75,7 @@ def extract_json_tools(text: str) -> list:
     return calls
 
 
-def run_claude(prompt: str, timeout: int = 300) -> tuple[list, str]:
+def run_claude(prompt: str, timeout: int = TIMEOUT_TURN1) -> tuple[list, str]:
     """Fresh claude -p call (no --resume). Returns (tool_calls, final_text).
     Runs from /tmp to avoid loading tmux-agents/CLAUDE.md (huge system prompt).
     """
@@ -183,27 +187,53 @@ def run_arm_b_on_instance(instance: dict) -> dict:
     harness = WorldHarness(instance)
     history = []  # [{tool, args, result}, ...]
     submitted = False
+    timeout_turn = None
+    timeout_attempts = 0
     n_turns = 0
+    instance_start = time.monotonic()
 
     for turn in range(MAX_TURNS):
         n_turns = turn + 1
-        prompt = build_prompt(skill_body, instance, history, turn)
 
-        try:
-            tool_calls, _ = run_claude(prompt)
-        except Exception as e:
-            print(f"\n    [retry turn {turn}]: {e}", flush=True)
-            time.sleep(15)
+        # Per-instance hard cap
+        if time.monotonic() - instance_start > INSTANCE_CAP_SEC:
+            timeout_turn = turn
+            print(f"\n    [instance cap exceeded @ turn {turn}]", flush=True)
+            break
+
+        prompt = build_prompt(skill_body, instance, history, turn)
+        turn_timeout = TIMEOUT_TURN1 if turn == 0 else TIMEOUT_TURN_N
+
+        tool_calls = None
+        last_err = None
+        for attempt, delay in enumerate(RETRY_BACKOFFS):
+            if delay:
+                time.sleep(delay)
             try:
-                tool_calls, _ = run_claude(prompt)
-            except Exception as e2:
-                print(f"\n    [fail turn {turn}]: {e2}", flush=True)
+                tool_calls, _ = run_claude(prompt, timeout=turn_timeout)
                 break
+            except subprocess.TimeoutExpired as e:
+                timeout_attempts += 1
+                last_err = e
+                print(f"\n    [timeout turn={turn} attempt={attempt+1}/3 after {turn_timeout}s]",
+                      flush=True)
+            except Exception as e:
+                last_err = e
+                print(f"\n    [error turn={turn} attempt={attempt+1}/3]: {e}", flush=True)
+
+        if tool_calls is None:
+            # All attempts failed — record FAIL_TIMEOUT, abort instance. No identity fallback.
+            timeout_turn = turn
+            print(
+                f"\n    [FAIL_TIMEOUT instance={instance['id']} turn={timeout_turn} "
+                f"attempts={timeout_attempts} last_err={last_err!r}]",
+                flush=True
+            )
+            break
 
         if not tool_calls:
             turns_left = MAX_TURNS - turn - 1
             if turns_left <= 2:
-                # Force submit on next turn via history entry
                 history.append({
                     "tool": "system",
                     "args": {},
@@ -223,36 +253,74 @@ def run_arm_b_on_instance(instance: dict) -> dict:
         if submitted:
             break
 
-    if not submitted:
-        try:
-            harness.submit_hypothesis("def hidden_rule_fn(state): return state")
-        except Exception:
-            pass
-
+    # Build result — NO IDENTITY FALLBACK.
     log = harness.get_log()
     subs = [e for e in log if e["tool"] == "submit_hypothesis"]
-    return {
-        "instance_id": instance["id"],
-        "family": instance["family"],
-        "difficulty": instance["difficulty"],
-        "accuracy": subs[-1]["accuracy"] if subs else 0.0,
-        "hypothesis_source": subs[-1].get("hypothesis_source", "") if subs else "",
-        "n_interventions": sum(1 for e in log if e["tool"] == "intervene"),
-        "n_turns": n_turns,
-        "fallback": not submitted,
-    }
+
+    if submitted:
+        return {
+            "instance_id": instance["id"],
+            "family": instance["family"],
+            "difficulty": instance["difficulty"],
+            "accuracy": subs[-1]["accuracy"],
+            "hypothesis_source": subs[-1].get("hypothesis_source", ""),
+            "hypothesis_status": "submitted",
+            "n_interventions": sum(1 for e in log if e["tool"] == "intervene"),
+            "n_turns": n_turns,
+            "fallback": False,
+        }
+    else:
+        status = "FAIL_TIMEOUT" if timeout_turn is not None else "FAIL_NO_SUBMIT"
+        return {
+            "instance_id": instance["id"],
+            "family": instance["family"],
+            "difficulty": instance["difficulty"],
+            "accuracy": None,  # excluded from mean_valid
+            "hypothesis_source": None,
+            "hypothesis_status": status,
+            "n_interventions": sum(1 for e in log if e["tool"] == "intervene"),
+            "n_turns": n_turns,
+            "fallback": True,
+            "timeout_turn": timeout_turn,
+            "timeout_attempts": timeout_attempts,
+        }
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Arm B v2 runner")
+    parser.add_argument(
+        "--only", nargs="+", metavar="INSTANCE_ID",
+        help="Run only the specified instance IDs (space-separated)"
+    )
+    args = parser.parse_args()
+
     from worlds.gen import generate_all
 
     if not SKILL.exists():
         raise RuntimeError(f"v2 jump skill not found at {SKILL}. Create it first.")
 
-    instances = generate_all()
-    print(f"Arm B (claude -p + jump_v2 skill) — {len(instances)} instances, MAX_TURNS={MAX_TURNS}")
+    all_instances = generate_all()
+
+    if args.only:
+        only_set = set(args.only)
+        instances = [i for i in all_instances if i["id"] in only_set]
+        missing = only_set - {i["id"] for i in instances}
+        if missing:
+            raise ValueError(f"Unknown instance IDs: {sorted(missing)}")
+        output_path = Path("arm_b/results_v2_p6.json")
+    else:
+        instances = all_instances
+        output_path = Path("arm_b/results_v2.json")
+
+    print(
+        f"Arm B (claude -p + jump_v2 skill) — {len(instances)} instances, "
+        f"MAX_TURNS={MAX_TURNS}, output={output_path}"
+    )
 
     results = []
+    fail_timeout_count = 0
+    ESCALATION_THRESHOLD = 3
+
     for inst in instances:
         print(f"  {inst['id']} ({inst['family']}, {inst['difficulty']})...", end="", flush=True)
         try:
@@ -262,34 +330,96 @@ def main():
                 "instance_id": inst["id"],
                 "family": inst["family"],
                 "difficulty": inst["difficulty"],
-                "accuracy": 0.0,
-                "hypothesis_source": f"# ERROR: {e}",
+                "accuracy": None,
+                "hypothesis_source": None,
+                "hypothesis_status": "FAIL_EXCEPTION",
                 "n_interventions": 0,
                 "n_turns": 0,
                 "fallback": True,
+                "error": str(e),
             }
+
         results.append(r)
-        print(f" acc={r['accuracy']:.3f} n_int={r['n_interventions']} turns={r['n_turns']}", flush=True)
 
-    Path("arm_b/results_v2.json").write_text(json.dumps(results, indent=2))
+        status = r.get("hypothesis_status", "submitted")
+        acc_str = f"{r['accuracy']:.3f}" if r["accuracy"] is not None else "None"
+        print(
+            f" acc={acc_str} n_int={r['n_interventions']} turns={r['n_turns']} [{status}]",
+            flush=True
+        )
 
-    mean_acc = statistics.mean(r["accuracy"] for r in results)
-    arm_a_mean = 0.343
-    print(f"\n=== Arm B mean accuracy: {mean_acc:.3f} (Arm A: {arm_a_mean:.3f}) ===")
-    print(f"Controls: C-random=0.010, C-induce=0.127, C-retrieval=1.000")
-
-    arm_a_fam = {
-        "cellular_automata": 0.000,
-        "particle_system": 0.167,
-        "pattern_puzzle": 0.833,
-    }
-    for fam in ["cellular_automata", "particle_system", "pattern_puzzle"]:
-        fam_accs = [r["accuracy"] for r in results if r["family"] == fam]
-        if fam_accs:
+        # Machine-parseable log tag
+        if status == "FAIL_TIMEOUT":
+            total_wait = r.get("timeout_attempts", 0) * (TIMEOUT_TURN1 + TIMEOUT_TURN_N)
             print(
-                f"  {fam}: Arm B={statistics.mean(fam_accs):.3f}"
-                f"  Arm A={arm_a_fam.get(fam, '?'):.3f}"
+                f"[FAIL_TIMEOUT instance={r['instance_id']} turn={r.get('timeout_turn')} "
+                f"attempts={r.get('timeout_attempts')} total_wait_s={total_wait}]",
+                flush=True
             )
+            fail_timeout_count += 1
+        elif status == "FAIL_NO_SUBMIT":
+            print(f"[FAIL_NO_SUBMIT instance={r['instance_id']} turn={r['n_turns']}]", flush=True)
+        elif status == "FAIL_EXCEPTION":
+            print(f"[FAIL_EXCEPTION instance={r['instance_id']} err={r.get('error', '')}]", flush=True)
+        else:
+            print(f"[OK instance={r['instance_id']} turns={r['n_turns']} acc={acc_str}]", flush=True)
+
+        # Escalation check — stop if too many FAIL_TIMEOUT (structural hang, not fluke)
+        if fail_timeout_count >= ESCALATION_THRESHOLD:
+            print(
+                f"\n[ESCALATION] {fail_timeout_count} FAIL_TIMEOUT instances detected. "
+                f"Stopping run. Completed {len(results)}/{len(instances)} instances. "
+                f"Structural hang suspected — investigate root cause before retrying.",
+                flush=True
+            )
+            break
+
+    # Write completed results regardless of escalation
+    output_path.write_text(json.dumps(results, indent=2))
+    print(f"\nResults written to {output_path} ({len(results)} entries)")
+
+    # Summary statistics
+    scored = [r for r in results if r.get("accuracy") is not None]
+    n_excluded = len(results) - len(scored)
+    mean_acc = statistics.mean(r["accuracy"] for r in scored) if scored else float("nan")
+    print(
+        f"\n=== Arm B mean accuracy: {mean_acc:.3f} over {len(scored)}/{len(results)} "
+        f"(excluded {n_excluded} FAIL_*) ==="
+    )
+    if not args.only:
+        arm_a_mean = 0.343
+        print(f"Controls: C-random=0.010, C-induce=0.127, C-retrieval=1.000")
+        print(f"Arm A reference: {arm_a_mean:.3f}")
+
+        arm_a_fam = {
+            "cellular_automata": 0.000,
+            "particle_system": 0.167,
+            "pattern_puzzle": 0.833,
+        }
+        for fam in ["cellular_automata", "particle_system", "pattern_puzzle"]:
+            fam_results = [r for r in results if r["family"] == fam]
+            fam_scored = [r["accuracy"] for r in fam_results if r.get("accuracy") is not None]
+            if fam_scored:
+                print(
+                    f"  {fam}: Arm B={statistics.mean(fam_scored):.3f} "
+                    f"(n={len(fam_scored)}/{len(fam_results)})  "
+                    f"Arm A={arm_a_fam.get(fam, '?'):.3f}"
+                )
+            else:
+                print(f"  {fam}: Arm B=(all FAIL)  Arm A={arm_a_fam.get(fam, '?'):.3f}")
+
+    statuses = [r.get("hypothesis_status", "submitted") for r in results]
+    print(
+        f"FAIL counts: timeout={statuses.count('FAIL_TIMEOUT')} "
+        f"no_submit={statuses.count('FAIL_NO_SUBMIT')} "
+        f"exception={statuses.count('FAIL_EXCEPTION')}"
+    )
+
+    if fail_timeout_count >= ESCALATION_THRESHOLD:
+        print(
+            f"\nESCALATION: {fail_timeout_count} FAIL_TIMEOUT — re-run blocked. "
+            f"Investigate claude -p hang before v2-P6c."
+        )
 
 
 if __name__ == "__main__":
