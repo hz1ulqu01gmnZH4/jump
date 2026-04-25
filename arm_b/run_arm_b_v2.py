@@ -15,7 +15,8 @@ CLAUDE_CMD = [
     "env", "-u", "CLAUDECODE", "-u", "ANTHROPIC_API_KEY",
     "claude", "-p",
     "--dangerously-skip-permissions",
-    "--output-format", "stream-json", "--verbose",
+    "--output-format", "stream-json", "--include-partial-messages", "--verbose",
+    "--model", "claude-sonnet-4-6",
 ]
 SKILL = Path.home() / ".claude" / "skills" / "jump_v2.md"
 MAX_TURNS = 12
