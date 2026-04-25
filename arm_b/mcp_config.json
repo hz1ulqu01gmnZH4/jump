@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "jump-world": {
+      "command": "uv",
+      "args": ["run", "python", "arm_b/arm_b_mcp_server.py"],
+      "cwd": "/home/ak/tmux-agents/projects/jump/repo",
+      "env": {
+        "JUMP_INSTANCE_ID": "${JUMP_INSTANCE_ID}",
+        "JUMP_RESULTS_PATH": "${JUMP_RESULTS_PATH}"
+      }
+    }
+  }
+}
