@@ -3,7 +3,8 @@
 Arm B v3 harness: per-instance single claude -p call with MCP tools.
 No MAX_TURNS — claude's native tool loop handles multi-turn reasoning.
 """
-import argparse, json, os, signal, statistics, subprocess, sys, time
+import argparse, json, os, signal, statistics, subprocess, sys, threading, time
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -63,7 +64,7 @@ def write_instance_mcp_config(instance_id: str, results_path: Path) -> None:
     MCP_CONFIG_INSTANCE.write_text(json.dumps(config, indent=2))
 
 
-def run_subprocess(cmd, prompt, timeout, env, cwd):
+def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
     proc = subprocess.Popen(
         cmd,
         stdin=subprocess.PIPE,
@@ -75,20 +76,102 @@ def run_subprocess(cmd, prompt, timeout, env, cwd):
         start_new_session=True,
     )
     t0 = time.monotonic()
+    stdout_lines = []
+    stderr_lines = []
+
+    def _append_progress(record):
+        if progress_file is not None:
+            progress_file.write(json.dumps(record) + "\n")
+            progress_file.flush()
+
+    def _log_event(ev, elapsed):
+        ts = datetime.now().strftime('%H:%M:%S')
+        ev_type = ev.get("type", "")
+        if ev_type == "tool_use":
+            name = ev.get("name", "")
+            input_keys = list(ev.get("input", {}).keys())
+            print(f"[{ts}] tool_use: name={name} input_keys={input_keys}", file=sys.stderr, flush=True)
+            _append_progress({"t": round(elapsed, 2), "event": "tool_use", "name": name, "input": ev.get("input", {})})
+        elif ev_type == "tool_result":
+            tool_use_id = ev.get("tool_use_id", "")
+            content_len = len(str(ev.get("content", "")))
+            print(f"[{ts}] tool_result: tool_use_id={tool_use_id} content_len={content_len}", file=sys.stderr, flush=True)
+            _append_progress({"t": round(elapsed, 2), "event": "tool_result", "id": tool_use_id, "content_len": content_len})
+        elif ev_type in ("text_delta", "content_block_delta"):
+            delta = ev.get("delta", {})
+            text = delta.get("text", "") if isinstance(delta, dict) else ""
+            if text:
+                print(f"[{ts}] text_delta: {text[:80]}", file=sys.stderr, flush=True)
+                _append_progress({"t": round(elapsed, 2), "event": "text", "text": text[:200]})
+        elif ev_type == "message_start":
+            print(f"[{ts}] message_start", file=sys.stderr, flush=True)
+        elif ev_type in ("message_stop", "message_delta"):
+            delta = ev.get("delta", {})
+            stop_reason = (delta.get("stop_reason", "") if isinstance(delta, dict) else "") or ev.get("stop_reason", "")
+            print(f"[{ts}] message_stop stop_reason={stop_reason}", file=sys.stderr, flush=True)
+            _append_progress({"t": round(elapsed, 2), "event": "message_stop", "stop_reason": stop_reason})
+        elif ev_type == "assistant":
+            for block in ev.get("message", {}).get("content", []):
+                btype = block.get("type", "")
+                if btype == "tool_use":
+                    name = block.get("name", "")
+                    input_keys = list(block.get("input", {}).keys())
+                    print(f"[{ts}] tool_use: name={name} input_keys={input_keys}", file=sys.stderr, flush=True)
+                    _append_progress({"t": round(elapsed, 2), "event": "tool_use", "name": name, "input": block.get("input", {})})
+                elif btype == "tool_result":
+                    tid = block.get("tool_use_id", "")
+                    clen = len(str(block.get("content", "")))
+                    print(f"[{ts}] tool_result: tool_use_id={tid} content_len={clen}", file=sys.stderr, flush=True)
+                    _append_progress({"t": round(elapsed, 2), "event": "tool_result", "id": tid, "content_len": clen})
+        else:
+            if ev_type:
+                print(f"[{ts}] event: {ev_type}", file=sys.stderr, flush=True)
+
+    def _read_stdout():
+        for line in proc.stdout:
+            stdout_lines.append(line)
+            stripped = line.strip()
+            if not stripped:
+                continue
+            try:
+                ev = json.loads(stripped)
+            except json.JSONDecodeError:
+                continue
+            _log_event(ev, time.monotonic() - t0)
+
+    def _read_stderr():
+        for line in proc.stderr:
+            stderr_lines.append(line)
+
     try:
-        stdout, stderr = proc.communicate(input=prompt, timeout=timeout)
+        proc.stdin.write(prompt)
+        proc.stdin.close()
+    except BrokenPipeError:
+        pass
+
+    stdout_thread = threading.Thread(target=_read_stdout, daemon=True)
+    stderr_thread = threading.Thread(target=_read_stderr, daemon=True)
+    stdout_thread.start()
+    stderr_thread.start()
+
+    try:
+        stdout_thread.join(timeout=timeout)
+        if stdout_thread.is_alive():
+            elapsed = time.monotonic() - t0
+            _append_progress({"t": round(elapsed, 2), "event": "timeout_sigkill"})
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+            except (ProcessLookupError, PermissionError):
+                proc.kill()
+            stdout_thread.join(timeout=5)
+            stderr_thread.join(timeout=5)
+            wall_s = time.monotonic() - t0
+            raise subprocess.TimeoutExpired(cmd, timeout)
+        stderr_thread.join(timeout=30)
+        proc.wait()
         wall_s = time.monotonic() - t0
-        return stdout, stderr, proc.returncode, wall_s
+        return "".join(stdout_lines), "".join(stderr_lines), proc.returncode, wall_s
     except subprocess.TimeoutExpired:
-        try:
-            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-        except (ProcessLookupError, PermissionError):
-            proc.kill()
-        try:
-            proc.communicate(timeout=10)
-        except subprocess.TimeoutExpired:
-            pass
-        wall_s = time.monotonic() - t0
         raise
 
 
@@ -145,49 +228,55 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
         except ValueError:
             pass
 
-    for attempt in range(1 + RETRY_ON_TIMEOUT):
-        t_start = time.time()
-        try:
-            stdout, stderr, rc, wall_s = run_subprocess(
-                cmd, prompt,
-                timeout=INSTANCE_HARD_CAP,
-                env=env,
-                cwd="/home/ak/tmux-agents/projects/jump/repo",
-            )
-            t_end = time.time()
-            t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t_start))
-            t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t_end))
-            print(
-                f"[ATTEMPT instance={instance['id']} attempt={attempt+1}/{1+RETRY_ON_TIMEOUT} "
-                f"rc={rc} wall_s={wall_s:.1f} start={t_start_iso} end={t_end_iso}]",
-                flush=True,
-            )
-            break
-        except subprocess.TimeoutExpired:
-            print(
-                f"[TIMEOUT instance={instance['id']} attempt={attempt+1}/{1+RETRY_ON_TIMEOUT} "
-                f"wall_s={INSTANCE_HARD_CAP}]",
-                flush=True,
-            )
-            if attempt >= RETRY_ON_TIMEOUT:
-                return {
-                    "instance_id": instance["id"],
-                    "family": instance["family"],
-                    "difficulty": instance["difficulty"],
-                    "accuracy": None,
-                    "hypothesis_source": None,
-                    "hypothesis_status": "FAIL_TIMEOUT_RETRY",
-                    "n_interventions": 0,
-                    "n_turns": None,
-                    "fallback": True,
-                    "capture_path": None,
-                    "wall_s": INSTANCE_HARD_CAP * (attempt + 1),
-                    "model": model,
-                    "effort": "medium",
-                    "arm": "B",
-                    "version": "v3",
-                }
-            continue
+    progress_path = Path(f"arm_b/v3_progress_{instance['id']}.jsonl")
+    progress_file = progress_path.open("w")
+    try:
+        for attempt in range(1 + RETRY_ON_TIMEOUT):
+            t_start = time.time()
+            try:
+                stdout, stderr, rc, wall_s = run_subprocess(
+                    cmd, prompt,
+                    timeout=INSTANCE_HARD_CAP,
+                    env=env,
+                    cwd="/home/ak/tmux-agents/projects/jump/repo",
+                    progress_file=progress_file,
+                )
+                t_end = time.time()
+                t_start_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t_start))
+                t_end_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t_end))
+                print(
+                    f"[ATTEMPT instance={instance['id']} attempt={attempt+1}/{1+RETRY_ON_TIMEOUT} "
+                    f"rc={rc} wall_s={wall_s:.1f} start={t_start_iso} end={t_end_iso}]",
+                    flush=True,
+                )
+                break
+            except subprocess.TimeoutExpired:
+                print(
+                    f"[TIMEOUT instance={instance['id']} attempt={attempt+1}/{1+RETRY_ON_TIMEOUT} "
+                    f"wall_s={INSTANCE_HARD_CAP}]",
+                    flush=True,
+                )
+                if attempt >= RETRY_ON_TIMEOUT:
+                    return {
+                        "instance_id": instance["id"],
+                        "family": instance["family"],
+                        "difficulty": instance["difficulty"],
+                        "accuracy": None,
+                        "hypothesis_source": None,
+                        "hypothesis_status": "FAIL_TIMEOUT_RETRY",
+                        "n_interventions": 0,
+                        "n_turns": None,
+                        "fallback": True,
+                        "capture_path": None,
+                        "wall_s": INSTANCE_HARD_CAP * (attempt + 1),
+                        "model": model,
+                        "effort": "medium",
+                        "arm": "B",
+                        "version": "v3",
+                    }
+                continue
+    finally:
+        progress_file.close()
 
     n_interventions = count_interventions(stdout)
 
