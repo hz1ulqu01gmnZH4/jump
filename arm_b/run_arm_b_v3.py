@@ -29,6 +29,19 @@ MCP_RESULTS_DIR = Path("arm_b/.mcp_results")
 MCP_CONFIG_INSTANCE = Path("arm_b/mcp_config_instance.json")
 INSTANCE_HARD_CAP = 7200
 RETRY_ON_TIMEOUT = 1
+STUCK_REASONING_CAP_S = 300       # seconds since last tool_use before kill
+STUCK_WATCHDOG_POLL_S = 5         # watchdog loop cadence
+
+
+class StuckReasoningError(Exception):
+    def __init__(self, wall_s, since_last_tool_s, tool_use_count):
+        self.wall_s = wall_s
+        self.since_last_tool_s = since_last_tool_s
+        self.tool_use_count = tool_use_count
+        super().__init__(
+            f"stuck reasoning: {since_last_tool_s:.1f}s without tool_use "
+            f"after {tool_use_count} tool calls (cap={STUCK_REASONING_CAP_S}s)"
+        )
 
 
 def load_skill_body() -> str:
@@ -42,8 +55,25 @@ def load_skill_body() -> str:
     return text
 
 
+DEADLINE_NUDGE = """## Deadline policy (harness-enforced)
+
+You operate under a hard turn budget. Endless silent reasoning will be killed as
+FAIL_STUCK_REASONING with zero credit and no retry — a worse outcome than any
+submission.
+
+- You MUST call `intervene` at least once before calling `submit_hypothesis`. A
+  hypothesis without at least one intervention is unacceptable.
+- If, after a handful of interventions, your confidence is low, submit your best
+  current hypothesis anyway. Note your uncertainty in a Python comment inside
+  `hypothesis_source`. A weak submission with stated caveats is strictly better
+  than no submission.
+- Do not loop in private analysis between tool calls. Commit to a probe, read the
+  result, refine — externalise reasoning through tool calls, not internal monologue.
+"""
+
+
 def build_prompt(skill_body: str) -> str:
-    return skill_body + "\n\nBegin by calling get_train_obs."
+    return skill_body + "\n\n" + DEADLINE_NUDGE + "\nBegin by calling get_train_obs."
 
 
 def write_instance_mcp_config(instance_id: str, results_path: Path) -> None:
@@ -78,6 +108,10 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
     t0 = time.monotonic()
     stdout_lines = []
     stderr_lines = []
+    last_tool_t = 0.0
+    last_tool_count = 0
+    state_lock = threading.Lock()
+    stuck_flag = threading.Event()
 
     def _append_progress(record):
         if progress_file is not None:
@@ -85,6 +119,7 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
             progress_file.flush()
 
     def _log_event(ev, elapsed):
+        nonlocal last_tool_t, last_tool_count
         ts = datetime.now().strftime('%H:%M:%S')
         ev_type = ev.get("type", "")
         if ev_type == "tool_use":
@@ -92,6 +127,9 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
             input_keys = list(ev.get("input", {}).keys())
             print(f"[{ts}] tool_use: name={name} input_keys={input_keys}", file=sys.stderr, flush=True)
             _append_progress({"t": round(elapsed, 2), "event": "tool_use", "name": name, "input": ev.get("input", {})})
+            with state_lock:
+                last_tool_t = elapsed
+                last_tool_count += 1
         elif ev_type == "tool_result":
             tool_use_id = ev.get("tool_use_id", "")
             content_len = len(str(ev.get("content", "")))
@@ -118,6 +156,9 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
                     input_keys = list(block.get("input", {}).keys())
                     print(f"[{ts}] tool_use: name={name} input_keys={input_keys}", file=sys.stderr, flush=True)
                     _append_progress({"t": round(elapsed, 2), "event": "tool_use", "name": name, "input": block.get("input", {})})
+                    with state_lock:
+                        last_tool_t = elapsed
+                        last_tool_count += 1
                 elif btype == "tool_result":
                     tid = block.get("tool_use_id", "")
                     clen = len(str(block.get("content", "")))
@@ -143,6 +184,31 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
         for line in proc.stderr:
             stderr_lines.append(line)
 
+    def _watchdog():
+        POLL_S = 5.0
+        while not stuck_flag.is_set():
+            time.sleep(POLL_S)
+            if proc.poll() is not None:
+                return
+            with state_lock:
+                since = (time.monotonic() - t0) - last_tool_t
+                count = last_tool_count
+            if since > STUCK_REASONING_CAP_S and count >= 1:
+                stuck_flag.set()
+                elapsed = time.monotonic() - t0
+                _append_progress({
+                    "t": round(elapsed, 2),
+                    "event": "stuck_reasoning_kill",
+                    "since_last_tool_s": round(since, 2),
+                    "tool_use_count": count,
+                    "cap_s": STUCK_REASONING_CAP_S,
+                })
+                try:
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+                except (ProcessLookupError, PermissionError):
+                    proc.kill()
+                return
+
     try:
         proc.stdin.write(prompt)
         proc.stdin.close()
@@ -153,9 +219,18 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
     stderr_thread = threading.Thread(target=_read_stderr, daemon=True)
     stdout_thread.start()
     stderr_thread.start()
+    watchdog_thread = threading.Thread(target=_watchdog, daemon=True)
+    watchdog_thread.start()
 
     try:
         stdout_thread.join(timeout=timeout)
+        if stuck_flag.is_set():
+            stderr_thread.join(timeout=5)
+            wall_s = time.monotonic() - t0
+            with state_lock:
+                since = wall_s - last_tool_t
+                count = last_tool_count
+            raise StuckReasoningError(wall_s, since, count)
         if stdout_thread.is_alive():
             elapsed = time.monotonic() - t0
             _append_progress({"t": round(elapsed, 2), "event": "timeout_sigkill"})
@@ -250,6 +325,32 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
                     flush=True,
                 )
                 break
+            except StuckReasoningError as e:
+                print(
+                    f"[STUCK_REASONING instance={instance['id']} attempt={attempt+1} "
+                    f"wall_s={e.wall_s:.1f} since_last_tool_s={e.since_last_tool_s:.1f} "
+                    f"tool_use_count={e.tool_use_count}]",
+                    flush=True,
+                )
+                return {
+                    "instance_id": instance["id"],
+                    "family": instance["family"],
+                    "difficulty": instance["difficulty"],
+                    "accuracy": None,
+                    "hypothesis_source": None,
+                    "hypothesis_status": "FAIL_STUCK_REASONING",
+                    "n_interventions": 0,
+                    "n_turns": None,
+                    "fallback": True,
+                    "capture_path": None,
+                    "wall_s": e.wall_s,
+                    "stuck_since_last_tool_s": e.since_last_tool_s,
+                    "stuck_tool_use_count": e.tool_use_count,
+                    "model": model,
+                    "effort": "medium",
+                    "arm": "B",
+                    "version": "v3",
+                }
             except subprocess.TimeoutExpired:
                 print(
                     f"[TIMEOUT instance={instance['id']} attempt={attempt+1}/{1+RETRY_ON_TIMEOUT} "
@@ -438,6 +539,13 @@ def main():
             print(f"[FAIL_NO_SUBMIT instance={r['instance_id']}]", flush=True)
         elif status == "FAIL_EXCEPTION":
             print(f"[FAIL_EXCEPTION instance={r['instance_id']} err={r.get('error', '')}]", flush=True)
+        elif status == "FAIL_STUCK_REASONING":
+            print(
+                f"[FAIL_STUCK_REASONING instance={r['instance_id']} "
+                f"wall_s={r.get('wall_s', 0):.0f} "
+                f"since_last_tool_s={r.get('stuck_since_last_tool_s', 0):.0f}]",
+                flush=True,
+            )
         else:
             print(f"[OK instance={r['instance_id']} acc={acc_str} capture={r.get('capture_path')}]", flush=True)
 
@@ -457,7 +565,8 @@ def main():
     print(
         f"FAIL counts: timeout={statuses.count('FAIL_TIMEOUT') + statuses.count('FAIL_TIMEOUT_RETRY')} "
         f"no_submit={statuses.count('FAIL_NO_SUBMIT')} "
-        f"exception={statuses.count('FAIL_EXCEPTION')}",
+        f"exception={statuses.count('FAIL_EXCEPTION')} "
+        f"stuck_reasoning={statuses.count('FAIL_STUCK_REASONING')}",
         flush=True,
     )
 
