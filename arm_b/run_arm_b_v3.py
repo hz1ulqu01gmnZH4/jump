@@ -28,7 +28,7 @@ MCP_RESULTS_DIR = Path("arm_b/.mcp_results")
 MCP_CONFIG_INSTANCE = Path("arm_b/mcp_config_instance.json")
 INSTANCE_HARD_CAP = 7200
 RETRY_ON_TIMEOUT = 1
-STUCK_REASONING_CAP_S = 300       # seconds since last tool_use before kill
+STUCK_REASONING_CAP_S = 600       # seconds since last tool_use before kill
 STUCK_WATCHDOG_POLL_S = 5         # watchdog loop cadence
 
 
@@ -59,14 +59,16 @@ DEADLINE_NUDGE = """## Deadline policy (harness-enforced)
 You operate under a hard turn budget. Endless silent reasoning is killed as
 FAIL_STUCK_REASONING with zero credit and no retry — worse than any submission.
 
-- After `get_train_obs`, your FIRST subsequent action MUST be a call to
-  `intervene`. Do not finalize, submit, or continue internal analysis before
-  making that probe. Even a basic valid action breaks the analysis loop.
-- After your first `intervene`, submit if you have a supported hypothesis or
-  continue probing. A weak submission with uncertainty noted in a Python
-  comment is strictly better than silence.
-- Do not loop in private analysis between tool calls. Externalise reasoning
-  through tool calls, not internal monologue.
+- Before forming or articulating any hypothesis, your FIRST tool call after
+  `get_train_obs` MUST be `intervene`. Treat the first probe as a reflex,
+  not a conclusion.
+- After 5 successful `intervene` calls (a "successful" call = received a
+  `tool_result`, regardless of action validity), your NEXT action MUST be
+  `submit_hypothesis` with your best current rule. Stating uncertainty in
+  Python comments is permitted; continued probing without submission is not.
+- A weak submission with uncertainty noted in comments is strictly better
+  than silence or extended internal analysis.
+- Externalise reasoning through tool calls, not internal monologue.
 """
 
 
@@ -251,6 +253,7 @@ def run_subprocess(cmd, prompt, timeout, env, cwd, progress_file=None):
 def parse_tool_uses(stdout: str, name: str) -> list[dict]:
     """Extract tool_use blocks from stream-json output matching the given name."""
     results = []
+    seen_ids = set()
     for line in stdout.splitlines():
         line = line.strip()
         if not line:
@@ -259,10 +262,23 @@ def parse_tool_uses(stdout: str, name: str) -> list[dict]:
             ev = json.loads(line)
         except json.JSONDecodeError:
             continue
+        # Shape 1: top-level partial-stream tool_use event
+        if ev.get("type") == "tool_use" and ev.get("name") == name:
+            tid = ev.get("id")
+            if tid is None or tid not in seen_ids:
+                if tid is not None:
+                    seen_ids.add(tid)
+                results.append(ev)
+            continue
+        # Shape 2: consolidated assistant message with content blocks
         if ev.get("type") == "assistant":
             for block in ev.get("message", {}).get("content", []):
                 if block.get("type") == "tool_use" and block.get("name") == name:
-                    results.append(block)
+                    tid = block.get("id")
+                    if tid is None or tid not in seen_ids:
+                        if tid is not None:
+                            seen_ids.add(tid)
+                        results.append(block)
     return results
 
 
