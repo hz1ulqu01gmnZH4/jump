@@ -13,9 +13,8 @@ CLAUDE_CMD = [
     "env", "-u", "CLAUDECODE", "-u", "ANTHROPIC_API_KEY",
     "claude", "-p",
     "--dangerously-skip-permissions",
-    "--effort", "medium",
     "--output-format", "stream-json", "--include-partial-messages", "--verbose",
-    "--model", "claude-sonnet-4-6",
+    "--model", "claude-opus-4-7",
     "--mcp-config", "arm_b/mcp_config_instance.json",
     "--allowed-tools",
         "mcp__jump-world__get_train_obs,"
@@ -280,7 +279,7 @@ def count_interventions(stdout: str) -> int:
     return len(parse_tool_uses(stdout, "mcp__jump-world__intervene"))
 
 
-def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
+def run_one_instance(instance: dict, model: str = "claude-opus-4-7", effort: str = "medium") -> dict:
     MCP_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     results_path = MCP_RESULTS_DIR / f"{instance['id']}.json"
     if results_path.exists():
@@ -296,12 +295,14 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
 
     cmd = list(CLAUDE_CMD)
     # Replace model if overridden
-    if model != "claude-sonnet-4-6":
+    if model != "claude-opus-4-7":
         try:
-            idx = cmd.index("claude-sonnet-4-6")
+            idx = cmd.index("claude-opus-4-7")
             cmd[idx] = model
         except ValueError:
             pass
+    # inject effort at runtime
+    cmd = cmd + ["--effort", effort]
 
     progress_path = Path(f"arm_b/v3_progress_{instance['id']}.jsonl")
     progress_file = progress_path.open("w")
@@ -347,7 +348,7 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
                     "stuck_since_last_tool_s": e.since_last_tool_s,
                     "stuck_tool_use_count": e.tool_use_count,
                     "model": model,
-                    "effort": "medium",
+                    "effort": effort,
                     "arm": "B",
                     "version": "v3",
                 }
@@ -371,7 +372,7 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
                         "capture_path": None,
                         "wall_s": INSTANCE_HARD_CAP * (attempt + 1),
                         "model": model,
-                        "effort": "medium",
+                        "effort": effort,
                         "arm": "B",
                         "version": "v3",
                     }
@@ -398,7 +399,7 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
                 "capture_path": "mcp_file",
                 "wall_s": wall_s,
                 "model": model,
-                "effort": "medium",
+                "effort": effort,
                 "arm": "B",
                 "version": "v3",
             }
@@ -424,7 +425,7 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
                 "capture_path": "stream_parse_fallback",
                 "wall_s": wall_s,
                 "model": model,
-                "effort": "medium",
+                "effort": effort,
                 "arm": "B",
                 "version": "v3",
             }
@@ -445,7 +446,7 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
         "capture_path": None,
         "wall_s": wall_s,
         "model": model,
-        "effort": "medium",
+        "effort": effort,
         "arm": "B",
         "version": "v3",
     }
@@ -454,7 +455,9 @@ def run_one_instance(instance: dict, model: str = "claude-sonnet-4-6") -> dict:
 def main():
     parser = argparse.ArgumentParser(description="Arm B v3 runner")
     parser.add_argument("--only", nargs="+", metavar="INSTANCE_ID")
-    parser.add_argument("--model", default="claude-sonnet-4-6")
+    parser.add_argument("--model", default="claude-opus-4-7")
+    parser.add_argument("--effort", default="medium",
+                        choices=["low", "medium", "high", "xhigh", "max"])
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
 
@@ -493,7 +496,7 @@ def main():
             continue
         print(f"  {inst['id']} ({inst['family']}, {inst['difficulty']})...", end="", flush=True)
         try:
-            r = run_one_instance(inst, model=args.model)
+            r = run_one_instance(inst, model=args.model, effort=args.effort)
         except Exception as e:
             r = {
                 "instance_id": inst["id"],
@@ -508,7 +511,7 @@ def main():
                 "capture_path": None,
                 "wall_s": 0,
                 "model": args.model,
-                "effort": "medium",
+                "effort": args.effort,
                 "arm": "B",
                 "version": "v3",
                 "error": str(e),
