@@ -180,19 +180,20 @@ async def _run_instance_async(
             submit_called = False
 
             while not state.abort_event.is_set() and not submit_called:
-                # OpenAI SDK requires extra_body to pass chat_template_kwargs to llama-server.
-                # The "/nothink" string in user messages does NOT reach the Jinja template.
-                # The old arm_a/driver.py had the correct implementation using raw requests;
-                # this is the OpenAI-SDK-compatible equivalent.
+                # Qwen3 thinking enabled (native mode). max_tokens=32768 allows CA-scale reasoning
+                # to complete (~200s at ~161 tok/sec). Methodologically symmetric with Arm B
+                # Opus high (extended thinking at full budget). Option A (enable_thinking=False)
+                # was rejected: introduced pathological JSON errors and degenerate reasoning.
+                # llama-server must be started with --ctx-size 65536 (input ~4000 + output 32768
+                # + system overhead, with headroom).
                 try:
                     resp = await client.chat.completions.create(
                         model=actual_model,
                         messages=messages,
                         tools=openai_tools,
                         tool_choice="auto",
-                        max_tokens=16384,
-                        timeout=300.0,
-                        extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+                        max_tokens=32768,
+                        timeout=600.0,
                     )
                 except Exception as e:
                     ts = datetime.now().strftime("%H:%M:%S")
