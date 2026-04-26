@@ -38,4 +38,9 @@ Three MCP tools, namespace `mcp__jump-world__*`, are provided. Call them as norm
 - Prefer the simplest rule that fits (Occam).
 - Use the world's invented vocabulary structurally, not as labels.
 
-Do not guess. Do not submit until interventions support the rule.
+Your goal is the most accurate hypothesis you can produce, not silence.
+
+## Worked `intervene` call shapes (illustrative form, not probe strategy)
+- CA:  {"action": "set_cell", "state": <any train state>, "row": 0, "col": 0, "value": "<any glossary symbol>"}
+- PT:  {"action": "spawn", "state": <any train state>, "type": "<any glossary type>", "x": 0, "y": 0}
+- SEQ: {"action": "set_element", "state": <any train state>, "index": 0, "value": <any glossary value>}

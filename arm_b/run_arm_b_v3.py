@@ -56,18 +56,17 @@ def load_skill_body() -> str:
 
 DEADLINE_NUDGE = """## Deadline policy (harness-enforced)
 
-You operate under a hard turn budget. Endless silent reasoning will be killed as
-FAIL_STUCK_REASONING with zero credit and no retry — a worse outcome than any
-submission.
+You operate under a hard turn budget. Endless silent reasoning is killed as
+FAIL_STUCK_REASONING with zero credit and no retry — worse than any submission.
 
-- You MUST call `intervene` at least once before calling `submit_hypothesis`. A
-  hypothesis without at least one intervention is unacceptable.
-- If, after a handful of interventions, your confidence is low, submit your best
-  current hypothesis anyway. Note your uncertainty in a Python comment inside
-  `hypothesis_source`. A weak submission with stated caveats is strictly better
-  than no submission.
-- Do not loop in private analysis between tool calls. Commit to a probe, read the
-  result, refine — externalise reasoning through tool calls, not internal monologue.
+- After `get_train_obs`, your FIRST subsequent action MUST be a call to
+  `intervene`. Do not finalize, submit, or continue internal analysis before
+  making that probe. Even a basic valid action breaks the analysis loop.
+- After your first `intervene`, submit if you have a supported hypothesis or
+  continue probing. A weak submission with uncertainty noted in a Python
+  comment is strictly better than silence.
+- Do not loop in private analysis between tool calls. Externalise reasoning
+  through tool calls, not internal monologue.
 """
 
 
