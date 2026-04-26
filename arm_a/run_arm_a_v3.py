@@ -174,13 +174,16 @@ async def _run_instance_async(
             skill_body = load_skill_body()
             messages = [
                 {"role": "system", "content": skill_body + "\n\n" + DEADLINE_NUDGE},
-                # /nothink disables Qwen3 extended thinking to avoid token exhaustion
-                {"role": "user", "content": "Begin by calling get_train_obs. /nothink"},
+                {"role": "user", "content": "Begin by calling get_train_obs."},
             ]
 
             submit_called = False
 
             while not state.abort_event.is_set() and not submit_called:
+                # OpenAI SDK requires extra_body to pass chat_template_kwargs to llama-server.
+                # The "/nothink" string in user messages does NOT reach the Jinja template.
+                # The old arm_a/driver.py had the correct implementation using raw requests;
+                # this is the OpenAI-SDK-compatible equivalent.
                 try:
                     resp = await client.chat.completions.create(
                         model=actual_model,
@@ -189,6 +192,7 @@ async def _run_instance_async(
                         tool_choice="auto",
                         max_tokens=16384,
                         timeout=300.0,
+                        extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                     )
                 except Exception as e:
                     ts = datetime.now().strftime("%H:%M:%S")
