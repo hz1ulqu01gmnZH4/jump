@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_003",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # For each particle, compute Chebyshev direction to every other particle\n    # If splurn with that particle is 0, move toward it; if splurn is 1, move away\n    # Velocity = sign(sum of these directions)\n    \n    def wrap_diff(a, b):\n        \"\"\"Compute signed shortest difference on toroidal 8x8 grid.\"\"\"\n        d = (b - a) % 8\n        if d > 4:\n            return d - 8\n        return d\n    \n    def chebyshev_direction(from_pos, to_pos):\n        \"\"\"Return the Chebyshev direction from from_pos to to_pos.\"\"\"\n        dx = wrap_diff(from_pos[0], to_pos[0])\n        dy = wrap_diff(from_pos[1], to_pos[1])\n        return (dx, dy)\n    \n    def splurn(p, q):\n        \"\"\"Parity of sum of coordinates of two particles.\"\"\"\n        return (p['x'] + p['y'] + q['x'] + q['y']) % 2\n    \n    result = []\n    for i, particle in enumerate(state):\n        p = particle\n        pos = (p['x'], p['y'])\n        total_dx = 0\n        total_dy = 0\n        \n        for j, other in enumerate(state):\n            if i == j:\n                continue\n            o = other\n            o_pos = (o['x'], o['y'])\n            \n            # Compute Chebyshev direction from p to o\n            dx, dy = chebyshev_direction(pos, o_pos)\n            \n            # Determine sign based on splurn\n            s = splurn(p, o)\n            if s == 0:\n                # Move toward: use direction as-is\n                total_dx += dx\n                total_dy += dy\n            else:\n                # Move away: negate direction\n                total_dx -= dx\n                total_dy -= dy\n        \n        # Determine velocity from sum\n        vx = 0\n        vy = 0\n        if total_dx > 0:\n            vx = 1\n        elif total_dx < 0:\n            vx = -1\n        if total_dy > 0:\n            vy = 1\n        elif total_dy < 0:\n            vy = -1\n        \n        # Compute new position\n        new_x = (pos[0] + vx) % 8\n        new_y = (pos[1] + vy) % 8\n        \n        result.append({'type': p['type'], 'x': new_x, 'y': new_y})\n    \n    return result",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 330.32718956199824,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

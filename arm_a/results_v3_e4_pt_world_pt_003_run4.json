@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_003",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Identify BLINX and TORVE particles\n    blinx_particles = [(p['x'], p['y']) for p in state if p['type'] == 'BLINX']\n    torve_particles = [(p['x'], p['y']) for p in state if p['type'] == 'TORVE']\n    \n    def wrap_dir(delta):\n        \"\"\"Compute direction for a coordinate displacement on 8x8 toroidal grid.\n        delta = (target - source) mod 8, then direction is:\n        - 0 if delta == 0\n        - +1 if 1 <= delta <= 4\n        - -1 if 5 <= delta <= 7\n        \"\"\"\n        d = delta % 8\n        if d == 0:\n            return 0\n        elif d <= 4:\n            return 1\n        else:\n            return -1\n    \n    def chebyshev_dist(p1, p2):\n        \"\"\"Chebyshev distance on 8x8 toroidal grid.\"\"\"\n        dx = min(abs(p1[0] - p2[0]), 8 - abs(p1[0] - p2[0]))\n        dy = min(abs(p1[1] - p2[1]), 8 - abs(p1[1] - p2[1]))\n        return max(dx, dy)\n    \n    def find_nearest(p, targets):\n        \"\"\"Find the nearest target to point p by Chebyshev distance.\n        Ties broken by lexicographic ordering (smallest x, then smallest y).\n        Returns the nearest target tuple, or None if no targets.\n        \"\"\"\n        if not targets:\n            return None\n        best = min(targets, key=lambda t: (chebyshev_dist(p, t), t[0], t[1]))\n        return best\n    \n    def move_towards(p, target):\n        \"\"\"Move one step towards target on toroidal grid.\"\"\"\n        dx = wrap_dir(target[0] - p[0])\n        dy = wrap_dir(target[1] - p[1])\n        return ((p[0] + dx) % 8, (p[1] + dy) % 8)\n    \n    def move_away(p, target):\n        \"\"\"Move one step away from target on toroidal grid.\"\"\"\n        dx = -wrap_dir(target[0] - p[0])\n        dy = -wrap_dir(target[1] - p[1])\n        return ((p[0] + dx) % 8, (p[1] + dy) % 8)\n    \n    def splurn(p, q):\n        \"\"\"Parity of total coordinate sum of two particles.\"\"\"\n        return (p[0] + p[1] + q[0] + q[1]) % 2\n    \n    next_state = []\n    \n    for p in state:\n        if p['type'] == 'BLINX':\n            nearest_torve = find_nearest((p['x'], p['y']), torve_particles)\n            if nearest_torve is None:\n                # No TORVEs, BLINX stays\n                next_state.append({'type': 'BLINX', 'x': p['x'], 'y': p['y']})\n            else:\n                s = splurn((p['x'], p['y']), nearest_torve)\n                if s == 0:\n                    # Move towards nearest TORVE\n                    new_pos = move_towards((p['x'], p['y']), nearest_torve)\n                else:\n                    # Move away from nearest TORVE\n                    new_pos = move_away((p['x'], p['y']), nearest_torve)\n                next_state.append({'type': 'BLINX', 'x': new_pos[0], 'y': new_pos[1]})\n        elif p['type'] == 'TORVE':\n            nearest_blinx = find_nearest((p['x'], p['y']), blinx_particles)\n            if nearest_blinx is None:\n                # No BLINXs, TORVE stays\n                next_state.append({'type': 'TORVE', 'x': p['x'], 'y': p['y']})\n            else:\n                s = splurn((p['x'], p['y']), nearest_blinx)\n                if s == 0:\n                    # Move towards nearest BLINX\n                    new_pos = move_towards((p['x'], p['y']), nearest_blinx)\n                else:\n                    # Stay in place\n                    new_pos = (p['x'], p['y'])\n                next_state.append({'type': 'TORVE', 'x': new_pos[0], 'y': new_pos[1]})\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 3,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 261.71303051499854,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_001",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # For states of odd length or length 2: use ploon-XOR of last two elements\n    # For states of even length >= 4: use grolp-sum of last two elements\n    # ploon-XOR: (a XOR b) % 7\n    # grolp-sum: (a + b + 3) % 7\n    if len(state) == 2 or len(state) % 2 == 1:\n        # XOR for odd lengths or length 2\n        new_val = (state[-1] ^ state[-2]) % 7\n    else:\n        # grolp-sum for even lengths >= 4\n        new_val = (state[-1] + state[-2] + 3) % 7\n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 25,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 66.03941438499896,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

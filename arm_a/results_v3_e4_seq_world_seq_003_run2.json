@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_003",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # For all training observations, the rule appears to be:\n    # Append (last * second_last) mod 11 to the state\n    # This corresponds to blorf-mul (splid-sum of index 2 = 2, 2 mod 3 = 2)\n    if len(state) < 2:\n        return state[:]\n    last = state[-1]\n    second_last = state[-2]\n    new_val = (last * second_last) % 11\n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 16.325650738996046,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

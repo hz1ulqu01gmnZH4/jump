@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    import copy\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0]*cols for _ in range(rows)]\n    \n    def get_neighbors(r, c, coord_class):\n        neighbors = []\n        if coord_class == 0:\n            # diagonal tetrad: NE, NW, SE, SW\n            nr = [(r-1+c+1)%rows, (r-1+c-1)%rows, (r+1+c+1)%rows, (r+1+c-1)%rows]\n            nc = [(r-1+c+1)%cols, (r-1+c-1)%cols, (r+1+c+1)%cols, (r+1+c-1)%cols]\n            # Wait, this is wrong. Let me redo.\n            # NE: (r-1, c+1), NW: (r-1, c-1), SE: (r+1, c+1), SW: (r+1, c-1)\n            pass\n        return neighbors\n    \n    for r in range(rows):\n        for c in range(cols):\n            coord_class = (r + c) % 3\n            \n            # Get neighbors based on coord_class\n            if coord_class == 0:\n                # diagonal tetrad: NE, NW, SE, SW\n                neighbors = [\n                    state[(r-1)%rows][(c+1)%cols],\n                    state[(r-1)%rows][(c-1)%cols],\n                    state[(r+1)%rows][(c+1)%cols],\n                    state[(r+1)%rows][(c-1)%cols]\n                ]\n            elif coord_class == 1:\n                # von Neumann quad: N, S, E, W\n                neighbors = [\n                    state[(r-1)%rows][c],\n                    state[(r+1)%rows][c],\n                    state[r][(c+1)%cols],\n                    state[r][(c-1)%cols]\n                ]\n            elif coord_class == 2:\n                # axial-2 quad: distance 2 along N, S, E, W\n                neighbors = [\n                    state[(r-2)%rows][c],\n                    state[(r+2)%rows][c],\n                    state[r][(c-2)%cols],\n                    state[r][(c+2)%cols]\n                ]\n            \n            # Count f0, f1, f2\n            f0 = sum(1 for v in neighbors if v == 0)\n            f1 = sum(1 for v in neighbors if v == 1)\n            f2 = sum(1 for v in neighbors if v == 2)\n            \n            # Determine next state based on majority\n            counts = [(f0, 0), (f1, 1), (f2, 2)]\n            max_count = max(c[0] for c in counts)\n            winners = [v for c, v in counts if c == max_count]\n            \n            if len(winners) == 1:\n                next_state[r][c] = winners[0]\n            elif len(winners) == 2:\n                # Tie between two values\n                # Use cell state as tiebreaker - pick the value != cell state\n                cell_val = state[r][c]\n                other = [v for v in winners if v != cell_val]\n                if other:\n                    next_state[r][c] = other[0]\n                else:\n                    next_state[r][c] = winners[0]\n            else:\n                # All tied\n                next_state[r][c] = cell_val\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 124.9142755890025,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

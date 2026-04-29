@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_003",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # For all training states, the state has length 2 and transitions to length 3\n    # The appended element is (state[0] * state[1]) % 11\n    # This corresponds to blorf-mul operation (splid-sum of index 2 = 2, 2 mod 3 = 2)\n    n = len(state)\n    if n == 0:\n        return state\n    # Determine the operation based on splid-sum of the next index (n)\n    # splid-sum(n) = sum of decimal digits of n\n    splid = sum(int(d) for d in str(n))\n    mod3 = splid % 3\n    last = state[-1]\n    second_last = state[-2] if n >= 2 else 0\n    if mod3 == 0:\n        # blorf-add: (last + second_last) % 11\n        new_val = (last + second_last) % 11\n    elif mod3 == 1:\n        # blorf-XOR: (last XOR second_last) % 11\n        new_val = (last ^ second_last) % 11\n    else:\n        # blorf-mul: (last * second_last) % 11\n        new_val = (last * second_last) % 11\n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 82,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 71.28327285900014,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

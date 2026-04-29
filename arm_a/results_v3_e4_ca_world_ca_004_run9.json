@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_004",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.16666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    strip = state[0]\n    n = len(strip)\n    next_strip = []\n    for i in range(n):\n        # Compute range-hexad (neighbors at offsets -3, -2, -1, +1, +2, +3)\n        neighbors = []\n        for offset in [-3, -2, -1, 1, 2, 3]:\n            idx = (i + offset) % n\n            neighbors.append(strip[idx])\n        \n        s = sum(neighbors) % 3\n        ck = neighbors.count(0)\n        cs = neighbors.count(1)\n        cd = neighbors.count(2)\n        \n        # Determine majority (priority: cd > cs > ck)\n        if cd >= cs and cd >= ck:\n            majority = 'cd'\n        elif cs >= ck:\n            majority = 'cs'\n        else:\n            majority = 'ck'\n        \n        state_i = strip[i]\n        \n        if s == 0:\n            if state_i == 0:\n                next_val = 0\n            elif state_i == 1:\n                next_val = 1 if ck == cd else 2\n            else:  # state_i == 2\n                next_val = 1 if cs >= ck and cs >= cd else 0\n        elif s == 1:\n            if majority == 'cs':\n                next_val = 2 if state_i != 0 else 1\n            elif majority == 'ck':\n                next_val = 2 if state_i == 2 else 1\n            else:  # majority == 'cd'\n                next_val = 0\n        else:  # s == 2\n            if majority == 'ck':\n                next_val = cd if cd > 0 else (2 - state_i)\n            elif majority == 'cd':\n                next_val = state_i\n            else:  # majority == 'cs'\n                if state_i == 0:\n                    next_val = 2\n                elif state_i == 1:\n                    next_val = 1 if ck < cd else 2\n                else:  # state_i == 2\n                    next_val = 0\n        \n        next_strip.append(next_val)\n    \n    return [next_strip]",
+    "hypothesis_status": "submitted",
+    "n_interventions": 14,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 418.71049232899895,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

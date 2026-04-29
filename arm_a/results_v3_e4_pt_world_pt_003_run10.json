@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_003",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Build a dict of position -> type\n    pos_to_type = {}\n    for p in state:\n        pos_to_type[(p['x'], p['y'])] = p['type']\n    \n    # Compute splurn for a pair of particles\n    def splurn(p1, p2):\n        return (p1['x'] + p1['y'] + p2['x'] + p2['y']) % 2\n    \n    # Compute Chebyshev distance on toroidal grid\n    def cheb_dist(p1, p2):\n        dx = min(abs(p1['x'] - p2['x']), 8 - abs(p1['x'] - p2['x']))\n        dy = min(abs(p1['y'] - p2['y']), 8 - abs(p1['y'] - p2['y']))\n        return max(dx, dy)\n    \n    # Find swap pairs: different types, Chebyshev distance 1, splurn 0\n    n = len(state)\n    swapped = [False] * n\n    swap_target = [None] * n\n    \n    for i in range(n):\n        for j in range(i+1, n):\n            if state[i]['type'] != state[j]['type'] and cheb_dist(state[i], state[j]) == 1 and splurn(state[i], state[j]) == 0:\n                swap_target[i] = (state[j]['x'], state[j]['y'])\n                swap_target[j] = (state[i]['x'], state[i]['y'])\n                swapped[i] = True\n                swapped[j] = True\n    \n    # Build next state\n    next_state = []\n    for i in range(n):\n        if swapped[i]:\n            next_state.append({'type': state[i]['type'], 'x': swap_target[i][0], 'y': swap_target[i][1]})\n        else:\n            # Movement for non-swapping particles\n            # Based on observed patterns, try a simple formula\n            x, y = state[i]['x'], state[i]['y']\n            t = state[i]['type']\n            \n            if t == 'BLINX':\n                dx = (y % 2) * 2 - 1\n                dy = (x % 2) * 2 - 1\n            else:  # TORVE\n                dx = -(y % 2) * 2 + 1\n                dy = (x % 2) * 2 - 1\n            \n            new_x = (x + dx) % 8\n            new_y = (y + dy) % 8\n            next_state.append({'type': t, 'x': new_x, 'y': new_y})\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 246.20914900399976,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

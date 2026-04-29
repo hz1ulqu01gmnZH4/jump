@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.5,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    R, C = len(state), len(state[0])\n    result = [[0]*C for _ in range(R)]\n    for i in range(R):\n        for j in range(C):\n            current = state[i][j]\n            # Compute diagonal tetrad (NE, NW, SE, SW) with toroidal wrap\n            ne = state[(i-1) % R][(j+1) % C]\n            nw = state[(i-1) % R][(j-1) % C]\n            se = state[(i+1) % R][(j+1) % C]\n            sw = state[(i+1) % R][(j-1) % C]\n            diag = [ne, nw, se, sw]\n            d_z = diag.count(0)\n            d_p = diag.count(1)\n            d_q = diag.count(2)\n            \n            if current == 1:\n                if d_p == 0:\n                    result[i][j] = 1\n                elif d_p == 1:\n                    result[i][j] = 2\n                else:\n                    result[i][j] = 1  # fallback\n            elif current == 0:\n                if d_q == 3:\n                    result[i][j] = 2\n                elif d_q == 0:\n                    result[i][j] = max(0, d_p - 1)\n                else:\n                    result[i][j] = 0\n            elif current == 2:\n                if d_q < 2:\n                    result[i][j] = 1\n                elif d_q == 2 and d_p == 1:\n                    result[i][j] = 2\n                else:\n                    result[i][j] = 1\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 321.63771090000046,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_002",
+    "family": "pattern_puzzle",
+    "difficulty": "easy",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # State is a flat list of 15 integers (3 rows x 5 cols)\n    # Even rows: new[i] = (v + right_neighbour) mod 5, with circular wrap\n    # Odd rows: new[i] = (v XOR cell_below) mod 5\n    # For odd rows, row_below wraps: if current row is last (row 2), use row 0 below\n    \n    n_rows = 3\n    n_cols = 5\n    \n    def get_val(r, c):\n        return state[r * n_cols + c]\n    \n    next_state = [0] * len(state)\n    \n    for r in range(n_rows):\n        for c in range(n_cols):\n            v = get_val(r, c)\n            if r % 2 == 0:\n                # Even row: (v + right_neighbour) mod 5, circular\n                right_c = (c + 1) % n_cols\n                right_v = get_val(r, right_c)\n                next_state[r * n_cols + c] = (v + right_v) % 5\n            else:\n                # Odd row: (v XOR cell_below) mod 5\n                below_r = (r + 1) % n_rows  # wrap around\n                below_v = get_val(below_r, c)\n                next_state[r * n_cols + c] = (v ^ below_v) % 5\n    \n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 1,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 109.35147445499751,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

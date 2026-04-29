@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Compute next state based on diagonal-tetrad counts\n    # For each cell, count d_z (0s), d_p (1s), d_q (2s) in diagonal neighbors\n    # Next state = majority value (highest count, ties broken by preferring 2 > 1 > 0)\n    \n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0] * cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            # Compute diagonal-tetrad with toroidal wrapping\n            neighbors = [\n                state[(r - 1) % rows][(c - 1) % cols],  # NW\n                state[(r - 1) % rows][(c + 1) % cols],  # NE\n                state[(r + 1) % rows][(c - 1) % cols],  # SW\n                state[(r + 1) % rows][(c + 1) % cols],  # SE\n            ]\n            \n            # Count each value\n            d_z = sum(1 for v in neighbors if v == 0)\n            d_p = sum(1 for v in neighbors if v == 1)\n            d_q = sum(1 for v in neighbors if v == 2)\n            \n            # Find majority value (highest count, ties broken by preferring 2 > 1 > 0)\n            counts = [(d_q, 2), (d_p, 1), (d_z, 0)]\n            counts.sort(reverse=True)\n            next_state[r][c] = counts[0][1]\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 398.1885235440004,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

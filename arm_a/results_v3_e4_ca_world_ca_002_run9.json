@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    result = []\n    for r in range(n):\n        row = []\n        for c in range(n):\n            # Compute knight-octad neighbors in toroidal grid\n            neighbors = [\n                state[(r+1)%n][(c+2)%n],\n                state[(r+1)%n][(c-2)%n],\n                state[(r-1)%n][(c+2)%n],\n                state[(r-1)%n][(c-2)%n],\n                state[(r+2)%n][(c+1)%n],\n                state[(r+2)%n][(c-1)%n],\n                state[(r-2)%n][(c+1)%n],\n                state[(r-2)%n][(c-1)%n],\n            ]\n            # Sum of neighbor values mod 4\n            total = sum(neighbors) % 4\n            row.append(total)\n        result.append(row)\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 89.07955226000195,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

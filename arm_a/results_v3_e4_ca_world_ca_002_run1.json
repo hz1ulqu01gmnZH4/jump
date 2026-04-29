@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    next_state = [row[:] for row in state]\n    for r in range(n):\n        for c in range(n):\n            s = state[r][c]\n            cv = cs = cb = cf = 0\n            for dr, dc in [(1,2),(1,-2),(-1,2),(-1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]:\n                nr, nc = (r+dr) % n, (c+dc) % n\n                v = state[nr][nc]\n                if v == 0: cv += 1\n                elif v == 1: cs += 1\n                elif v == 2: cb += 1\n                elif v == 3: cf += 1\n            mx = max(cv, cs, cb, cf)\n            if cv == mx and cv > cf:\n                next_state[r][c] = (s + 1) % 4\n            elif cf == mx and cf > cv:\n                next_state[r][c] = (s - 1) % 4\n            else:\n                next_state[r][c] = s\n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 9,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 276.27782181600014,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

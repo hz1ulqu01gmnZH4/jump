@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    grid = state\n    rows = len(grid)\n    cols = len(grid[0])\n    next_grid = [[0]*cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            own = grid[r][c]\n            coord_class = (r + c) % 3\n            \n            # Get neighbours based on coord_class\n            neighbours = []\n            if coord_class == 0:\n                # Diagonal tetrad (NE, NW, SE, SW)\n                for dr, dc in [(-1, 1), (-1, -1), (1, 1), (1, -1)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbours.append(grid[nr][nc])\n            elif coord_class == 1:\n                # Von Neumann (N, S, E, W)\n                for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbours.append(grid[nr][nc])\n            elif coord_class == 2:\n                # Axial-2 quad\n                for dr, dc in [(-2, 0), (2, 0), (0, 2), (0, -2)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbours.append(grid[nr][nc])\n            \n            # Count f0, f1, f2\n            f0 = sum(1 for v in neighbours if v == 0)\n            f1 = sum(1 for v in neighbours if v == 1)\n            f2 = sum(1 for v in neighbours if v == 2)\n            \n            # Rule: next = count of own value in neighbourhood\n            if own == 0:\n                next_grid[r][c] = f0\n            elif own == 1:\n                next_grid[r][c] = f1\n            elif own == 2:\n                next_grid[r][c] = f2\n    \n    return next_grid",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 218.01663513099993,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

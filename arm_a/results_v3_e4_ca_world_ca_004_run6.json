@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_004",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state[0])\n    next_state = [[0] * n for _ in range(1)]\n    for i in range(n):\n        # Compute hexad: offsets -3, -2, -1, +1, +2, +3 (toroidal)\n        offsets = [-3, -2, -1, 1, 2, 3]\n        hexad = [state[0][(i + off) % n] for off in offsets]\n        s = sum(hexad) % 3\n        value = state[0][i]\n        next_state[0][i] = (s + value) % 3\n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 34,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 366.48347121999905,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

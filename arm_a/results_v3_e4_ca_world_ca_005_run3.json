@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_005",
+    "family": "cellular_automata",
+    "difficulty": "easy",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    next_state = []\n    for r in range(rows):\n        next_row = []\n        for c in range(cols):\n            if r % 2 == 0:  # even row\n                idx = (2 * c + 1) % cols\n                next_row.append(state[r][idx])\n            else:  # odd row\n                next_row.append((state[r][c] + 1) % 3)\n        next_state.append(next_row)\n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 475.54437513000084,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

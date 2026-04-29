@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    result = [[0] * cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            cc = (r + c) % 3\n            \n            # Get neighbors based on coord-class\n            neighbors = []\n            if cc == 0:  # diagonal tetrad\n                for dr, dc in [(-1, 1), (-1, -1), (1, 1), (1, -1)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbors.append(state[nr][nc])\n                    else:\n                        neighbors.append(1)  # OOB = 1\n            elif cc == 1:  # von Neumann\n                for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbors.append(state[nr][nc])\n                    else:\n                        neighbors.append(1)  # OOB = 1\n            elif cc == 2:  # axial-2\n                for dr, dc in [(-2, 0), (2, 0), (0, 2), (0, -2)]:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < rows and 0 <= nc < cols:\n                        neighbors.append(state[nr][nc])\n                    else:\n                        neighbors.append(1)  # OOB = 1\n            \n            # Count f0, f1, f2\n            f0 = neighbors.count(0)\n            f1 = neighbors.count(1)\n            f2 = neighbors.count(2)\n            \n            # Apply class-specific rule: majority vote\n            if f0 >= f1 and f0 >= f2:\n                result[r][c] = 0\n            elif f1 >= f0 and f1 >= f2:\n                result[r][c] = 1\n            else:\n                result[r][c] = 2\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 161.72644126199884,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

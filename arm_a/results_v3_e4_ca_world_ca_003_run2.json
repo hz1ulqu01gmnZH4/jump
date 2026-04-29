@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_003",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0] * cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            north = state[(r - 1) % rows][c]\n            south = state[(r + 1) % rows][c]\n            east = state[r][(c + 1) % cols]\n            west = state[r][(c - 1) % cols]\n            \n            von_quad = [north, south, east, west]\n            distinct = set(von_quad)\n            D = len(distinct)\n            current = state[r][c]\n            \n            if D == 1:\n                next_state[r][c] = current\n            elif D == 3:\n                next_state[r][c] = (2 - current) % 3\n            elif D == 2:\n                # Count occurrences\n                counts = {}\n                for v in von_quad:\n                    counts[v] = counts.get(v, 0) + 1\n                max_count = max(counts.values())\n                if max_count >= 3:\n                    most_freq = [s for s in distinct if counts[s] == max_count][0]\n                    next_state[r][c] = most_freq\n                else:\n                    # Tied: use min of distinct\n                    next_state[r][c] = min(distinct)\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 17,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 275.5936804000012,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

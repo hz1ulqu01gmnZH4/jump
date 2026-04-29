@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_005",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.6666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Particle movement rules:\n    # - VEXON: repelled from nearest BRANT (by krelon_dist)\n    # - BRANT: attracted to nearest CLORF (by krelon_dist)\n    # - CLORF: attracted to nearest VEXON (by krelon_dist)\n    # If no target particle exists, the particle stays in place.\n    \n    vexons = [(p['x'], p['y']) for p in state if p['type'] == 'VEXON']\n    brants = [(p['x'], p['y']) for p in state if p['type'] == 'BRANT']\n    clorfs = [(p['x'], p['y']) for p in state if p['type'] == 'CLORF']\n    \n    def toroidal_diff(a, b):\n        diff = b - a\n        if diff > 4:\n            diff -= 8\n        elif diff < -4:\n            diff += 8\n        return diff\n    \n    def krelon_dist(ax, ay, bx, by, same_type):\n        adx = toroidal_diff(ax, bx)\n        ady = toroidal_diff(ay, by)\n        if same_type:\n            return adx**2 + ady**2\n        else:\n            return adx**2 + ady**2 + abs(adx - ady)\n    \n    next_state = []\n    for p in state:\n        x, y, t = p['x'], p['y'], p['type']\n        dx_move = 0\n        dy_move = 0\n        \n        if t == 'VEXON':\n            if brants:\n                best_dist = float('inf')\n                best_bx, best_by = None, None\n                for bx, by in brants:\n                    dist = krelon_dist(x, y, bx, by, False)\n                    if dist < best_dist:\n                        best_dist = dist\n                        best_bx, best_by = bx, by\n                vdx = toroidal_diff(x, best_bx)\n                vdy = toroidal_diff(y, best_by)\n                if vdx > 0: dx_move = -1\n                elif vdx < 0: dx_move = 1\n                if vdy > 0: dy_move = -1\n                elif vdy < 0: dy_move = 1\n        \n        elif t == 'BRANT':\n            if clorfs:\n                best_dist = float('inf')\n                best_cx, best_cy = None, None\n                for cx, cy in clorfs:\n                    dist = krelon_dist(x, y, cx, cy, False)\n                    if dist < best_dist:\n                        best_dist = dist\n                        best_cx, best_cy = cx, cy\n                vdx = toroidal_diff(x, best_cx)\n                vdy = toroidal_diff(y, best_cy)\n                if vdx > 0: dx_move = 1\n                elif vdx < 0: dx_move = -1\n                if vdy > 0: dy_move = 1\n                elif vdy < 0: dy_move = -1\n        \n        elif t == 'CLORF':\n            if vexons:\n                best_dist = float('inf')\n                best_vx, best_vy = None, None\n                for vx, vy in vexons:\n                    dist = krelon_dist(x, y, vx, vy, False)\n                    if dist < best_dist:\n                        best_dist = dist\n                        best_vx, best_vy = vx, vy\n                vdx = toroidal_diff(x, best_vx)\n                vdy = toroidal_diff(y, best_vy)\n                if vdx > 0: dx_move = 1\n                elif vdx < 0: dx_move = -1\n                if vdy > 0: dy_move = 1\n                elif vdy < 0: dy_move = -1\n        \n        new_x = (x + dx_move) % 8\n        new_y = (y + dy_move) % 8\n        next_state.append({'type': t, 'x': new_x, 'y': new_y})\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 25,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 225.67586917500012,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

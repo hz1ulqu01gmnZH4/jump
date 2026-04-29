@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    \"\"\"\n    Hypothesis: next[r][c] = (state[r][c] + count_of_state[r][c]_in_octad) mod 4\n    where count_of_state[r][c]_in_octad is the number of cells in the knight-octad\n    of (r,c) that have the same value as state[r][c].\n    \n    The knight-octad of (r,c) consists of cells at knight-move offsets:\n    (r+1,c+2), (r+1,c-2), (r-1,c+2), (r-1,c-2),\n    (r+2,c+1), (r+2,c-1), (r-2,c+1), (r-2,c-1)\n    all taken mod 5 (toroidal grid).\n    \"\"\"\n    n = len(state)\n    m = len(state[0])\n    next_state = [[0]*m for _ in range(n)]\n    \n    # Knight move offsets\n    knight_offsets = [\n        (1, 2), (1, -2), (-1, 2), (-1, -2),\n        (2, 1), (2, -1), (-2, 1), (-2, -1)\n    ]\n    \n    for r in range(n):\n        for c in range(m):\n            cur_val = state[r][c]\n            # Count occurrences of cur_val in the knight-octad\n            count = 0\n            for dr, dc in knight_offsets:\n                nr = (r + dr) % n\n                nc = (c + dc) % m\n                if state[nr][nc] == cur_val:\n                    count += 1\n            # Apply the rule\n            next_state[r][c] = (cur_val + count) % 4\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 203.53159173300082,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

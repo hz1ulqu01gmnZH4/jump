@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    m = len(state[0])\n    next_state = [row[:] for row in state]\n    for i in range(n):\n        for j in range(m):\n            # Compute knight-octad neighbors\n            octad = []\n            for di, dj in [(1,2),(1,-2),(-1,2),(-1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]:\n                ni, nj = (i+di) % n, (j+dj) % m\n                octad.append(state[ni][nj])\n            # Count each value (0=VORN, 1=SKEL, 2=BRIX, 3=FLUM)\n            cv = octad.count(0)\n            cs = octad.count(1)\n            cb = octad.count(2)\n            cf = octad.count(3)\n            cur = state[i][j]\n            # Determine next state based on octad counts\n            # Try: if f >= cv, next = (cur + 1) % 4, else next = cur\n            if cf >= cv:\n                next_state[i][j] = (cur + 1) % 4\n            else:\n                next_state[i][j] = cur\n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 503.6687689850005,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

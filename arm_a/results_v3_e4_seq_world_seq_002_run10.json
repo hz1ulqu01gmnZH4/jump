@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_002",
+    "family": "pattern_puzzle",
+    "difficulty": "easy",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    W = 5  # grid width\n    next_state = [0] * n\n    for pos in range(n):\n        r = pos // W\n        c = pos % W\n        v = state[pos]\n        if r % 2 == 0:  # even row\n            right_pos = pos + 1 if c + 1 < W else 0\n            next_state[pos] = (v + state[right_pos]) % 5\n        else:  # odd row\n            below_pos = pos + W if pos + W < n else pos  # wrap vertically? Let's check\n            # From observations, position 5 (row 1, col 0) has below at index 10\n            # Position 9 (row 1, col 4) has below at index 14\n            # No wrap seems needed for these cases\n            if below_pos < n:\n                next_state[pos] = (v ^ state[below_pos]) % 5\n            else:\n                next_state[pos] = v  # fallback for bottom odd row (shouldn't happen in 3-row grid)\n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 1,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 91.77823240599537,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

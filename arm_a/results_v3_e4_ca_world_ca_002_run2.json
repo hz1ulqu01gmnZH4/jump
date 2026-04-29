@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_002",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "# My best guess for the hidden rule\n# The rule involves knight-octad counts (cv, cs, cb, cf for values 0,1,2,3)\n# I observed that most cells stay the same, and some change by +1 or +3 mod 4\n# The exact mapping from counts to next_state is unclear to me\n\ndef hidden_rule_fn(state):\n    n = len(state)\n    result = [[0]*n for _ in range(n)]\n    \n    # Knight moves (toroidal)\n    knight_moves = [\n        (1, 2), (1, -2), (-1, 2), (-1, -2),\n        (2, 1), (2, -1), (-2, 1), (-2, -1)\n    ]\n    \n    for i in range(n):\n        for j in range(n):\n            # Compute knight-octad counts\n            counts = [0, 0, 0, 0]  # cv, cs, cb, cf\n            for di, dj in knight_moves:\n                ni = (i + di) % n\n                nj = (j + dj) % n\n                counts[state[ni][nj]] += 1\n            \n            cv, cs, cb, cf = counts\n            current = state[i][j]\n            \n            # Heuristic: if the current value's count is the unique maximum, stay\n            # Otherwise, try to move to a value with higher count\n            # This is a guess - not confident in this rule\n            \n            # Find the value with the highest count (break ties by smallest value)\n            max_count = max(cv, cs, cb, cf)\n            if cv == max_count:\n                next_val = 0\n            elif cs == max_count:\n                next_val = 1\n            elif cb == max_count:\n                next_val = 2\n            else:\n                next_val = 3\n            \n            # If current value is the majority, stay; otherwise change to majority\n            if current != next_val:\n                result[i][j] = next_val\n            else:\n                result[i][j] = current\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 13,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 233.33175139099876,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

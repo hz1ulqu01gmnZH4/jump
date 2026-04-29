@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0]*cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            # Compute coord-class\n            coord_class = (r + c) % 3\n            \n            # Get neighbors based on coord-class (toroidal wrapping)\n            neighbors = []\n            if coord_class == 0:\n                # Diagonal tetrad: NE, NW, SE, SW\n                neighbors.append(state[(r-1)%rows][(c+1)%cols])  # NE\n                neighbors.append(state[(r-1)%rows][(c-1)%cols])  # NW\n                neighbors.append(state[(r+1)%rows][(c+1)%cols])  # SE\n                neighbors.append(state[(r+1)%rows][(c-1)%cols])  # SW\n            elif coord_class == 1:\n                # von Neumann: N, S, E, W\n                neighbors.append(state[(r-1)%rows][c])  # N\n                neighbors.append(state[(r+1)%rows][c])  # S\n                neighbors.append(state[r][(c+1)%cols])  # E\n                neighbors.append(state[r][(c-1)%cols])  # W\n            else:\n                # class 2: axial-2: cells at distance 2 along N,S,E,W\n                neighbors.append(state[(r-2)%rows][c])  # N\n                neighbors.append(state[(r+2)%rows][c])  # S\n                neighbors.append(state[r][(c+2)%cols])  # E\n                neighbors.append(state[r][(c-2)%cols])  # W\n            \n            # Compute next state: (sum of neighbors + 2) mod 3\n            neighbor_sum = sum(neighbors)\n            next_state[r][c] = (neighbor_sum + 2) % 3\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 109.84290791500098,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

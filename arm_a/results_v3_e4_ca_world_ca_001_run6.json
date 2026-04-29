@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "# Hypothesis: next_state of each cell is determined by diagonal-tetrad composition\n# and the cell's own value.\n# \n# Based on analysis, the rule seems to be:\n# For each cell (r, c), compute d_z, d_p, d_q (counts of ZORK, PLOON, QUAV in diagonal-tetrad)\n# Then: next = (own + f(d_z, d_p, d_q)) mod 3\n#\n# Observed patterns:\n# - When dp=1: next often equals (own + 1) mod 3 or own\n# - When dq=3 and dp=0: next often equals (own + 2) mod 3\n# - When dz is max: next often = 1\n# - When dq is max: next often = 0 or 2\n#\n# Best guess function:\ndef hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    result = []\n    for r in range(rows):\n        row_result = []\n        for c in range(cols):\n            own = state[r][c]\n            # Compute diagonal-tetrad values with toroidal wrap\n            diagonals = []\n            for dr, dc in [(-1, 1), (-1, -1), (1, 1), (1, -1)]:\n                nr = (r + dr) % rows\n                nc = (c + dc) % cols\n                diagonals.append(state[nr][nc])\n            dz = diagonals.count(0)\n            dp = diagonals.count(1)\n            dq = diagonals.count(2)\n            \n            # Try: next = (dp + dq) mod 3\n            # But this doesn't match all cases. Let me try another approach.\n            # \n            # Based on more careful analysis:\n            # next depends on majority of tetrad and own value\n            # If majority == own: next = own\n            # If majority != own: next = (own + 2) % 3  (which is own - 1)\n            # But this doesn't work for all cases.\n            #\n            # Let me try: next = (own + dp + dq) % 3\n            next_val = (own + dp + dq) % 3\n            \n            row_result.append(next_val)\n        result.append(row_result)\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 3,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 281.0311230069983,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

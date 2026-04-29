@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_001",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_NO_SUBMIT",
+    "n_interventions": 0,
+    "n_turns": null,
+    "fallback": true,
+    "capture_path": null,
+    "wall_s": 198.25777173999813,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

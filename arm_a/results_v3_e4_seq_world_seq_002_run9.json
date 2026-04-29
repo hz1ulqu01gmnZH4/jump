@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_002",
+    "family": "pattern_puzzle",
+    "difficulty": "easy",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    result = list(state)\n    n_cols = 5\n    n_rows = 3\n    \n    for r in range(n_rows):\n        start = r * n_cols\n        for c in range(n_cols):\n            idx = start + c\n            v = state[idx]\n            if r % 2 == 0:\n                # Even row: (v + right_neighbor) mod 5\n                # Last column wraps to first column of same row\n                right_c = (c + 1) % n_cols\n                right_idx = start + right_c\n                result[idx] = (v + state[right_idx]) % 5\n            else:\n                # Odd row: (v XOR cell_below) mod 5\n                # Last row has no cell below, so use itself (identity)\n                if r < n_rows - 1:\n                    below_idx = (r + 1) * n_cols + c\n                    result[idx] = (v ^ state[below_idx]) % 5\n                else:\n                    result[idx] = v % 5\n    \n    return result",
+    "hypothesis_status": "submitted",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 44.29618786199717,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_004",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    # Identify A-strand (even indices) and B-strand (odd indices)\n    A = [state[i] for i in range(0, n, 2)]\n    B = [state[i] for i in range(1, n, 2)]\n    \n    # Determine which strand we're appending to\n    # Next position is n (0-indexed), so if n is even, we append to A-strand\n    if n % 2 == 0:\n        # Append to A-strand: strand-sum = (last_A + last_B) % 8\n        last_A = A[-1]\n        last_B = B[-1]\n        new_val = (last_A + last_B) % 8\n    else:\n        # Append to B-strand: strand-XOR = (last_A XOR last_B XOR len_A) % 8\n        last_A = A[-1]\n        last_B = B[-1]\n        len_A = len(A)\n        new_val = (last_A ^ last_B ^ len_A) % 8\n    \n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 12,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 25.982442407002964,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

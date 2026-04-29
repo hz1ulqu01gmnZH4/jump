@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_004",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.3333333333333333,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Parse state into lists of particles\n    particles = []\n    for p in state:\n        particles.append({'type': p['type'], 'x': p['x'], 'y': p['y']})\n    \n    # Helper: compute wovve_dist between two particles\n    def wovve_dist(p1, p2):\n        dx = abs(p1['x'] - p2['x'])\n        dy = abs(p1['y'] - p2['y'])\n        wrap_dx = min(dx, 8 - dx)\n        wrap_dy = min(dy, 8 - dy)\n        return wrap_dx**2 + wrap_dy\n    \n    # Helper: compute direction from p1 to p2 on torus, returns (dx, dy) each in {-1, 0, +1}\n    def direction(p1, p2):\n        dx = (p2['x'] - p1['x']) % 8\n        dy = (p2['y'] - p1['y']) % 8\n        # Determine direction for x\n        if dx == 0:\n            dir_x = 0\n        elif dx <= 4:\n            dir_x = 1\n        else:\n            dir_x = -1\n        # Determine direction for y\n        if dy == 0:\n            dir_y = 0\n        elif dy <= 4:\n            dir_y = 1\n        else:\n            dir_y = -1\n        return (dir_x, dir_y)\n    \n    # Separate PLEKTs and WOVVEs\n    plekts = [p for p in particles if p['type'] == 'PLEKT']\n    wovves = [p for p in particles if p['type'] == 'WOVVE']\n    \n    # Compute new positions\n    next_particles = []\n    \n    # For PLEKTs: move toward nearest WOVVE\n    for p in plekts:\n        nearest = None\n        min_dist = float('inf')\n        for w in wovves:\n            d = wovve_dist(p, w)\n            if d < min_dist:\n                min_dist = d\n                nearest = w\n        if nearest:\n            dx, dy = direction(p, nearest)\n            nx = (p['x'] + dx) % 8\n            ny = (p['y'] + dy) % 8\n            next_particles.append({'type': 'PLEKT', 'x': nx, 'y': ny})\n        else:\n            next_particles.append({'type': 'PLEKT', 'x': p['x'], 'y': p['y']})\n    \n    # For WOVVEs: move away from nearest PLEKT\n    for p in wovves:\n        nearest = None\n        min_dist = float('inf')\n        for pl in plekts:\n            d = wovve_dist(p, pl)\n            if d < min_dist:\n                min_dist = d\n                nearest = pl\n        if nearest:\n            dx, dy = direction(p, nearest)\n            # Move away (reverse direction)\n            nx = (p['x'] - dx) % 8\n            ny = (p['y'] - dy) % 8\n            next_particles.append({'type': 'WOVVE', 'x': nx, 'y': ny})\n        else:\n            next_particles.append({'type': 'WOVVE', 'x': p['x'], 'y': p['y']})\n    \n    # WOVVEs spawn at their anti-pole if unoccupied\n    occupied = set()\n    for p in next_particles:\n        occupied.add((p['x'], p['y']))\n    \n    for w in wovves:\n        anti_x = (w['x'] + 4) % 8\n        anti_y = (w['y'] + 4) % 8\n        if (anti_x, anti_y) not in occupied:\n            next_particles.append({'type': 'WOVVE', 'x': anti_x, 'y': anti_y})\n            occupied.add((anti_x, anti_y))\n    \n    return next_particles\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 257.9551084860004,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_004",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "# Rule: next[i] = (sum of range-hexad values mod 3 + count of KRIV (0) in range-hexad) mod 3\n# Note: This worked for most training observations but may need refinement\n\ndef hidden_rule_fn(state):\n    n = len(state[0])\n    result = []\n    for i in range(n):\n        # Compute range-hexad: indices (i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n\n        indices = [(i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n]\n        values = [state[0][idx] for idx in indices]\n        s = sum(values) % 3\n        ck = values.count(0)\n        next_val = (s + ck) % 3\n        result.append(next_val)\n    return [result]",
+    "hypothesis_status": "submitted",
+    "n_interventions": 38,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 365.54545473300095,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

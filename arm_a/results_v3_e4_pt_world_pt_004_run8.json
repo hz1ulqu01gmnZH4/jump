@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_004",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.3333333333333333,
+    "hypothesis_source": "# Hypothesis for particle system\n# PLEKT rule: Each PLEKT moves toward the nearest WOVVE (by wovve_dist = |wrap_dx|^2 + |wrap_dy|)\n# by step = (sign(wrap_dx), sign(wrap_dy)) where wrap = (target - current) % 8\n# sign: +1 for wrap in [1,4], -1 for wrap in [5,7], 0 for wrap = 0\n# WOVVE rule: Each WOVVE moves toward the nearest PLEKT by wovve_dist with same step rule\n# If WOVVEs don't move (stay still), they remain in place\n\ndef step(dir):\n    if 1 <= dir <= 4:\n        return 1\n    elif 5 <= dir <= 7:\n        return -1\n    else:\n        return 0\n\ndef wrap_diff(target, current):\n    return (target - current) % 8\n\ndef wovve_dist(p, q):\n    dx = wrap_diff(q['x'], p['x'])\n    dy = wrap_diff(q['y'], p['y'])\n    # Use shortest wrap for |wrap_dx|\n    if dx > 4:\n        dx = 8 - dx\n    return dx * dx + dy\n\ndef chebyshev(p, q):\n    dx = abs(wrap_diff(q['x'], p['x']))\n    dy = abs(wrap_diff(q['y'], p['y']))\n    if dx > 4:\n        dx = 8 - dx\n    if dy > 4:\n        dy = 8 - dy\n    return max(dx, dy)\n\ndef nearest(list_a, list_b, dist_fn):\n    best_a = None\n    best_dist = float('inf')\n    for a in list_a:\n        for b in list_b:\n            d = dist_fn(a, b)\n            if d < best_dist:\n                best_dist = d\n                best_a = a\n    return best_a\n\ndef hidden_rule_fn(state):\n    plekts = [p for p in state if p['type'] == 'PLEKT']\n    wovves = [p for p in state if p['type'] == 'WOVVE']\n    \n    next_state = []\n    \n    # PLEKTs move toward nearest WOVVE\n    for p in plekts:\n        target = nearest([p], wovves, wovve_dist)\n        if target:\n            dx = wrap_diff(target['x'], p['x'])\n            dy = wrap_diff(target['y'], p['y'])\n            sx = step(dx)\n            sy = step(dy)\n            next_state.append({'type': 'PLEKT', 'x': (p['x'] + sx) % 8, 'y': (p['y'] + sy) % 8})\n        else:\n            next_state.append({'type': 'PLEKT', 'x': p['x'], 'y': p['y']})\n    \n    # WOVVEs move toward nearest PLEKT\n    for p in wovves:\n        target = nearest([p], plekts, wovve_dist)\n        if target:\n            dx = wrap_diff(target['x'], p['x'])\n            dy = wrap_diff(target['y'], p['y'])\n            sx = step(dx)\n            sy = step(dy)\n            next_state.append({'type': 'WOVVE', 'x': (p['x'] + sx) % 8, 'y': (p['y'] + sy) % 8})\n        else:\n            next_state.append({'type': 'WOVVE', 'x': p['x'], 'y': p['y']})\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 312.66322253399994,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

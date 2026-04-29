@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_005",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Convert state to a dict of (x,y) -> type\n    grid = {}\n    for p in state:\n        grid[(p['x'], p['y'])] = p['type']\n    \n    # If all particles are the same type, nothing moves\n    types = set(p['type'] for p in state)\n    if len(types) == 1:\n        return [dict(p) for p in state]\n    \n    # Each particle moves by (+1, +1) on the toroidal 8x8 grid\n    result = []\n    for p in state:\n        new_x = (p['x'] + 1) % 8\n        new_y = (p['y'] + 1) % 8\n        # If the target position is occupied, stay put\n        if (new_x, new_y) in grid:\n            result.append(dict(p))\n        else:\n            result.append({'type': p['type'], 'x': new_x, 'y': new_y})\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 12,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 73.54629260599995,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

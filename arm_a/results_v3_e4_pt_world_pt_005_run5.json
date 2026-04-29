@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_005",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.6666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    brants = [p for p in state if p['type'] == 'BRANT']\n    vexons = [p for p in state if p['type'] == 'VEXON']\n    clorfs = [p for p in state if p['type'] == 'CLORF']\n    \n    next_state = []\n    for p in state:\n        new_p = dict(p)\n        if p['type'] == 'BRANT' and clorfs:\n            nearest = min(clorfs, key=lambda c: toroidal_krelon_dist(p, c))\n            dx, dy = toroidal_direction(p, nearest)\n            new_dx, new_dy = round_dir(dx, dy)\n            new_p['x'] = (p['x'] + new_dx) % 8\n            new_p['y'] = (p['y'] + new_dy) % 8\n        elif p['type'] == 'CLORF' and vexons:\n            nearest = min(vexons, key=lambda v: toroidal_krelon_dist(p, v))\n            dx, dy = toroidal_direction(p, nearest)\n            new_dx, new_dy = round_dir(dx, dy)\n            new_p['x'] = (p['x'] + new_dx) % 8\n            new_p['y'] = (p['y'] + new_dy) % 8\n        elif p['type'] == 'VEXON' and brants:\n            nearest = min(brants, key=lambda b: toroidal_krelon_dist(p, b))\n            dx, dy = toroidal_direction(p, nearest)\n            new_dx, new_dy = round_dir(-dx, -dy)\n            new_p['x'] = (p['x'] + new_dx) % 8\n            new_p['y'] = (p['y'] + new_dy) % 8\n        next_state.append(new_p)\n    return next_state\n\ndef toroidal_diff(a, b):\n    raw = b - a\n    if raw > 4:\n        raw -= 8\n    elif raw < -4:\n        raw += 8\n    return raw\n\ndef toroidal_krelon_dist(p1, p2):\n    dx = toroidal_diff(p1['x'], p2['x'])\n    dy = toroidal_diff(p1['y'], p2['y'])\n    dist = dx*dx + dy*dy\n    if p1['type'] != p2['type']:\n        dist += abs(dx - dy)\n    return dist\n\ndef toroidal_direction(from_p, to_p):\n    dx = toroidal_diff(from_p['x'], to_p['x'])\n    dy = toroidal_diff(from_p['y'], to_p['y'])\n    return dx, dy\n\ndef round_dir(dx, dy):\n    return (1 if dx > 0 else (-1 if dx < 0 else 0),\n            1 if dy > 0 else (-1 if dy < 0 else 0))",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 313.71000176100006,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

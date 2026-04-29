@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_004",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.3333333333333333,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Separate PLEKTs and WOVVEs\n    plekts = [p for p in state if p['type'] == 'PLEKT']\n    wovves = [p for p in state if p['type'] == 'WOVVE']\n    \n    # If no WOVVEs, PLEKTs don't move\n    if not wovves:\n        return state[:]\n    \n    # Move PLEKTs toward nearest WOVVE\n    new_plekts = []\n    for p in plekts:\n        # Find nearest WOVVE by Chebyshev distance on wrapped 8x8 grid\n        best_dist = float('inf')\n        best_dx = 0\n        best_dy = 0\n        for w in wovves:\n            dx = ((w['x'] - p['x'] + 4) % 8) - 4\n            dy = ((w['y'] - p['y'] + 4) % 8) - 4\n            dist = max(abs(dx), abs(dy))\n            if dist < best_dist:\n                best_dist = dist\n                best_dx = dx\n                best_dy = dy\n        \n        # Compute movement direction\n        # sign(-4) = +1, sign(0) = 0, sign(v) = 1 if v>0 else -1\n        if best_dx > 0 or best_dx == -4:\n            ddx = 1\n        elif best_dx < 0:\n            ddx = -1\n        else:\n            ddx = 0\n        \n        if best_dy > 0 or best_dy == -4:\n            ddy = 1\n        elif best_dy < 0:\n            ddy = -1\n        else:\n            ddy = 0\n        \n        new_x = (p['x'] + ddx) % 8\n        new_y = (p['y'] + ddy) % 8\n        new_plekts.append({'type': 'PLEKT', 'x': new_x, 'y': new_y})\n    \n    # WOVVEs stay in place (simplified - may not handle WOVVE movement/spawning)\n    # TODO: WOVVE movement rule is uncertain; may need refinement\n    # Observed that WOVVEs sometimes move when there are multiple WOVVEs\n    new_wovves = wovves[:]\n    \n    return new_plekts + new_wovves\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 13,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 267.79422586800047,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

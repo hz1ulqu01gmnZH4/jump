@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_003",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.3333333333333333,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Rule: Each particle moves based on interactions with nearest opposite-type particle\n    # BLINX always moves:\n    #   - If pair splurn (x+y of both particles) is even, move 1 step toward nearest TORVE\n    #   - If pair splurn is odd, move 1 step away from nearest TORVE\n    # TORVE moves only if pair splurn with nearest BLINX is even (same splurn):\n    #   - If even, move 1 step toward nearest BLINX\n    #   - If odd, stay\n    # Tie-breaking for nearest opposite type: smallest Chebyshev distance, then smallest x, then smallest y\n    \n    def wrap(val, mod=8):\n        return val % mod\n    \n    def wrap_diff(a, b, mod=8):\n        \"\"\"Compute wrapped difference from a to b, in range [-mod/2, mod/2)\"\"\"\n        d = (b - a) % mod\n        if d > mod // 2:\n            d -= mod\n        return d\n    \n    def cheb_dist(p, q):\n        dx = abs(wrap_diff(p['x'], q['x']))\n        dy = abs(wrap_diff(p['y'], q['y']))\n        return max(dx, dy)\n    \n    def move_toward(p, target):\n        \"\"\"Move p one step toward target in each coordinate that reduces distance.\"\"\"\n        dx = wrap_diff(p['x'], target['x'])\n        dy = wrap_diff(p['y'], target['y'])\n        new_x = p['x'] + (1 if dx < 0 else (-1 if dx > 0 else 0))\n        new_y = p['y'] + (1 if dy < 0 else (-1 if dy > 0 else 0))\n        return {'x': wrap(new_x), 'y': wrap(new_y)}\n    \n    def move_away(p, target):\n        \"\"\"Move p one step away from target in each coordinate that increases distance.\"\"\"\n        dx = wrap_diff(p['x'], target['x'])\n        dy = wrap_diff(p['y'], target['y'])\n        new_x = p['x'] + (-1 if dx < 0 else (1 if dx > 0 else 0))\n        new_y = p['y'] + (-1 if dy < 0 else (1 if dy > 0 else 0))\n        return {'x': wrap(new_x), 'y': wrap(new_y)}\n    \n    # Separate particles by type\n    blinx = [p for p in state if p['type'] == 'BLINX']\n    torve = [p for p in state if p['type'] == 'TORVE']\n    \n    result = []\n    \n    for p in state:\n        ptype = p['type']\n        other_type = 'BLINX' if ptype == 'TORVE' else 'TORVE'\n        others = [q for q in state if q['type'] == other_type]\n        \n        if not others:\n            # No opposite-type particles, stay\n            result.append({'type': p['type'], 'x': p['x'], 'y': p['y']})\n            continue\n        \n        # Find nearest opposite-type particle\n        # Sort by Chebyshev distance, then by x, then by y\n        others_sorted = sorted(others, key=lambda q: (cheb_dist(p, q), q['x'], q['y']))\n        nearest = others_sorted[0]\n        \n        # Compute splurn of the pair\n        pair_splurn = (p['x'] + p['y'] + nearest['x'] + nearest['y']) % 2\n        \n        if ptype == 'BLINX':\n            # BLINX always moves\n            if pair_splurn == 0:  # even, move toward\n                new_pos = move_toward(p, nearest)\n            else:  # odd, move away\n                new_pos = move_away(p, nearest)\n            result.append({'type': p['type'], 'x': new_pos['x'], 'y': new_pos['y']})\n        else:  # TORVE\n            if pair_splurn == 0:  # even (same splurn), move toward\n                new_pos = move_toward(p, nearest)\n                result.append({'type': p['type'], 'x': new_pos['x'], 'y': new_pos['y']})\n            else:  # odd (different splurn), stay\n                result.append({'type': p['type'], 'x': p['x'], 'y': p['y']})\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 269.66858207700034,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

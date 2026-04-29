@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_002",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    def wrap_diff(a, b, mod=8):\n        return min((b - a) % mod, (a - b) % mod) * ((b - a) % mod if (b - a) % mod <= 4 else (a - b) % mod)\n    \n    def grolp_dist(p1, p2):\n        dx = min((p2['x'] - p1['x']) % 8, (p1['x'] - p2['x']) % 8)\n        dy = min((p2['y'] - p1['y']) % 8, (p1['y'] - p2['y']) % 8)\n        if p1['type'] == p2['type']:\n            return dx * dy + 1\n        else:\n            return dx + 2 * dy\n    \n    def wrap_add(val, delta, mod=8):\n        return (val + delta) % mod\n    \n    def one_step_toward(current, target, mod=8):\n        \"\"\"Move one step toward target in each coordinate.\"\"\"\n        dx = (target - current) % mod\n        if dx > mod // 2:\n            dx -= mod\n        dy = (target - current) % mod\n        if dy > mod // 2:\n            dy -= mod\n        # Move one step in the direction of the target\n        if abs(dx) >= 1:\n            move_x = 1 if dx > 0 else -1\n        else:\n            move_x = 0\n        if abs(dy) >= 1:\n            move_y = 1 if dy > 0 else -1\n        else:\n            move_y = 0\n        return move_x, move_y\n    \n    next_state = []\n    for i, particle in enumerate(state):\n        # Find nearest neighbor by grolp_dist\n        nearest_idx = -1\n        nearest_dist = float('inf')\n        for j, other in enumerate(state):\n            if i != j:\n                d = grolp_dist(particle, other)\n                if d < nearest_dist:\n                    nearest_dist = d\n                    nearest_idx = j\n        \n        nearest = state[nearest_idx]\n        \n        # Determine movement based on type\n        if particle['type'] == 'SPONT':\n            # Move only in y toward nearest's y\n            move_x, move_y = one_step_toward(particle['y'], nearest['y'])\n            move_x = 0  # SPONT only moves in y\n            new_x = particle['x']\n            new_y = wrap_add(particle['y'], move_y)\n        elif particle['type'] == 'VRIX':\n            # Move in both x and y toward nearest\n            move_x, move_y = one_step_toward(particle['x'], nearest['x']), one_step_toward(particle['y'], nearest['y'])\n            new_x = wrap_add(particle['x'], move_x)\n            new_y = wrap_add(particle['y'], move_y)\n        elif particle['type'] == 'KRAUL':\n            # Move in x toward nearest's x, and y toward nearest's y\n            dx = (nearest['x'] - particle['x']) % 8\n            if dx > 4:\n                dx -= 8\n            dy = (nearest['y'] - particle['y']) % 8\n            if dy > 4:\n                dy -= 8\n            move_x = 1 if dx > 0 else (-1 if dx < 0 else 0)\n            move_y = 1 if dy > 0 else (-1 if dy < 0 else 0)\n            new_x = wrap_add(particle['x'], move_x)\n            new_y = wrap_add(particle['y'], move_y)\n        else:\n            new_x = particle['x']\n            new_y = particle['y']\n        \n        next_state.append({'type': particle['type'], 'x': new_x, 'y': new_y})\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 3,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 219.70608149699547,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

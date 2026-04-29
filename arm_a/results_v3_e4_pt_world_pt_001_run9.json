@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_001",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Extract ZEX and GLORP particles\n    zex_particles = [p for p in state if p['type'] == 'ZEX']\n    glorp_particles = [p for p in state if p['type'] == 'GLORP']\n    \n    def toroidal_delta(a, b):\n        \"\"\"Compute signed toroidal delta from a to b on 8-torus.\n        Result is in range [-3, 4].\"\"\"\n        d = (b - a) % 8\n        if d > 4:\n            d = d - 8\n        return d\n    \n    def chromodistance(p1, p2):\n        \"\"\"Compute chromodistance between two particles.\"\"\"\n        dx = abs(toroidal_delta(p1['x'], p2['x']))\n        dy = abs(toroidal_delta(p1['y'], p2['y']))\n        dist = max(dx, dy)\n        if p1['type'] != p2['type']:\n            dist += 1\n        return dist\n    \n    def nearest_partner(particle, candidates):\n        \"\"\"Find nearest candidate by chromodistance, tiebreak by lex (x,y).\"\"\"\n        if not candidates:\n            return None\n        best = None\n        best_dist = float('inf')\n        for c in candidates:\n            d = chromodistance(particle, c)\n            if d < best_dist or (d == best_dist and (c['x'], c['y']) < (best['x'], best['y'])):\n                best_dist = d\n                best = c\n        return best\n    \n    def move_zex(particle, state):\n        \"\"\"Move ZEX one step toward nearest ZEX partner.\"\"\"\n        other_zex = [z for z in state if z['type'] == 'ZEX' and z['x'] != particle['x'] or z['type'] == 'ZEX' and z['y'] != particle['y']]\n        # Actually, need to find other ZEX particles (not itself)\n        other_zex = [z for z in state if z is not particle and z['type'] == 'ZEX']\n        # If there are no other ZEX particles, stay put\n        if not other_zex:\n            return {'type': 'ZEX', 'x': particle['x'], 'y': particle['y']}\n        target = nearest_partner(particle, other_zex)\n        dx = toroidal_delta(particle['x'], target['x'])\n        dy = toroidal_delta(particle['y'], target['y'])\n        new_x = particle['x'] + (1 if dx > 0 else (-1 if dx < 0 else 0))\n        new_y = particle['y'] + (1 if dy > 0 else (-1 if dy < 0 else 0))\n        new_x = new_x % 8\n        new_y = new_y % 8\n        return {'type': 'ZEX', 'x': new_x, 'y': new_y}\n    \n    def move_glorp(particle, state):\n        \"\"\"Move GLORP one step away from nearest ZEX.\"\"\"\n        zex_list = [z for z in state if z['type'] == 'ZEX']\n        if not zex_list:\n            return {'type': 'GLORP', 'x': particle['x'], 'y': particle['y']}\n        target = nearest_partner(particle, zex_list)\n        dx = toroidal_delta(particle['x'], target['x'])\n        dy = toroidal_delta(particle['y'], target['y'])\n        # Find axis with larger magnitude, x preferred on tie\n        if abs(dx) >= abs(dy):\n            move_x = -dx  # away direction\n            new_x = particle['x'] + (1 if move_x > 0 else (-1 if move_x < 0 else 0))\n            new_y = particle['y']  # no move in y\n        else:\n            move_y = -dy  # away direction\n            new_x = particle['x']\n            new_y = particle['y'] + (1 if move_y > 0 else (-1 if move_y < 0 else 0))\n        new_x = new_x % 8\n        new_y = new_y % 8\n        return {'type': 'GLORP', 'x': new_x, 'y': new_y}\n    \n    next_state = []\n    for p in state:\n        if p['type'] == 'ZEX':\n            next_state.append(move_zex(p, state))\n        else:\n            next_state.append(move_glorp(p, state))\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 362.72238662999735,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

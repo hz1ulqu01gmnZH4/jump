@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_005",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.8333333333333334,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    def toro_delta(p, q):\n        dx = (q[0] - p[0]) % 8\n        if dx > 4:\n            dx -= 8\n        dy = (q[1] - p[1]) % 8\n        if dy > 4:\n            dy -= 8\n        return dx, dy\n    \n    def find_nearest(p, types):\n        \"\"\"Find nearest particle of given types from position p.\"\"\"\n        best_dist = float('inf')\n        best_pos = None\n        for other in state:\n            if other['type'] in types:\n                dx, dy = toro_delta(p, (other['x'], other['y']))\n                dist = dx*dx + dy*dy\n                if dist < best_dist or (dist == best_dist and (best_pos is None or (other['x'], other['y']) < best_pos)):\n                    best_dist = dist\n                    best_pos = (other['x'], other['y'])\n        return best_pos\n    \n    next_state = []\n    for particle in state:\n        ptype = particle['type']\n        px, py = particle['x'], particle['y']\n        \n        if ptype == 'BRANT':\n            # Move towards nearest CLORF\n            nearest = find_nearest((px, py), ['CLORF'])\n            if nearest is None:\n                nx, ny = px, py\n            else:\n                dx, dy = toro_delta((px, py), nearest)\n                dx = max(-1, min(1, dx))\n                dy = max(-1, min(1, dy))\n                nx = (px + dx) % 8\n                ny = (py + dy) % 8\n        \n        elif ptype == 'CLORF':\n            # Move towards nearest VEXON\n            nearest = find_nearest((px, py), ['VEXON'])\n            if nearest is None:\n                nx, ny = px, py\n            else:\n                dx, dy = toro_delta((px, py), nearest)\n                dx = max(-1, min(1, dx))\n                dy = max(-1, min(1, dy))\n                nx = (px + dx) % 8\n                ny = (py + dy) % 8\n        \n        elif ptype == 'VEXON':\n            # Move away from nearest BRANT\n            nearest = find_nearest((px, py), ['BRANT'])\n            if nearest is None:\n                nx, ny = px, py\n            else:\n                dx, dy = toro_delta((px, py), nearest)\n                dx = max(-1, min(1, -dx))\n                dy = max(-1, min(1, -dy))\n                nx = (px + dx) % 8\n                ny = (py + dy) % 8\n        \n        next_state.append({'type': ptype, 'x': nx, 'y': ny})\n    \n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 151.42998126699968,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

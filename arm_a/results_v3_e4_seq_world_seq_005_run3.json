@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_005",
+    "family": "pattern_puzzle",
+    "difficulty": "easy",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # The appended value is computed as (-state[0] + state[2]) mod 13\n    # state[1] has no effect on the output\n    new_val = (-state[0] + state[2]) % 13\n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 59.584318505003466,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

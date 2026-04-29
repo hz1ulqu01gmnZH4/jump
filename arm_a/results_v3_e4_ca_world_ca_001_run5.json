@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    m = len(state[0])\n    result = [[0]*m for _ in range(n)]\n    for r in range(n):\n        for c in range(m):\n            ne = state[(r-1)%n][(c+1)%m]\n            nw = state[(r-1)%n][(c-1)%m]\n            se = state[(r+1)%n][(c+1)%m]\n            sw = state[(r+1)%n][(c-1)%m]\n            result[r][c] = (ne + nw + se + sw) % 3\n    return result",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 365.58659643400097,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

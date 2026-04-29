@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    \"\"\"\n    Cellular automaton rule.\n    \n    For each cell, determine the coord-class = (row + col) % 3.\n    Based on the coord-class, determine the neighborhood:\n    - class 0: diagonal tetrad (NE, NW, SE, SW)\n    - class 1: von Neumann (N, S, E, W)\n    - class 2: axial-2 quad (N,S,E,W at distance 2)\n    \n    Count f0, f1, f2 in the neighborhood (with toroidal wrapping).\n    \n    The next state is determined by a function of (f0, f1, f2, current, class).\n    \"\"\"\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0]*cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            current = state[r][c]\n            coord_class = (r + c) % 3\n            \n            # Get neighborhood based on coord_class\n            if coord_class == 0:\n                # Diagonal tetrad\n                neighbors = [\n                    state[(r-1)%rows][(c+1)%cols],  # NE\n                    state[(r-1)%rows][(c-1)%cols],  # NW\n                    state[(r+1)%rows][(c+1)%cols],  # SE\n                    state[(r+1)%rows][(c-1)%cols],  # SW\n                ]\n            elif coord_class == 1:\n                # Von Neumann\n                neighbors = [\n                    state[(r-1)%rows][c],  # N\n                    state[(r+1)%rows][c],  # S\n                    state[r][(c+1)%cols],  # E\n                    state[r][(c-1)%cols],  # W\n                ]\n            else:  # coord_class == 2\n                # Axial-2 quad\n                neighbors = [\n                    state[(r-2)%rows][c],  # N\n                    state[(r+2)%rows][c],  # S\n                    state[r][(c+2)%cols],  # E\n                    state[r][(c-2)%cols],  # W\n                ]\n            \n            # Count f0, f1, f2\n            f0 = sum(1 for n in neighbors if n == 0)\n            f1 = sum(1 for n in neighbors if n == 1)\n            f2 = sum(1 for n in neighbors if n == 2)\n            \n            # Determine next state based on neighborhood counts and current value\n            # This is a heuristic based on observed patterns\n            if f1 >= 3:\n                next_state[r][c] = (current + 1) % 3\n            elif f0 >= 3:\n                next_state[r][c] = (current + 2) % 3\n            elif f2 >= 3:\n                next_state[r][c] = (current + 1) % 3\n            elif f1 >= f0 and f1 >= f2:\n                next_state[r][c] = 1\n            elif f0 >= f1 and f0 >= f2:\n                next_state[r][c] = 0\n            else:\n                next_state[r][c] = 2\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 16,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 305.29463223999846,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

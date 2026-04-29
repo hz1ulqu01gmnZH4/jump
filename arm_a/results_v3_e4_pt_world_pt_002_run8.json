@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_002",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Extract particles by type\n    sponts = [p for p in state if p['type'] == 'SPONT']\n    vrixs = [p for p in state if p['type'] == 'VRIX']\n    krauls = [p for p in state if p['type'] == 'KRAUL']\n    \n    def wrap_dist(dx_raw, dy_raw):\n        dx = dx_raw % 8\n        if dx > 4:\n            dx -= 8\n        dy = dy_raw % 8\n        if dy > 4:\n            dy -= 8\n        return dx, dy\n    \n    def grolp_dist(p1, p2):\n        dx, dy = wrap_dist(p2['x'] - p1['x'], p2['y'] - p1['y'])\n        if p1['type'] == p2['type']:\n            return abs(dx) * abs(dy) + 1\n        else:\n            return abs(dx) + 2 * abs(dy)\n    \n    def find_nearest_diff(p, candidates):\n        best = None\n        best_dist = float('inf')\n        for c in candidates:\n            d = grolp_dist(p, c)\n            if d < best_dist:\n                best_dist = d\n                best = c\n        return best\n    \n    result = []\n    for p in state:\n        x, y = p['x'], p['y']\n        if p['type'] == 'SPONT':\n            if krauls:\n                target = find_nearest_diff(p, krauls)\n                dx, dy = wrap_dist(target['x'] - x, target['y'] - y)\n                # Move AWAY from target in y-direction only\n                sign_dy = 1 if dy > 0 else (-1 if dy < 0 else 0)\n                new_y = (y - sign_dy) % 8\n                new_x = x\n            else:\n                new_x, new_y = x, y\n        elif p['type'] == 'VRIX':\n            if sponts:\n                target = find_nearest_diff(p, sponts)\n                dx, dy = wrap_dist(target['x'] - x, target['y'] - y)\n                # Move TOWARD target in both x and y\n                sign_dx = 1 if dx > 0 else (-1 if dx < 0 else 0)\n                sign_dy = 1 if dy > 0 else (-1 if dy < 0 else 0)\n                new_x = (x + sign_dx) % 8\n                new_y = (y + sign_dy) % 8\n            else:\n                new_x, new_y = x, y\n        elif p['type'] == 'KRAUL':\n            if vrixs:\n                target = find_nearest_diff(p, vrixs)\n                dx, dy = wrap_dist(target['x'] - x, target['y'] - y)\n                # Move TOWARD target in both x and y\n                sign_dx = 1 if dx > 0 else (-1 if dx < 0 else 0)\n                sign_dy = 1 if dy > 0 else (-1 if dy < 0 else 0)\n                new_x = (x + sign_dx) % 8\n                new_y = (y + sign_dy) % 8\n            else:\n                new_x, new_y = x, y\n        else:\n            new_x, new_y = x, y\n        result.append({'type': p['type'], 'x': new_x, 'y': new_y})\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 21,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 165.79373987299914,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

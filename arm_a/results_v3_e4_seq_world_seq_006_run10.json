@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_006",
+    "family": "pattern_puzzle",
+    "difficulty": "hard",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Rule: append element computed as ((state[1] << 1) & 0xF) | (state[0] & 1)\n    # Verified against all 12 training observations\n    new_element = ((state[1] << 1) & 0xF) | (state[0] & 1)\n    return state + [new_element]",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 43.71139479699923,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

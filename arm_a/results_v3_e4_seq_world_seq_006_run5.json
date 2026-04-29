@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_006",
+    "family": "pattern_puzzle",
+    "difficulty": "hard",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_NO_SUBMIT",
+    "n_interventions": 1,
+    "n_turns": null,
+    "fallback": true,
+    "capture_path": null,
+    "wall_s": 229.3757653789944,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

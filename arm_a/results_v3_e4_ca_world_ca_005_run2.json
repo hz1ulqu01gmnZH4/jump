@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_005",
+    "family": "cellular_automata",
+    "difficulty": "easy",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Try to implement the transition rule based on observations\n    # Even rows use E/W diads, odd rows use N/S diads\n    # The rule seems to involve pairs and some form of swapping or arithmetic\n    # My best guess: for even rows, pairs (0,1) and (2,3) are swapped if values differ\n    # For odd rows, similar pattern with N/S pairs\n    # Also cell 4 might use state[3]\n    \n    result = [row[:] for row in state]  # copy\n    \n    for r in range(5):\n        for c in range(5):\n            if r % 2 == 0:  # even row: E/W\n                if c % 2 == 0:  # even column\n                    if c < 4:\n                        result[r][c] = state[r][c + 1]\n                    else:\n                        result[r][c] = state[r][3]\n                else:  # odd column\n                    result[r][c] = state[r][c - 1]\n            else:  # odd row: N/S\n                if c % 2 == 0:  # even column\n                    if r < 4:\n                        result[r][c] = state[r + 1][c]\n                    else:\n                        result[r][c] = state[r - 1][c]\n                else:  # odd column\n                    result[r][c] = state[r - 1][c]\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 4,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 338.32369519999884,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_004",
+    "family": "particle_system",
+    "difficulty": "hard",
+    "accuracy": 0.3333333333333333,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Parse state into PLEKTs and WOVVEs\n    plekts = [(p['x'], p['y']) for p in state if p['type'] == 'PLEKT']\n    wovves = [(p['x'], p['y']) for p in state if p['type'] == 'WOVVE']\n    \n    if not wovves:\n        # No WOVVEs, PLEKTs don't move\n        return state\n    \n    # Helper: compute wrapped difference\n    def wrap_diff(a, b):\n        return ((b - a + 4) % 8) - 4\n    \n    # Helper: sign with special handling for -4\n    def sign(v):\n        if v > 0:\n            return 1\n        elif v < 0:\n            return -1\n        else:\n            return 0\n    \n    # Helper: Chebyshev distance on toroidal grid\n    def chebyshev(x1, y1, x2, y2):\n        dx = abs(wrap_diff(x1, x2))\n        dy = abs(wrap_diff(y1, y2))\n        return max(dx, dy)\n    \n    # Helper: wovve_dist\n    def wovve_dist(x1, y1, x2, y2):\n        dx = wrap_diff(x1, x2)\n        dy = wrap_diff(y1, y2)\n        return dx*dx + dy*dy\n    \n    # Compute PLEKT movements\n    new_plekts = []\n    for px, py in plekts:\n        # Find nearest WOVVE by wovve_dist\n        best_dist = float('inf')\n        best_wovve = None\n        for wx, wy in wovves:\n            d = wovve_dist(px, py, wx, wy)\n            if d < best_dist:\n                best_dist = d\n                best_wovve = (wx, wy)\n        \n        if best_wovve:\n            wx, wy = best_wovve\n            dx = wrap_diff(px, wx)\n            dy = wrap_diff(py, wy)\n            # Special: treat -4 as +4 (anti-pole)\n            if dx == -4:\n                dx = 4\n            if dy == -4:\n                dy = 4\n            new_px = (px + sign(dx)) % 8\n            new_py = (py + sign(dy)) % 8\n            new_plekts.append({'type': 'PLEKT', 'x': new_px, 'y': new_py})\n    \n    # Compute WOVVE movements\n    new_wovves = []\n    for wx, wy in wovves:\n        # Find nearest PLEKT by wovve_dist\n        best_dist = float('inf')\n        best_plekt = None\n        for px, py in plekts:\n            d = wovve_dist(wx, wy, px, py)\n            if d < best_dist:\n                best_dist = d\n                best_plekt = (px, py)\n        \n        if best_plekt:\n            px, py = best_plekt\n            dx = wrap_diff(wx, px)\n            dy = wrap_diff(wy, py)\n            if dx == -4:\n                dx = 4\n            if dy == -4:\n                dy = 4\n            # Move away from nearest PLEKT\n            new_wx = (wx - sign(dx)) % 8\n            new_wy = (wy - sign(dy)) % 8\n            new_wovves.append({'type': 'WOVVE', 'x': new_wx, 'y': new_wy})\n    \n    # Check for WOVVE spawning\n    # Spawn at anti-pole of WOVVE if that WOVVE has no PLEKT at Chebyshev <= 1\n    spawned_wovves = []\n    for wx, wy in wovves:\n        has_close_plekt = False\n        for px, py in plekts:\n            if chebyshev(wx, wy, px, py) <= 1:\n                has_close_plekt = True\n                break\n        if not has_close_plekt:\n            # Spawn at anti-pole\n            anti_x = (wx + 4) % 8\n            anti_y = (wy + 4) % 8\n            # Only spawn if cell is empty\n            occupied = any(p['x'] == anti_x and p['y'] == anti_y for p in new_plekts + new_wovves)\n            if not occupied:\n                spawned_wovves.append({'type': 'WOVVE', 'x': anti_x, 'y': anti_y})\n    \n    result = new_plekts + new_wovves + spawned_wovves\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 294.380092894,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

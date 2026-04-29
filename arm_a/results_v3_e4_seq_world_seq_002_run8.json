@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_002",
+    "family": "pattern_puzzle",
+    "difficulty": "easy",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Grid is 3 rows x 5 columns, row-major\n    # Even rows (0, 2): new_val = (v + right_neighbour) % 5, right wraps within row\n    # Odd rows (1): new_val = (v XOR cell_below) % 5, cell_below is 5 positions down\n    result = [0] * 15\n    \n    for row in range(3):\n        for col in range(5):\n            idx = row * 5 + col\n            v = state[idx]\n            \n            if row % 2 == 0:\n                # Even row: add right neighbour (wraps)\n                right_col = (col + 1) % 5\n                right_idx = row * 5 + right_col\n                result[idx] = (v + state[right_idx]) % 5\n            else:\n                # Odd row: XOR with cell below\n                below_idx = idx + 5\n                result[idx] = (v ^ state[below_idx]) % 5\n    \n    return result",
+    "hypothesis_status": "submitted",
+    "n_interventions": 3,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 140.97658920800313,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

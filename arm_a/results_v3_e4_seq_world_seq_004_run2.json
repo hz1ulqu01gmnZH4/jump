@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_004",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # The rule appends (sum of all elements mod 8) to the state.\n    # Specifically: next_state = state + [(sum(state) % 8)]\n    # Verified against all training observations.\n    return state + [(sum(state) % 8)]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 37.64348413999687,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_006",
+    "family": "cellular_automata",
+    "difficulty": "hard",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_NO_SUBMIT",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": true,
+    "capture_path": null,
+    "wall_s": 61.7064978060007,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

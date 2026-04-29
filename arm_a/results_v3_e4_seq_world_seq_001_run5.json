@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_001",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    if n == 0:\n        return state[:]\n    \n    def is_prime(k):\n        if k < 2:\n            return False\n        if k == 2:\n            return True\n        if k % 2 == 0:\n            return False\n        for i in range(3, int(k**0.5) + 1, 2):\n            if k % i == 0:\n                return False\n        return True\n    \n    a = state[-2]\n    b = state[-1]\n    \n    if is_prime(n):\n        new_val = (a ^ b) % 7\n    else:\n        new_val = (a + b + 3) % 7\n    \n    return state + [new_val]\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 29,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 59.14803643600317,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

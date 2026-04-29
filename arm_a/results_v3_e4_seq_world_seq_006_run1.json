@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_006",
+    "family": "pattern_puzzle",
+    "difficulty": "hard",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    \"\"\"\n    The world transitions by appending a new nibrel at the end.\n    The new value uses shift-merge: left-shift the last element by 1\n    (masked to 4 bits), then OR with the parity bit of the second-to-last element.\n    \n    Rule: new_val = ((state[-1] << 1) & 0xF) | (state[-2] & 1)\n    This matches all 12 training observations exactly.\n    \"\"\"\n    last = state[-1]\n    second = state[-2]\n    new_val = ((last << 1) & 0xF) | (second & 1)\n    return state + [new_val]",
+    "hypothesis_status": "submitted",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 53.49315606699383,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_005",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.16666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Group particles by type\n    brants = [p for p in state if p['type'] == 'BRANT']\n    clorfs = [p for p in state if p['type'] == 'CLORF']\n    vexons = [p for p in state if p['type'] == 'VEXON']\n    \n    def toroidal_delta(a, b, dim=8):\n        \"\"\"Compute signed toroidal delta from a to b (smallest magnitude).\"\"\"\n        dx = b - a\n        if dx > dim // 2:\n            dx -= dim\n        elif dx < -dim // 2:\n            dx += dim\n        return dx\n    \n    def krelon_dist(p1, p2):\n        \"\"\"Compute krelon_dist between two particles.\"\"\"\n        dx = abs(toroidal_delta(p1['x'], p2['x']))\n        dy = abs(toroidal_delta(p1['y'], p2['y']))\n        same_type = 0 if p1['type'] == p2['type'] else abs(dx - dy)\n        return dx * dx + dy * dy + same_type\n    \n    def nearest_towards(p, targets):\n        \"\"\"Find nearest target and return one-step delta towards it.\"\"\"\n        if not targets:\n            return None\n        best_dist = float('inf')\n        best_target = None\n        for t in targets:\n            d = krelon_dist(p, t)\n            if d < best_dist:\n                best_dist = d\n                best_target = t\n            elif d == best_dist and best_target is not None:\n                # Tiebreaker: prefer smaller x, then smaller y\n                if (t['x'], t['y']) < (best_target['x'], best_target['y']):\n                    best_target = t\n        if best_target is None:\n            return None\n        dx = toroidal_delta(p['x'], best_target['x'])\n        dy = toroidal_delta(p['y'], best_target['y'])\n        return (dx, dy)\n    \n    def nearest_away(p, sources):\n        \"\"\"Find nearest source and return one-step delta away from it.\"\"\"\n        if not sources:\n            return None\n        best_dist = float('inf')\n        best_source = None\n        for s in sources:\n            d = krelon_dist(p, s)\n            if d < best_dist:\n                best_dist = d\n                best_source = s\n            elif d == best_dist and best_source is not None:\n                if (s['x'], s['y']) < (best_source['x'], best_source['y']):\n                    best_source = s\n        if best_source is None:\n            return None\n        dx = toroidal_delta(p['x'], best_source['x'])\n        dy = toroidal_delta(p['y'], best_source['y'])\n        # Move away: negate the delta\n        dx = -dx\n        dy = -dy\n        return (dx, dy)\n    \n    def apply_move(p, delta):\n        if delta is None:\n            return p\n        dx, dy = delta\n        new_x = (p['x'] + dx) % 8\n        new_y = (p['y'] + dy) % 8\n        return {'type': p['type'], 'x': new_x, 'y': new_y}\n    \n    result = []\n    for p in state:\n        if p['type'] == 'BRANT':\n            # Move towards nearest CLORF\n            delta = nearest_towards(p, clorfs)\n            result.append(apply_move(p, delta))\n        elif p['type'] == 'CLORF':\n            # Move towards nearest VEXON\n            delta = nearest_towards(p, vexons)\n            result.append(apply_move(p, delta))\n        elif p['type'] == 'VEXON':\n            # Move away from nearest BRANT\n            delta = nearest_away(p, brants)\n            result.append(apply_move(p, delta))\n    \n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 2,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 257.121145436,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

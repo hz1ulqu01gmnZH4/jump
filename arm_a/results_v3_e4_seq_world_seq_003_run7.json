@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_seq_003",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # Rule: append (last * second_last) % 11 to the state\n    if len(state) >= 2:\n        new_element = (state[-1] * state[-2]) % 11\n        return state + [new_element]\n    else:\n        # If fewer than 2 elements, return state as-is\n        return state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 27,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 36.43553452699416,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]
