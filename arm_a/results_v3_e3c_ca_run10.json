@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.16666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    result = [[0]*n for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            ne = state[(i-1)%n][(j+1)%n]\n            nw = state[(i-1)%n][(j-1)%n]\n            se = state[(i+1)%n][(j+1)%n]\n            sw = state[(i+1)%n][(j-1)%n]\n            cur = state[i][j]\n            d_z = sum(1 for v in [ne, nw, se, sw] if v == 0)\n            d_p = sum(1 for v in [ne, nw, se, sw] if v == 1)\n            d_q = sum(1 for v in [ne, nw, se, sw] if v == 2)\n            # Rule: next = (cur + 2) mod 3 if (d_p == 0 and cur == 2) or (d_q == 0 and cur == 2 and d_p == 1) or (d_q == 3 and cur == 0)\n            # Otherwise next = cur\n            if (d_p == 0 and cur == 2) or (d_q == 0 and cur == 2 and d_p == 1) or (d_q == 3 and cur == 0):\n                result[i][j] = (cur + 2) % 3\n            else:\n                result[i][j] = cur\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 6,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 494.96674761900067,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

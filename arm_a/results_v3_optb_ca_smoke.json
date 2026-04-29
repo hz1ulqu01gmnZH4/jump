@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.6666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0]*cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            s = state[r][c]\n            # Compute diagonal tetrad counts with toroidal wrap\n            d_z = 0\n            d_p = 0\n            d_q = 0\n            for dr in [-1, 1]:\n                for dc in [-1, 1]:\n                    nr = (r + dr) % rows\n                    nc = (c + dc) % cols\n                    val = state[nr][nc]\n                    if val == 0:\n                        d_z += 1\n                    elif val == 1:\n                        d_p += 1\n                    elif val == 2:\n                        d_q += 1\n            \n            if s == 0:\n                # ZORK: if all 4 diagonals are QUAV (impossible since only 4 diagonals), next=2\n                # Actually d_q==3 means 3 QUAVs in diagonal tetrad\n                if d_q == 3:\n                    next_state[r][c] = 2\n                elif d_p == 2:\n                    next_state[r][c] = 1\n                else:\n                    next_state[r][c] = 0\n            elif s == 1:\n                # PLOON: if d_p (count of PLOON neighbors) is odd, next=2; else next=1\n                if d_p % 2 == 1:\n                    next_state[r][c] = 2\n                else:\n                    next_state[r][c] = 1\n            elif s == 2:\n                # QUAV: next=2 unless d_z==3 or (d_z==2 and d_p==0)\n                if d_z <= 1:\n                    next_state[r][c] = 2\n                elif d_z == 2 and d_p > 0:\n                    next_state[r][c] = 2\n                else:\n                    next_state[r][c] = 1\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 3,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 161.15445481200004,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

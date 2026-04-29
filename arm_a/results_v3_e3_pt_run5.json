@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_001",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 0.16666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    def toro_delta(curr, target):\n        return (target - curr + 3) % 8 - 3\n\n    def chromo_dist(p, q):\n        dx = abs(toro_delta(p['x'], q['x']))\n        dy = abs(toro_delta(p['y'], q['y']))\n        dist = max(dx, dy)\n        if p['type'] != q['type']:\n            dist += 1\n        return dist\n\n    next_state = []\n    for p in state:\n        if p['type'] == 'ZEX':\n            min_dist = float('inf')\n            target = None\n            for q in state:\n                if q is p:\n                    continue\n                d = chromo_dist(p, q)\n                if d < min_dist or (d == min_dist and (q['x'], q['y']) < (target['x'], target['y'])):\n                    min_dist = d\n                    target = q\n            dx = toro_delta(p['x'], target['x'])\n            dy = toro_delta(p['y'], target['y'])\n            new_x = (p['x'] + (1 if dx > 0 else (-1 if dx < 0 else 0))) % 8\n            new_y = (p['y'] + (1 if dy > 0 else (-1 if dy < 0 else 0))) % 8\n            next_state.append({'type': 'ZEX', 'x': new_x, 'y': new_y})\n        else: # GLORP\n            min_dist = float('inf')\n            target = None\n            for q in state:\n                if q['type'] != 'ZEX':\n                    continue\n                d = chromo_dist(p, q)\n                if d < min_dist or (d == min_dist and (q['x'], q['y']) < (target['x'], target['y'])):\n                    min_dist = d\n                    target = q\n            dx = toro_delta(p['x'], target['x'])\n            dy = toro_delta(p['y'], target['y'])\n            if abs(dx) >= abs(dy): # x-axis preferred on tie\n                new_x = (p['x'] - (1 if dx > 0 else (-1 if dx < 0 else 0))) % 8\n                new_y = p['y']\n            else:\n                new_x = p['x']\n                new_y = (p['y'] - (1 if dy > 0 else (-1 if dy < 0 else 0))) % 8\n            next_state.append({'type': 'GLORP', 'x': new_x, 'y': new_y})\n    return next_state",
+    "hypothesis_status": "submitted",
+    "n_interventions": 0,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 67.23233918299957,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

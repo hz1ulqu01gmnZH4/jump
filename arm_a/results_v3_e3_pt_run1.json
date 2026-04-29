@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_pt_001",
+    "family": "particle_system",
+    "difficulty": "medium",
+    "accuracy": 1.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    def toroidal_delta(a, b):\n        d = (b - a) % 8\n        if d > 4:\n            d -= 8\n        return d\n\n    def chromodist(p, q):\n        dx = toroidal_delta(p['x'], q['x'])\n        dy = toroidal_delta(p['y'], q['y'])\n        return max(abs(dx), abs(dy)) + (0 if p['type'] == q['type'] else 1)\n\n    def find_target(p, others):\n        zexes = [q for q in others if q['type'] == 'ZEX']\n        if not zexes:\n            return p\n        best = None\n        best_dist = float('inf')\n        for q in zexes:\n            d = chromodist(p, q)\n            if d < best_dist or (d == best_dist and (q['x'], q['y']) < (best['x'], best['y'])):\n                best_dist = d\n                best = q\n        return best\n\n    result = []\n    for i, p in enumerate(state):\n        others = [state[j] for j in range(len(state)) if j != i]\n        target = find_target(p, others)\n        \n        if p['type'] == 'ZEX':\n            # If exactly adjacent (chromodist == 1), swap positions\n            if chromodist(p, target) == 1:\n                result.append({'type': 'ZEX', 'x': target['x'], 'y': target['y']})\n            else:\n                dx = toroidal_delta(p['x'], target['x'])\n                dy = toroidal_delta(p['y'], target['y'])\n                sx = 1 if dx > 0 else (-1 if dx < 0 else 0)\n                sy = 1 if dy > 0 else (-1 if dy < 0 else 0)\n                result.append({'type': 'ZEX', 'x': (p['x'] + sx) % 8, 'y': (p['y'] + sy) % 8})\n        else: # GLORP\n            dx = toroidal_delta(p['x'], target['x'])\n            dy = toroidal_delta(p['y'], target['y'])\n            # Prefer x-axis on tie\n            if abs(dx) >= abs(dy):\n                d = dx\n                axis = 'x'\n            else:\n                d = dy\n                axis = 'y'\n            # Move away: opposite sign of delta\n            step = -1 if d > 0 else (1 if d < 0 else 0)\n            nx, ny = p['x'], p['y']\n            if axis == 'x':\n                nx = (nx + step) % 8\n            else:\n                ny = (ny + step) % 8\n            result.append({'type': 'GLORP', 'x': nx, 'y': ny})\n    return result",
+    "hypothesis_status": "submitted",
+    "n_interventions": 1,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 135.6834575489993,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

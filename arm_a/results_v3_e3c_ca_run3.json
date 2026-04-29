@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.16666666666666666,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    next_state = [[0]*n for _ in range(n)]\n    for r in range(n):\n        for c in range(n):\n            # Get diagonal neighbors with toroidal wrap\n            diagonals = [\n                state[(r-1)%n][(c+1)%n],  # NE\n                state[(r-1)%n][(c-1)%n],  # NW\n                state[(r+1)%n][(c+1)%n],  # SE\n                state[(r+1)%n][(c-1)%n]   # SW\n            ]\n            d_z = diagonals.count(0)\n            d_p = diagonals.count(1)\n            d_q = diagonals.count(2)\n            own = state[r][c]\n            \n            # Rule based on diagonal-tetrad counts and own state\n            if d_q > d_z:\n                if d_p == 0:\n                    next_state[r][c] = (2 - own) % 3\n                else:\n                    next_state[r][c] = own\n            else:  # d_z >= d_q\n                if d_p == 0:\n                    next_state[r][c] = min(own, 1)\n                else:\n                    next_state[r][c] = (own + d_q) % 3\n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 5,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 324.591709813998,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

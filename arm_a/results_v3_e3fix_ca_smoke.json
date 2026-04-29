@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    next_state = [[0]*n for _ in range(n)]\n    \n    # 0 always stays 0\n    # For cells with state 1 or 2, we need to determine next state\n    # based on diagonal-tetrad counts\n    \n    for r in range(n):\n        for c in range(n):\n            if state[r][c] == 0:\n                next_state[r][c] = 0\n            elif state[r][c] == 1:\n                # Check diagonal neighbors\n                neighbors = [\n                    state[(r-1) % n][(c+1) % n],\n                    state[(r-1) % n][(c-1) % n],\n                    state[(r+1) % n][(c+1) % n],\n                    state[(r+1) % n][(c-1) % n]\n                ]\n                d_z = neighbors.count(0)\n                d_p = neighbors.count(1)\n                d_q = neighbors.count(2)\n                \n                # Hypothesis: if majority of diagonals are same as self, stay same\n                # 1 stays 1 if d_p >= 2, else becomes 2\n                if d_p >= 2:\n                    next_state[r][c] = 1\n                else:\n                    next_state[r][c] = 2\n            elif state[r][c] == 2:\n                neighbors = [\n                    state[(r-1) % n][(c+1) % n],\n                    state[(r-1) % n][(c-1) % n],\n                    state[(r+1) % n][(c+1) % n],\n                    state[(r+1) % n][(c-1) % n]\n                ]\n                d_z = neighbors.count(0)\n                d_p = neighbors.count(1)\n                d_q = neighbors.count(2)\n                \n                # Hypothesis: 2 becomes 1 if d_p >= 2, else stays 2\n                if d_p >= 2:\n                    next_state[r][c] = 1\n                else:\n                    next_state[r][c] = 2\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 15.893735614001343,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

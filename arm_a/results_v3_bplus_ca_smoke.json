@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    # This function implements the hidden rule for a 4x4 cellular automaton\n    # The rule depends on the diagonal-tetrad counts (d_z, d_p, d_q) and current state\n    # d_z, d_p, d_q are counts of ZORK(0), PLOON(1), QUAV(2) in the diagonal neighbors\n    \n    def get_next_cell(r, c, grid):\n        # Get diagonal-tetrad neighbors (toroidal wrap)\n        neighbors = [\n            grid[(r-1) % 4][(c+1) % 4],  # NE\n            grid[(r-1) % 4][(c-1) % 4],  # NW\n            grid[(r+1) % 4][(c+1) % 4],  # SE\n            grid[(r+1) % 4][(c-1) % 4],  # SW\n        ]\n        \n        # Count ZORK(0), PLOON(1), QUAV(2)\n        d_z = neighbors.count(0)\n        d_p = neighbors.count(1)\n        d_q = neighbors.count(2)\n        \n        current = grid[r][c]\n        \n        # Lookup table based on (d_z, d_p, d_q, current_state)\n        # Compiled from training observations\n        table = {\n            (4, 0, 0, 0): 1,\n            (4, 0, 0, 1): 1,\n            (4, 0, 0, 2): 1,\n            (3, 1, 0, 0): 0,\n            (3, 1, 0, 1): 2,\n            (3, 1, 0, 2): 1,\n            (3, 0, 1, 0): 0,\n            (3, 0, 1, 1): 2,\n            (3, 0, 1, 2): 1,\n            (2, 2, 0, 0): 1,\n            (2, 2, 0, 1): 1,\n            (2, 2, 0, 2): 2,\n            (2, 1, 1, 0): 0,\n            (2, 1, 1, 1): 2,\n            (2, 1, 1, 2): 1,\n            (2, 0, 2, 0): 0,\n            (2, 0, 2, 1): 1,\n            (2, 0, 2, 2): 1,\n            (1, 3, 0, 0): 0,\n            (1, 3, 0, 1): 2,\n            (1, 3, 0, 2): 2,\n            (1, 2, 1, 0): 0,\n            (1, 2, 1, 1): 1,\n            (1, 2, 1, 2): 2,\n            (1, 1, 2, 0): 0,\n            (1, 1, 2, 1): 1,\n            (1, 1, 2, 2): 2,\n            (1, 0, 3, 0): 2,\n            (1, 0, 3, 1): 1,\n            (1, 0, 3, 2): 1,\n            (0, 4, 0, 0): 0,\n            (0, 4, 0, 1): 0,\n            (0, 4, 0, 2): 0,\n            (0, 3, 1, 0): 0,\n            (0, 3, 1, 1): 2,\n            (0, 3, 1, 2): 0,\n            (0, 2, 2, 0): 0,\n            (0, 2, 2, 1): 1,\n            (0, 2, 2, 2): 2,\n            (0, 1, 3, 0): 2,\n            (0, 1, 3, 1): 2,\n            (0, 1, 3, 2): 2,\n            (0, 0, 4, 0): 2,\n            (0, 0, 4, 1): 2,\n            (0, 0, 4, 2): 2,\n        }\n        \n        key = (d_z, d_p, d_q, current)\n        return table.get(key, current)  # Default to current state if not in table\n    \n    # Apply rule to each cell\n    next_state = [[get_next_cell(r, c, state) for c in range(4)] for r in range(4)]\n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 8,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 395.85549295300007,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

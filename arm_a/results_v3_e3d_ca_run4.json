@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    result = [[0]*n for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            # Get diagonal-tetrad neighbors (NE, NW, SE, SW)\n            ne = state[(i-1) % n][(j+1) % n]\n            nw = state[(i-1) % n][(j-1) % n]\n            se = state[(i+1) % n][(j+1) % n]\n            sw = state[(i+1) % n][(j-1) % n]\n            tetrad = [ne, nw, se, sw]\n            d_z = tetrad.count(0)\n            d_p = tetrad.count(1)\n            d_q = tetrad.count(2)\n            result[i][j] = (d_p + 2 * d_q) % 3\n    return result\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 9,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 290.5542918919964,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

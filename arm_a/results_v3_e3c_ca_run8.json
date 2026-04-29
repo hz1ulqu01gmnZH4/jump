@@ -1,0 +1,19 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": 0.0,
+    "hypothesis_source": "def hidden_rule_fn(state):\n    rows = len(state)\n    cols = len(state[0])\n    next_state = [[0]*cols for _ in range(rows)]\n    \n    for r in range(rows):\n        for c in range(cols):\n            ne = state[(r-1) % rows][(c+1) % cols]\n            nw = state[(r-1) % rows][(c-1) % cols]\n            se = state[(r+1) % rows][(c+1) % cols]\n            sw = state[(r+1) % rows][(c-1) % cols]\n            \n            vals = [ne, nw, se, sw]\n            d_z = vals.count(0)\n            d_p = vals.count(1)\n            d_q = vals.count(2)\n            cur = state[r][c]\n            \n            # Determine next state based on diagonal counts and current value\n            key = (d_z, d_p, d_q, cur)\n            \n            # Lookup table based on observed patterns\n            if key == (3, 1, 0, 2):\n                nxt = 1\n            elif key == (1, 1, 2, 0):\n                nxt = 0\n            elif key == (1, 1, 2, 2):\n                nxt = 2\n            elif key == (2, 0, 2, 0):\n                nxt = 0\n            elif key == (2, 0, 2, 1):\n                nxt = 1\n            elif key == (2, 0, 2, 2):\n                nxt = 1\n            elif key == (1, 0, 3, 0):\n                nxt = 2\n            elif key == (1, 0, 3, 1):\n                nxt = 1\n            elif key == (3, 0, 1, 0):\n                nxt = 0\n            elif key == (3, 0, 1, 1):\n                nxt = 1\n            elif key == (3, 0, 1, 2):\n                nxt = 1\n            elif key == (2, 1, 1, 1):\n                nxt = 2\n            elif key == (2, 1, 1, 2):\n                nxt = 1\n            elif key == (0, 1, 3, 1):\n                nxt = 2\n            elif key == (0, 1, 3, 2):\n                nxt = 2\n            elif key == (1, 2, 1, 1):\n                nxt = 1\n            else:\n                # Fallback: use formula (d_p + 2*d_z) % 3\n                nxt = (d_p + 2 * d_z) % 3\n            \n            next_state[r][c] = nxt\n    \n    return next_state\n",
+    "hypothesis_status": "submitted",
+    "n_interventions": 7,
+    "n_turns": null,
+    "fallback": false,
+    "capture_path": "mcp_file",
+    "wall_s": 370.3907816139981,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]

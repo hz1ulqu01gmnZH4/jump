@@ -1,0 +1,4 @@
+{"t": 1.36, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 1.37, "event": "tool_result", "id": "PwbrZvd6q5bu6oqEbVNwxaDotZ8aGqY3", "content_len": 4916}
+{"t": 67.12, "event": "tool_use", "name": "mcp__jump-world__submit_hypothesis", "input_keys": ["hypothesis_source"]}
+{"t": 67.13, "event": "tool_result", "id": "zL9vP4Ay00vi4MaqvhKBM7q2thBrNqPg", "content_len": 68}

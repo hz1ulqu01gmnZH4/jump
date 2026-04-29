@@ -1,0 +1,21 @@
+[
+  {
+    "instance_id": "world_seq_001",
+    "family": "pattern_puzzle",
+    "difficulty": "medium",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_STUCK_REASONING",
+    "n_interventions": 1,
+    "n_turns": null,
+    "fallback": true,
+    "capture_path": null,
+    "wall_s": 51.9053026900001,
+    "stuck_since_last_tool_s": 8.668127570999786,
+    "stuck_tool_use_count": 1,
+    "model": "Qwen3.6-35B-A3B-MXFP4_MOE.gguf",
+    "effort": null,
+    "arm": "A",
+    "version": "v3"
+  }
+]
