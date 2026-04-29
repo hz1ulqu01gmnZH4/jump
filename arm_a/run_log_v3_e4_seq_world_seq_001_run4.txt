@@ -1,0 +1,64 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_seq_world_seq_001_run4.json
+  world_seq_001 (pattern_puzzle, medium)...[21:38:32] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:38:32] tool_result: id=A09bXggy6592fLoQRCa1hmmivlr5YnPD content_len=1506
+[21:39:01] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:01] tool_result: id=ERFxATZOMIhWJLe8kM1EwrLEBWc03xl5 content_len=7
+[21:39:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:14] tool_result: id=DTzDv4Kl8slEMOgqIVIsMlGXwq6Xncr6 content_len=7
+[21:39:15] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:15] tool_result: id=20viNcJ0nM1ns3QdV4vbR4Upa7tsgWA0 content_len=7
+[21:39:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:16] tool_result: id=ZJJqrzeTrdbnClRFreZiNCATxBHzn59R content_len=7
+[21:39:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:16] tool_result: id=1BrpKTMeJx7HxLcUMH2q2n6VUJkZhtx4 content_len=7
+[21:39:17] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:17] tool_result: id=XT5rzHoC72TNpDkF2m5AhtzqNvMx0TFy content_len=7
+[21:39:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:18] tool_result: id=cmpdcDH99egR6OA9WQDnGfUrcEzWhaRR content_len=7
+[21:39:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:18] tool_result: id=2ptu98azpycbMzigztDb2G22ASBlSN6D content_len=7
+[21:39:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'delta', 'mod']
+[21:39:19] tool_result: id=tse46FWF4C0NxA0j761mkRoEU7hkn9SA content_len=7
+[21:39:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:39:19] tool_result: id=Ixcm1dUXNhgq9vTzapVG4G09PRIHLhpB content_len=75
+[21:39:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:39:21] tool_result: id=6fNDQHDopl4Id00So9wm7evaDWumg1Md content_len=69
+[21:39:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:25] tool_result: id=g1SvdsVMh9mBs7ITnwM25v4BjDdtl0IM content_len=7
+[21:39:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:25] tool_result: id=5gZ87BVGWzyTywxpn84PTYu7buLiHHZX content_len=7
+[21:39:26] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:26] tool_result: id=Uu8TA54GdOYl6M1Rca13wVRWICc26X2z content_len=7
+[21:39:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:27] tool_result: id=s36kQmQ6FFNipxSFZbPeKwUlZqJiw9Rw content_len=7
+[21:39:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:27] tool_result: id=QZbkkQJXBNx8oOd2q0zqdSR2NSvviJ6E content_len=7
+[21:39:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:28] tool_result: id=ezO99TQuPnp3VCEvquzxKp5UtrleCWsv content_len=7
+[21:39:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:29] tool_result: id=mjsvtquzr3wiwPxg5ekjAaJywSd7ia64 content_len=7
+[21:39:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:29] tool_result: id=Z6izjcq4BM5I5LZk0Fu4NYpq5kJajlzn content_len=7
+[21:39:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:30] tool_result: id=7ZiWrVWx5GoF7UCtvmFWzvFQ4NxZJW5M content_len=7
+[21:39:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:31] tool_result: id=gPcpPOZZAIfRsrMtayzAiI44x1VcrFAO content_len=7
+[21:39:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[21:39:31] tool_result: id=I7IUCFi6KuCo0VetypXObz6Jieyvb8RO content_len=7
+[21:39:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:39:33] tool_result: id=9rPiDXLEVc9Z8HNNWjaZ4Ma3n9MaZOOr content_len=63
+[21:39:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:39:34] tool_result: id=SXnQ6Mnvd97PLkCUTZEdrJSXj1iO0060 content_len=51
+[21:39:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:39:34] tool_result: id=X7iBOCHBUyHQ61EEUXOxcPs6F89ErEYK content_len=57
+[21:39:37] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[21:39:37] tool_result: id=rcCvDVGtDI0zM0zIMLaBkUIUXPQWGUWF content_len=52
+[ATTEMPT instance=world_seq_001 attempt=1/2 wall_s=66.0 start=2026-04-26T12:38:31Z end=2026-04-26T12:39:37Z]
+ acc=1.000 n_int=25 [submitted] wall_s=66 capture=mcp_file
+[OK instance=world_seq_001 acc=1.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_seq_world_seq_001_run4.json (1 entries)
+
+=== Arm A v3 mean accuracy: 1.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

@@ -1,0 +1,28 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_003_run9.json
+  world_pt_003 (particle_system, hard)...[21:29:52] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:29:52] tool_result: id=Z9i2wmLQDqnXgMxbquDtFrXj9SXDebNs content_len=4535
+[21:31:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:31:56] tool_result: id=U6pGSIHaT5OkjNLH3bd2B5SJJhXRG6Fx content_len=316
+[21:31:59] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'vx', 'vy']
+[21:31:59] tool_result: id=gZClwM4xDuwPn1Ku4x5kvmhdz2iRwLbA content_len=316
+[21:32:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:32:10] tool_result: id=8zaNq4l25hmOocDIHNgme9JqOZgzCU36 content_len=316
+[21:32:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[21:32:19] tool_result: id=Rt3Cp1t1HBjuXFtYsn9jffIeb7l2ADIw content_len=246
+[21:32:20] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[21:32:20] tool_result: id=xj27OhrhP6SsxDV82gHnR52c1Nm7tXko content_len=176
+[21:32:22] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[21:32:22] tool_result: id=c6BZk28b9VBu9liOSkovXjaRsCa44xRy content_len=246
+[21:32:24] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[21:32:24] tool_result: id=UoiedQCzTzK9rJkK4My6Lk5D9rUF4QgU content_len=246
+[21:34:20] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[21:34:20] tool_result: id=gtctVVGZemdoRlHO4Yy34nVbWBKnrlTE content_len=67
+[ATTEMPT instance=world_pt_003 attempt=1/2 wall_s=269.7 start=2026-04-27T12:29:50Z end=2026-04-27T12:34:20Z]
+ acc=0.333 n_int=7 [submitted] wall_s=270 capture=mcp_file
+[OK instance=world_pt_003 acc=0.333 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_003_run9.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.333 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

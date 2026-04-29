@@ -1,0 +1,26 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e3c_ca_run10.json
+  world_ca_001 (cellular_automata, medium)...[20:10:38] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[20:10:38] tool_result: id=oxxt2InCp8Quia8olxXpZGBWtNE1FSbU content_len=2580
+[20:13:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[20:13:38] tool_result: id=wh45wlFqDqw1wUQChSNVnxLjcRn7KvA4 content_len=179
+[20:13:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[20:13:42] tool_result: id=GoeZOBPncLpMTolq3VjFJ3EAJXwikzLt content_len=179
+[20:13:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[20:13:43] tool_result: id=IEXooVNnChIiILpPebYjYLIIP0DXJqAU content_len=149
+[20:13:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[20:13:45] tool_result: id=7zWdL8BGv8HTGabTdQ49HFic5I4t9kiv content_len=179
+[20:13:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[20:13:46] tool_result: id=BYqJmjCr9xLFBTMkFWOQHkg1fCIaYSC9 content_len=179
+[20:15:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row']
+[20:15:25] tool_result: id=tyjJNWK5ZsvMVFtXNjEXXMm0xuamG8Yn content_len=148
+[20:18:51] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[20:18:51] tool_result: id=8mZPUlpBkuWIYF8OoancqzBwLfwYOoiM content_len=68
+[ATTEMPT instance=world_ca_001 attempt=1/2 wall_s=495.0 start=2026-04-26T11:10:36Z end=2026-04-26T11:18:51Z]
+ acc=0.167 n_int=6 [submitted] wall_s=495 capture=mcp_file
+[OK instance=world_ca_001 acc=0.167 capture=mcp_file]
+
+Results written to arm_a/results_v3_e3c_ca_run10.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.167 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

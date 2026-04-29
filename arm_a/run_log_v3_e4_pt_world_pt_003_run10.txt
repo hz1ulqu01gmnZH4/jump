@@ -1,0 +1,28 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_003_run10.json
+  world_pt_003 (particle_system, hard)...[21:34:23] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:34:23] tool_result: id=1WgYpT7HvbPojcFtiFLXG3zZ8kKmA1it content_len=4535
+[21:35:26] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:35:26] tool_result: id=KfEPrmD1axsiqkh9X38roKZMgyUjW1eg content_len=316
+[21:35:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:35:28] tool_result: id=u3qvUsiVkeVa80z0p8aHEy6HToaqSgML content_len=316
+[21:35:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'type', 'new_type', 'mod']
+[21:35:31] tool_result: id=zPvjgNECbZT5JIgWstgMTH8tSntDhuiF content_len=3
+[21:35:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'type', 'mod']
+[21:35:32] tool_result: id=1qd38grWFLVElnoy8g86QWe3y6G5Xm40 content_len=3
+[21:35:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'vx', 'vy']
+[21:35:33] tool_result: id=Na9VTRibgcZ3TIm5I985uDeiwKzrQcnM content_len=316
+[21:36:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'vx', 'vy']
+[21:36:04] tool_result: id=C6QCRyqKyx0grLiz3gHYrBFAB0usS4JS content_len=316
+[21:37:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:37:30] tool_result: id=X4cx8qtYV0SQCWziMIvUTO1ObNbBOjMo content_len=316
+[21:38:27] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[21:38:27] tool_result: id=9Lop73ksSHBmJi8DN5JzHRiUtQVskyRr content_len=52
+[ATTEMPT instance=world_pt_003 attempt=1/2 wall_s=246.2 start=2026-04-27T12:34:21Z end=2026-04-27T12:38:27Z]
+ acc=0.000 n_int=7 [submitted] wall_s=246 capture=mcp_file
+[OK instance=world_pt_003 acc=0.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_003_run10.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

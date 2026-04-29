@@ -1,0 +1,26 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_ca_world_ca_002_run5.json
+  world_ca_002 (cellular_automata, hard)...[00:02:55] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[00:02:55] tool_result: id=07wWL9LJn3NAhuSOJGAEcTkjNAG5FvsE content_len=3286
+[00:03:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:03:18] tool_result: id=4Gozrp1RPphRpoW5M4EBUy6Px8lWwFaI content_len=237
+[00:07:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:07:06] tool_result: id=w7lCXInnaG3lNZekXeA25iDXqsXEh89n content_len=237
+[00:07:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:07:07] tool_result: id=c5ywgxHk33mZgyNeC2FblcdLb6hLfvxd content_len=237
+[00:07:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:07:09] tool_result: id=2TKuSbZMkM8y3LLqcF24Y9lahPvB4KFO content_len=237
+[00:07:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:07:10] tool_result: id=imaGzUonmaL08SVsZBLuHtorkfT0CB2V content_len=237
+[00:09:02] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[00:09:02] tool_result: id=1ilYw742t57cFGVVsU6AvoSaWFfgoAR5 content_len=237
+[00:11:17] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[00:11:17] tool_result: id=TtJ9ejIKzazN7sCvoVpQSfhndoPBxk0j content_len=52
+[ATTEMPT instance=world_ca_002 attempt=1/2 wall_s=503.7 start=2026-04-27T15:02:54Z end=2026-04-27T15:11:17Z]
+ acc=0.000 n_int=6 [submitted] wall_s=504 capture=mcp_file
+[OK instance=world_ca_002 acc=0.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_ca_world_ca_002_run5.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

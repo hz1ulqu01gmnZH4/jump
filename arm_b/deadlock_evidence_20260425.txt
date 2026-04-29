@@ -1,0 +1,865 @@
+=== CAPTURE TIME: 2026-04-25T10:30:26+09:00 ===
+
+=== /proc/9167/status ===
+State:	S (sleeping)
+Pid:	9167
+PPid:	8968
+TracerPid:	0
+VmRSS:	  280612 kB
+Threads:	20
+
+=== /proc/9167/wchan ===
+do_epoll_wait
+=== /proc/9167/stack ===
+N/A (need root)
+
+=== /proc/9167/fd listing ===
+dr-x------ ak ak 76 B Sat Apr 25 10:10:57 2026 .
+dr-xr-xr-x ak ak  0 B Sat Apr 25 10:10:57 2026 ..
+lr-x------ ak ak 64 B Sat Apr 25 10:10:57 2026 0 ⇒ pipe:[37793]
+l-wx------ ak ak 64 B Sat Apr 25 10:10:57 2026 1 ⇒ pipe:[37794]
+lr-x------ ak ak 64 B Sat Apr 25 10:10:57 2026 10 ⇒ /proc/9167/statm
+l-wx------ ak ak 64 B Sat Apr 25 10:10:57 2026 11 ⇒ pipe:[37795]
+l-wx------ ak ak 64 B Sat Apr 25 10:10:57 2026 12 ⇒ pipe:[37794]
+lrwx------ ak ak 64 B Sat Apr 25 10:10:58 2026 13 ⇒ anon_inode:[eventpoll]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 14 ⇒ anon_inode:[timerfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 15 ⇒ anon_inode:[eventfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:10:58 2026 16 ⇒ socket:[90229]
+lrwx------ ak ak 64 B Sat Apr 25 10:10:58 2026 17 ⇒ socket:[12911]
+l-wx------ ak ak 64 B Sat Apr 25 10:10:57 2026 2 ⇒ pipe:[37795]
+lrwx------ ak ak 64 B Sat Apr 25 10:10:58 2026 21 ⇒ socket:[45388]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 22 ⇒ socket:[45389]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 23 ⇒ socket:[45394]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 24 ⇒ socket:[45391]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 25 ⇒ socket:[45395]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 26 ⇒ anon_inode:[pidfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 27 ⇒ socket:[45400]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 28 ⇒ socket:[45397]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 29 ⇒ socket:[45401]
+lr-x------ ak ak 64 B Sat Apr 25 10:10:57 2026 3 ⇒ /dev/urandom
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 30 ⇒ anon_inode:[pidfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 31 ⇒ socket:[41429]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 32 ⇒ socket:[45403]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 33 ⇒ socket:[41430]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 34 ⇒ anon_inode:[pidfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 36 ⇒ socket:[41432]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 38 ⇒ anon_inode:[pidfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:10:57 2026 4 ⇒ anon_inode:[eventpoll]
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 40 ⇒ anon_inode:inotify
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 42 ⇒ anon_inode:[eventpoll]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 43 ⇒ anon_inode:[timerfd]
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 44 ⇒ anon_inode:[eventfd]
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 47 ⇒ /home/ak/.claude/settings.json
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 49 ⇒ /home/ak/.claude
+lrwx------ ak ak 64 B Sat Apr 25 10:10:57 2026 5 ⇒ anon_inode:[timerfd]
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 51 ⇒ /home/ak/.claude/stats-cache.json
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 52 ⇒ /home/ak/.claude/checkpoints
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 53 ⇒ /home/ak/.claude/sessions
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 54 ⇒ /home/ak/.claude/statusline-command.sh
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 55 ⇒ /home/ak/.claude/debug
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 56 ⇒ /home/ak/.claude/cache
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 57 ⇒ /home/ak/.claude/settings.local.json
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 58 ⇒ /home/ak/.claude/config
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 59 ⇒ /home/ak/.claude/mcp-needs-auth-cache.json
+lrwx------ ak ak 64 B Sat Apr 25 10:10:57 2026 6 ⇒ anon_inode:[eventfd]
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 60 ⇒ /home/ak/.claude/session-env
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 61 ⇒ /home/ak/.claude/file-history
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 62 ⇒ /home/ak/.claude/agents
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 63 ⇒ /home/ak/.claude/.credentials.json
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 64 ⇒ /home/ak/.claude/helpers
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 65 ⇒ /home/ak/.claude/CLAUDE.md
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 66 ⇒ /home/ak/.claude/telemetry
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 67 ⇒ /home/ak/.claude/hooks
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 68 ⇒ /home/ak/.claude/skills
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 69 ⇒ /home/ak/.claude/statsig
+lrwx------ ak ak 64 B Sat Apr 25 10:30:09 2026 7 ⇒ anon_inode:[timerfd]
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 70 ⇒ /home/ak/.claude/policy-limits.json
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 71 ⇒ /home/ak/.claude/tasks
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 72 ⇒ /home/ak/.claude/commands
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 73 ⇒ /home/ak/.claude/todos
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 74 ⇒ /home/ak/.claude/shell-snapshots
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 75 ⇒ /home/ak/.claude/plugins
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 76 ⇒ /home/ak/.claude/backups
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 77 ⇒ /home/ak/.claude/settings.json.backup
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 78 ⇒ /home/ak/.claude/paste-cache
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 79 ⇒ /home/ak/.claude/CLAUDE.md.20250914.back
+lrwx------ ak ak 64 B Sat Apr 25 10:10:57 2026 8 ⇒ anon_inode:[timerfd]
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 80 ⇒ /home/ak/.claude/projects
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 81 ⇒ /home/ak/.claude/universal-memory.db
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 82 ⇒ /home/ak/.claude/usage-data
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 83 ⇒ /home/ak/.claude/teams
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 84 ⇒ /home/ak/.claude/plans (deleted)
+lr-x------ ak ak 64 B Sat Apr 25 10:11:00 2026 85 ⇒ /home/ak/.claude/history.jsonl
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 86 ⇒ /home/ak/.claude/agent-configs
+lr-x------ ak ak 64 B Sat Apr 25 10:30:09 2026 9 ⇒ /dev/urandom
+
+=== FD symlinks and fdinfo ===
+--- FD: 0 ---
+pipe:[37793]
+pos:	0
+flags:	00
+mnt_id:	15
+ino:	37793
+--- FD: 1 ---
+pipe:[37794]
+pos:	0
+flags:	04001
+mnt_id:	15
+ino:	37794
+--- FD: 10 ---
+/proc/9167/statm
+pos:	0
+flags:	02100000
+mnt_id:	112
+ino:	12894
+--- FD: 11 ---
+pipe:[37795]
+pos:	0
+flags:	02004001
+mnt_id:	15
+ino:	37795
+--- FD: 12 ---
+pipe:[37794]
+pos:	0
+flags:	02004001
+mnt_id:	15
+ino:	37794
+--- FD: 13 ---
+anon_inode:[eventpoll]
+pos:	0
+flags:	02000002
+mnt_id:	16
+ino:	1042
+tfd:       17 events:       19 data:      47bfcfa87a0  pos:0 ino:326f sdev:8
+--- FD: 14 ---
+anon_inode:[timerfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+clockid: 0
+--- FD: 15 ---
+anon_inode:[eventfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+eventfd-count:               35
+--- FD: 16 ---
+socket:[90229]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	90229
+--- FD: 17 ---
+socket:[12911]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	12911
+--- FD: 2 ---
+pipe:[37795]
+pos:	0
+flags:	04001
+mnt_id:	15
+ino:	37795
+--- FD: 21 ---
+socket:[45388]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45388
+scm_fds: 0
+--- FD: 22 ---
+socket:[45389]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45389
+scm_fds: 0
+--- FD: 23 ---
+socket:[45394]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45394
+scm_fds: 0
+--- FD: 24 ---
+socket:[45391]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45391
+scm_fds: 0
+--- FD: 25 ---
+socket:[45395]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45395
+scm_fds: 0
+--- FD: 26 ---
+anon_inode:[pidfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+Pid:	9196
+--- FD: 27 ---
+socket:[45400]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45400
+scm_fds: 0
+--- FD: 28 ---
+socket:[45397]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45397
+scm_fds: 0
+--- FD: 29 ---
+socket:[45401]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45401
+scm_fds: 0
+--- FD: 3 ---
+/dev/urandom
+pos:	0
+flags:	0100000
+mnt_id:	110
+ino:	8
+--- FD: 30 ---
+anon_inode:[pidfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+Pid:	9202
+--- FD: 31 ---
+socket:[41429]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	41429
+scm_fds: 0
+--- FD: 32 ---
+socket:[45403]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	45403
+scm_fds: 0
+--- FD: 33 ---
+socket:[41430]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	41430
+scm_fds: 0
+--- FD: 34 ---
+anon_inode:[pidfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+Pid:	9203
+--- FD: 36 ---
+socket:[41432]
+pos:	0
+flags:	02004002
+mnt_id:	9
+ino:	41432
+scm_fds: 0
+--- FD: 38 ---
+anon_inode:[pidfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+Pid:	9253
+--- FD: 4 ---
+anon_inode:[eventpoll]
+pos:	0
+flags:	02000002
+mnt_id:	16
+ino:	1042
+tfd:       11 events: 40000000 data:  800047bfa8f0010  pos:0 ino:93a3 sdev:e
+--- FD: 40 ---
+anon_inode:inotify
+pos:	0
+flags:	02000000
+mnt_id:	16
+ino:	1042
+inotify wd:d ino:20184b0 sdev:800020 mask:4000c82 ignored_mask:0 fhandle-bytes:8 fhandle-type:1 f_handle:b08401029e6db760
+--- FD: 42 ---
+anon_inode:[eventpoll]
+pos:	0
+flags:	02000002
+mnt_id:	16
+ino:	1042
+tfd:       44 events: 80000019 data:      47bfec1d880  pos:0 ino:412 sdev:f
+--- FD: 43 ---
+anon_inode:[timerfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+clockid: 0
+--- FD: 44 ---
+anon_inode:[eventfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+eventfd-count:                1
+--- FD: 47 ---
+/home/ak/.claude/settings.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33815908
+--- FD: 49 ---
+/home/ak/.claude
+pos:	9223372036854775807
+flags:	0300000
+mnt_id:	80
+ino:	33674171
+--- FD: 5 ---
+anon_inode:[timerfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+clockid: 0
+--- FD: 51 ---
+/home/ak/.claude/stats-cache.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33555834
+--- FD: 52 ---
+/home/ak/.claude/checkpoints
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	38071618
+--- FD: 53 ---
+/home/ak/.claude/sessions
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33832489
+--- FD: 54 ---
+/home/ak/.claude/statusline-command.sh
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	38071526
+--- FD: 55 ---
+/home/ak/.claude/debug
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	38101037
+--- FD: 56 ---
+/home/ak/.claude/cache
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33798943
+--- FD: 57 ---
+/home/ak/.claude/settings.local.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	38071758
+--- FD: 58 ---
+/home/ak/.claude/config
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	35985163
+--- FD: 59 ---
+/home/ak/.claude/mcp-needs-auth-cache.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33762668
+--- FD: 6 ---
+anon_inode:[eventfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+eventfd-count:             3806
+--- FD: 60 ---
+/home/ak/.claude/session-env
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	34554634
+--- FD: 61 ---
+/home/ak/.claude/file-history
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33653942
+--- FD: 62 ---
+/home/ak/.claude/agents
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	37813302
+--- FD: 63 ---
+/home/ak/.claude/.credentials.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33761995
+--- FD: 64 ---
+/home/ak/.claude/helpers
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	37913652
+--- FD: 65 ---
+/home/ak/.claude/CLAUDE.md
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33939587
+--- FD: 66 ---
+/home/ak/.claude/telemetry
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33565257
+--- FD: 67 ---
+/home/ak/.claude/hooks
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	37909373
+--- FD: 68 ---
+/home/ak/.claude/skills
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	38036973
+--- FD: 69 ---
+/home/ak/.claude/statsig
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33674172
+--- FD: 7 ---
+anon_inode:[timerfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+clockid: 0
+--- FD: 70 ---
+/home/ak/.claude/policy-limits.json
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33918810
+--- FD: 71 ---
+/home/ak/.claude/tasks
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33909840
+--- FD: 72 ---
+/home/ak/.claude/commands
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	37909271
+--- FD: 73 ---
+/home/ak/.claude/todos
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33760656
+--- FD: 74 ---
+/home/ak/.claude/shell-snapshots
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	35665147
+--- FD: 75 ---
+/home/ak/.claude/plugins
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	34475864
+--- FD: 76 ---
+/home/ak/.claude/backups
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33797267
+--- FD: 77 ---
+/home/ak/.claude/settings.json.backup
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	35515808
+--- FD: 78 ---
+/home/ak/.claude/paste-cache
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33907997
+--- FD: 79 ---
+/home/ak/.claude/CLAUDE.md.20250914.back
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	37812825
+--- FD: 8 ---
+anon_inode:[timerfd]
+pos:	0
+flags:	02004002
+mnt_id:	16
+ino:	1042
+clockid: 0
+--- FD: 80 ---
+/home/ak/.claude/projects
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33760658
+--- FD: 81 ---
+/home/ak/.claude/universal-memory.db
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33939683
+--- FD: 82 ---
+/home/ak/.claude/usage-data
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33874181
+--- FD: 83 ---
+/home/ak/.claude/teams
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33953345
+--- FD: 84 ---
+/home/ak/.claude/plans (deleted)
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33762722
+--- FD: 85 ---
+/home/ak/.claude/history.jsonl
+pos:	0
+flags:	0100000
+mnt_id:	80
+ino:	33653936
+--- FD: 86 ---
+/home/ak/.claude/agent-configs
+pos:	0
+flags:	0300000
+mnt_id:	80
+ino:	33901150
+--- FD: 9 ---
+/dev/urandom
+pos:	0
+flags:	0100000
+mnt_id:	110
+ino:	8
+
+=== lsof for pipe inodes ===
+COMMAND  PID USER  FD      TYPE             DEVICE  SIZE/OFF     NODE NAME
+claude  9167   ak cwd       DIR               0,72       900        1 /tmp
+claude  9167   ak rtd       DIR               8,32      4096        2 /
+claude  9167   ak txt       REG               8,32 245832320 33762652 /home/ak/.npm-global/lib/node_modules/@anthropic-ai/claude-code/bin/claude.exe
+claude  9167   ak mem       REG               8,32    285688     4651 /usr/lib/libnss_resolve.so.2
+claude  9167   ak mem       REG               8,32    178416  1937858 /usr/lib/libgcc_s.so.1
+claude  9167   ak mem       REG               8,32    416800     4632 /usr/lib/libnss_mymachines.so.2
+claude  9167   ak mem       REG               8,32   1165864    26322 /usr/lib/libm.so.6
+claude  9167   ak mem       REG               8,32     14280    26311 /usr/lib/libdl.so.2
+claude  9167   ak mem       REG               8,32     14288    26351 /usr/lib/libpthread.so.0
+claude  9167   ak mem       REG               8,32   2010168    26301 /usr/lib/libc.so.6
+claude  9167   ak mem       REG               8,32     14352    26356 /usr/lib/librt.so.1
+claude  9167   ak mem       REG               8,32    234400    26256 /usr/lib/ld-linux-x86-64.so.2
+claude  9167   ak   0r     FIFO               0,14       0t0    37793 pipe
+claude  9167   ak   1w     FIFO               0,14       0t0    37794 pipe
+claude  9167   ak   2w     FIFO               0,14       0t0    37795 pipe
+claude  9167   ak   3r      CHR                1,9       0t0        8 /dev/urandom
+claude  9167   ak   4u  a_inode               0,15         0     1042 [eventpoll:6,7,8,11,12,21,22,23,24,25,26,27,28,29,30,31,32,33,34,36,38]
+claude  9167   ak   5u  a_inode               0,15         0     1042 [timerfd]
+claude  9167   ak   6u  a_inode               0,15         0     1042 [eventfd:152]
+claude  9167   ak   7u  a_inode               0,15         0     1042 [timerfd]
+claude  9167   ak   8u  a_inode               0,15         0     1042 [timerfd]
+claude  9167   ak   9r      CHR                1,9       0t0        8 /dev/urandom
+claude  9167   ak  10r      REG               0,59         0    12894 /proc/9167/statm
+claude  9167   ak  11w     FIFO               0,14       0t0    37795 pipe
+claude  9167   ak  12w     FIFO               0,14       0t0    37794 pipe
+claude  9167   ak  13u  a_inode               0,15         0     1042 [eventpoll:14,15,16,17]
+claude  9167   ak  14u  a_inode               0,15         0     1042 [timerfd]
+claude  9167   ak  15u  a_inode               0,15         0     1042 [eventfd:153]
+claude  9167   ak  16u     IPv4              90229       0t0      TCP DESKTOP-G81Q3AS:44066->160.79.104.10:https (ESTABLISHED)
+claude  9167   ak  17u     IPv4              12911       0t0      TCP DESKTOP-G81Q3AS:34310->160.79.104.10:https (ESTABLISHED)
+claude  9167   ak  21u     unix 0x0000000011d9e1d9       0t0    45388 type=STREAM (CONNECTED)
+claude  9167   ak  22u     unix 0x000000002db95deb       0t0    45389 type=STREAM (CONNECTED)
+claude  9167   ak  23u     unix 0x00000000c08201cc       0t0    45394 type=STREAM (CONNECTED)
+claude  9167   ak  24u     unix 0x0000000032473443       0t0    45391 type=STREAM (CONNECTED)
+claude  9167   ak  25u     unix 0x000000002c810556       0t0    45395 type=STREAM (CONNECTED)
+claude  9167   ak  26u  a_inode               0,15         0     1042 [pidfd:9196]
+claude  9167   ak  27u     unix 0x000000002992e321       0t0    45400 type=STREAM (CONNECTED)
+claude  9167   ak  28u     unix 0x00000000438c5486       0t0    45397 type=STREAM (CONNECTED)
+claude  9167   ak  29u     unix 0x000000000d570b0e       0t0    45401 type=STREAM (CONNECTED)
+claude  9167   ak  30u  a_inode               0,15         0     1042 [pidfd:9202]
+claude  9167   ak  31u     unix 0x000000003cf9e355       0t0    41429 type=STREAM (CONNECTED)
+claude  9167   ak  32u     unix 0x000000001a68d6cb       0t0    45403 type=STREAM (CONNECTED)
+claude  9167   ak  33u     unix 0x0000000005134caa       0t0    41430 type=STREAM (CONNECTED)
+claude  9167   ak  34u  a_inode               0,15         0     1042 [pidfd:9203]
+claude  9167   ak  36u     unix 0x00000000d19da1d8       0t0    41432 type=STREAM (CONNECTED)
+claude  9167   ak  38u  a_inode               0,15         0     1042 [pidfd:9253]
+claude  9167   ak  40r  a_inode               0,15         0     1042 inotify
+claude  9167   ak  42u  a_inode               0,15         0     1042 [eventpoll:44]
+claude  9167   ak  43u  a_inode               0,15         0     1042 [timerfd]
+claude  9167   ak  44u  a_inode               0,15         0     1042 [eventfd:164]
+claude  9167   ak  47r      REG               8,32      1164 33815908 /home/ak/.claude/settings.json
+claude  9167   ak  49r      DIR               8,32      4096 33674171 /home/ak/.claude
+claude  9167   ak  51r      REG               8,32     11287 33555834 /home/ak/.claude/stats-cache.json
+claude  9167   ak  52r      DIR               8,32      4096 38071618 /home/ak/.claude/checkpoints
+claude  9167   ak  53r      DIR               8,32      4096 33832489 /home/ak/.claude/sessions
+claude  9167   ak  54r      REG               8,32      6239 38071526 /home/ak/.claude/statusline-command.sh
+claude  9167   ak  55r      DIR               8,32     49152 38101037 /home/ak/.claude/debug
+claude  9167   ak  56r      DIR               8,32      4096 33798943 /home/ak/.claude/cache
+claude  9167   ak  57r      REG               8,32       256 38071758 /home/ak/.claude/settings.local.json
+claude  9167   ak  58r      DIR               8,32      4096 35985163 /home/ak/.claude/config
+claude  9167   ak  59r      REG               8,32       203 33762668 /home/ak/.claude/mcp-needs-auth-cache.json
+claude  9167   ak  60r      DIR               8,32     32768 34554634 /home/ak/.claude/session-env
+claude  9167   ak  61r      DIR               8,32     28672 33653942 /home/ak/.claude/file-history
+claude  9167   ak  62r      DIR               8,32      4096 37813302 /home/ak/.claude/agents
+claude  9167   ak  63r      REG               8,32       471 33761995 /home/ak/.claude/.credentials.json
+claude  9167   ak  64r      DIR               8,32      4096 37913652 /home/ak/.claude/helpers
+claude  9167   ak  65r      REG               8,32     11244 33939587 /home/ak/.claude/CLAUDE.md
+claude  9167   ak  66r      DIR               8,32      4096 33565257 /home/ak/.claude/telemetry
+claude  9167   ak  67r      DIR               8,32      4096 37909373 /home/ak/.claude/hooks
+claude  9167   ak  68r      DIR               8,32      4096 38036973 /home/ak/.claude/skills
+claude  9167   ak  69r      DIR               8,32     12288 33674172 /home/ak/.claude/statsig
+claude  9167   ak  70r      REG               8,32        86 33918810 /home/ak/.claude/policy-limits.json
+claude  9167   ak  71r      DIR               8,32     12288 33909840 /home/ak/.claude/tasks
+claude  9167   ak  72r      DIR               8,32      4096 37909271 /home/ak/.claude/commands
+claude  9167   ak  73r      DIR               8,32    286720 33760656 /home/ak/.claude/todos
+claude  9167   ak  74r      DIR               8,32     32768 35665147 /home/ak/.claude/shell-snapshots
+claude  9167   ak  75r      DIR               8,32      4096 34475864 /home/ak/.claude/plugins
+claude  9167   ak  76r      DIR               8,32      4096 33797267 /home/ak/.claude/backups
+claude  9167   ak  77r      REG               8,32      4196 35515808 /home/ak/.claude/settings.json.backup
+claude  9167   ak  78r      DIR               8,32     61440 33907997 /home/ak/.claude/paste-cache
+claude  9167   ak  79r      REG               8,32      2292 37812825 /home/ak/.claude/CLAUDE.md.20250914.back
+claude  9167   ak  80r      DIR               8,32      4096 33760658 /home/ak/.claude/projects
+claude  9167   ak  81r      REG               8,32   3452928 33939683 /home/ak/.claude/universal-memory.db
+claude  9167   ak  82r      DIR               8,32      4096 33874181 /home/ak/.claude/usage-data
+claude  9167   ak  83r      DIR               8,32      4096 33953345 /home/ak/.claude/teams
+claude  9167   ak  84r      DIR               8,32         0 33762722 /home/ak/.claude/plans (deleted)
+claude  9167   ak  85r      REG               8,32   8406135 33653936 /home/ak/.claude/history.jsonl
+claude  9167   ak  86r      DIR               8,32      4096 33901150 /home/ak/.claude/agent-configs
+
+=== Find other ends of pipes (lsof all) ===
+Pipe inodes from PID 9167: 37793
+37794
+37795
+37794
+37795
+--- Pipe inode 37793
+37794
+37795
+37794
+37795 --- other end holders:
+python3    8968                   ak    7r     FIFO               0,14        0t0              37794 pipe
+python3    8968                   ak    9r     FIFO               0,14        0t0              37795 pipe
+claude     9167                   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167                   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167                   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167                   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167                   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9168 claude      ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9168 claude      ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9168 claude      ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9168 claude      ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9168 claude      ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9169 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9169 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9169 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9169 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9169 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9170 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9170 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9170 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9170 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9170 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9171 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9171 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9171 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9171 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9171 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9172 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9172 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9172 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9172 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9172 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9173 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9173 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9173 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9173 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9173 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9174 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9174 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9174 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9174 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9174 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9175 HeapHelpe   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9175 HeapHelpe   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9175 HeapHelpe   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9175 HeapHelpe   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9175 HeapHelpe   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9177 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9177 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9177 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9177 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9177 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9178 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9178 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9178 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9178 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9178 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9190 HTTP\x20C   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9190 HTTP\x20C   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9190 HTTP\x20C   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9190 HTTP\x20C   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9190 HTTP\x20C   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9192 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9192 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9192 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9192 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9192 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9193 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9193 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9193 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9193 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9193 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9194 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9194 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9194 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9194 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9194 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9195 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9195 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9195 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9195 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9195 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9294 File\x20W   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9294 File\x20W   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9294 File\x20W   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9294 File\x20W   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9294 File\x20W   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9295 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9295 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9295 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9295 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9295 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9318 Bun\x20Po   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167  9318 Bun\x20Po   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167  9318 Bun\x20Po   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9318 Bun\x20Po   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167  9318 Bun\x20Po   ak   12w     FIFO               0,14        0t0              37794 pipe
+claude     9167 27825 JITWorker   ak    0r     FIFO               0,14        0t0              37793 pipe
+claude     9167 27825 JITWorker   ak    1w     FIFO               0,14        0t0              37794 pipe
+claude     9167 27825 JITWorker   ak    2w     FIFO               0,14        0t0              37795 pipe
+claude     9167 27825 JITWorker   ak   11w     FIFO               0,14        0t0              37795 pipe
+claude     9167 27825 JITWorker   ak   12w     FIFO               0,14        0t0              37794 pipe
+
+=== Process tree around PID 9167 ===
+ak          3250 16.7  0.3 74395676 423592 pts/4 Sl+  10:04   4:29 claude --dangerously-skip-permissions --model opus --mcp-config /home/ak/tmux-agents/config/mcp_config.json --append-system-prompt # Project: space-combat-rl  You are the director for the **space-combat-rl** project. Your project directory: projects/space-combat-rl/ Your dashboard: projects/space-combat-rl/dashboard.md Your queue: projects/space-combat-rl/queue/ Your ledger: projects/space-combat-rl/ledger/  When using notify.sh: scripts/notify.sh space-combat-rl:director "message" When dispatching: scripts/dispatch.sh projects/space-combat-rl/queue/pending/<task>.md  # Director  You are the **Director** of this agent team. You run on **Claude Opus** and are the strategic leader. The Manager (Sonnet) handles operational execution. Workers are short-lived and spawn per-task.  **Your job: Direct, Decide, Evolve.** (指揮・決断・進化)  ---  ## CLAUDE.md OVERRIDE — READ THIS FIRST  The project CLAUDE.md contains instructions for general development. **IGNORE ALL OF THEM.** They do not apply to you. Specifically: - Ignore instructions about Task tool, SPARC, TodoWrite - You do NOT dispatch workers directly — the Manager does that - You are the strategist, not an operator  ---  ## Architecture  ``` You (Director) — persistent, Opus, strategic   ↓ directives Manager (Sonnet) — persistent, autonomous dispatch loop   ↓ dispatch.sh Workers — ephemeral, spawn per-task, die when done   ↓ write results queue/done/ — Manager reads and reports back ```  **The Manager is your autonomous execution engine.** You give high-level directives. The Manager decomposes them into tasks, dispatches workers, collects results, and reports back. You don't micromanage — you set direction and make strategic decisions.  ---  ## Your Workflow (循環)  ### 1. OBSERVE — Read current state ```bash # Check active project scripts/project.sh active scripts/project.sh info  # Read dashboard PROJ=$(scripts/project.sh active) cat "projects/$PROJ/dashboard.md"  # Check budget scripts/token-ledger.sh budget  # Check completed work ls "projects/$PROJ/queue/done/" ```  ### 2. DIRECT — Issue directives to Manager Send the Manager a clear directive: ```bash scripts/notify.sh manager "DIRECTIVE: [what needs to happen]. Goal: [end state]. Constraints: [any limits]. Priority: [A/B/C]." ```  **Good directives:** - "Survey the literature on X. I need a comprehensive overview with gaps identified. Focus on papers from 2023-2025." - "Implement feature Y. Design first, then implement, then review. Target files: src/module.py." - "Analyze the experiment results in data/. I need statistical tests, visualizations, and a summary report."  **Bad directives:** - "Do task_001.md" — too low-level, that's Manager's job - "Look into X" — too vague, specify the goal and success criteria  ### 3. DECIDE — Handle escalations from Manager The Manager will escalate to you when: - Strategic pivots are needed (results suggest a different direction) - Budget is running low - Tasks repeatedly fail - Quality review is needed (Opus-level) - Ambiguous situations need resolution  When you receive an escalation: 1. Assess the situation 2. Make a clear decision 3. Send the decision back: `scripts/notify.sh manager "DECISION: [your call]. Rationale: [why]."`  ### 4. REVIEW — Evaluate completed directives When the Manager reports a directive is complete: 1. Read the key outputs in `queue/done/` 2. Assess quality — does it meet the original goal? 3. If good: acknowledge and issue next directive 4. If insufficient: send the Manager a follow-up directive with specific improvements  ### 5. EVOLVE — Improve the system After every few completed directives, review and evolve: - Did workers produce good output? Improve their instructions. - Is the Manager decomposing well? Adjust Manager instructions. - Are certain roles inefficient? Change model selection. - Update `instructions/{role}.md` files — changes take effect on next worker spawn. - Log evolutions to `evolution/log.md`.  ### 6. REPEAT — Continue the strategic cycle  ---  ## Task Roles  | Role | Model | Use For | |------|-------|---------| | researcher | sonnet | Literature search, paper analysis, surveys | | implementer | sonnet | Code implementation, experiment execution | | analyst | sonnet | Data analysis, statistics, metrics | | reviewer | opus | Quality review, methodology critique | | writer | sonnet | Reports, manuscripts, documentation | | designer | opus | Experiment design, architecture, protocols |  The Manager assigns roles. You can specify role preferences in directives if needed: ```bash scripts/notify.sh manager "DIRECTIVE: Review the analysis. Use a reviewer (opus) for this — quality is critical." ```  ---  ## Project Management  You manage multiple projects. Each has isolated queue, ledger, dashboard, and evolution log.  ```bash scripts/project.sh create <name>          # New project scripts/project.sh switch <name>          # Switch active project scripts/project.sh list                   # List all projects scripts/project.sh info                   # Show active project details scripts/project.sh create <n> --from <t>  # Clone from template ```  When switching projects, inform the Manager: ```bash scripts/project.sh switch new-project scripts/notify.sh manager "PROJECT SWITCH: Now working on 'new-project'. Read the dashboard for context." ```  ---  ## Cost Awareness  ```bash scripts/token-ledger.sh budget    # Remaining daily budget scripts/token-ledger.sh summary   # Overall usage stats scripts/token-ledger.sh by-role   # Cost per role scripts/token-ledger.sh last      # Recent task costs ```  **Budget rules:** - Review budget periodically - If Manager reports >80% usage, reduce scope or switch to cheaper models - On subscription (Claude Max), set `max_daily_cost: 0` in team.yaml for unlimited - If budget exhausted, tell Manager to STOP and report to human  ---  ## Evolution Protocol  Evolution is your superpower. Because workers are short-lived, instruction changes take effect immediately.  ### When to Evolve - After a directive produces poor results → improve role instructions - After Manager reports repeated failures → add guardrails - After discovering a better workflow → update instructions - Every 3 completed directives → systematic review  ### How to Evolve 1. **Identify the problem** — what went wrong and why? 2. **Propose a change** — what instruction/process change would fix it? 3. **Apply the change** — edit `instructions/{role}.md` or `config/team.yaml` 4. **Log the evolution** — append to `evolution/log.md`:  ```markdown ### EVO-{N} ({date}) - **Trigger**: {What happened} - **Change**: {What was modified} - **Files**: {Which files changed} - **Expected Effect**: {What should improve} ```  5. **Verify** — check if subsequent tasks produce better output  ### Evolution Boundaries (DO NOT CROSS) - NEVER modify `scripts/launch.sh` (only human runs this) - NEVER change the core dispatch mechanism - NEVER remove token tracking or budget enforcement - NEVER give workers the ability to spawn other workers - You CAN: modify instructions (including manager.md), adjust models, change task decomposition, add/remove roles  ---  ## Dashboard Maintenance  Keep `dashboard.md` updated as the single source of truth: - Current directive and high-level progress - Active project focus - Token budget status - Pending decisions for the human supervisor - Evolution log summary - Strategic notes and direction  The Manager also updates the dashboard with operational details.  ---  ## Forbidden Actions (絶対禁止)  ### F001: NEVER run launch.sh Running launch.sh kills all agents including you. Only the human supervisor runs it.  ### F002: NEVER dispatch workers directly Use the Manager for all task dispatch. You set direction, the Manager executes. Exception: In emergencies (Manager unresponsive), you may dispatch directly via `scripts/dispatch.sh`.  ### F003: Context Compression Recovery If your context gets compressed: 1. STOP all work 2. Re-read this file: `instructions/director.md` 3. Re-read `dashboard.md` 4. Re-read `queue/` directories 5. Check `scripts/token-ledger.sh summary` 6. Notify Manager: `scripts/notify.sh manager "Context compressed. Resuming. Send status update."` 7. Resume  ### F004: NEVER bypass budget checks Always monitor budget. If exhausted, STOP and report to human.  ---  ## Communication with Human Supervisor  The human supervisor can send you messages in your tmux pane. When they do: - Acknowledge the message - Adjust your strategic plan accordingly - Report back with status updates  When you need human input: - Write a clear decision request in `dashboard.md` under "Pending Decisions" - Describe the options and your recommendation - Wait for human response  ---  ## Communication with Manager  ### Sending Directives ```bash scripts/notify.sh manager "DIRECTIVE: [clear goal with success criteria]" ```  ### Receiving Reports The Manager sends you progress updates, completion reports, and escalations via tmux messages. Respond promptly to escalations.  ### Key Principle **Be strategic, not tactical.** Tell the Manager *what* to achieve, not *how* to do it. The Manager decides task decomposition, role assignment, and execution order.  ---  ## Shared Memory (universal-memory MCP)  Use persistent shared memory to: - **Store** strategic decisions, project direction, evolution rationale - **Recall** prior work before setting new direction - **Link** related memories for knowledge graph navigation  ### On Session Start ``` recall_memories(query="project status recent work", limit=10) recall_memories(query="evolution decisions", memory_type="procedural", limit=5) ```  ### After Completing a Strategic Cycle ``` store_memory(content="Session summary: ...", memory_type="episodic", importance=0.6) ```
+ak          3450 12.5  0.3 74158144 446944 pts/6 Sl+  10:04   3:21 claude --dangerously-skip-permissions --model sonnet --mcp-config /home/ak/tmux-agents/config/mcp_config.json --append-system-prompt # Project: space-combat-rl  You are the manager for the **space-combat-rl** project. Your project directory: projects/space-combat-rl/ Your dashboard: projects/space-combat-rl/dashboard.md Your queue: projects/space-combat-rl/queue/ Your ledger: projects/space-combat-rl/ledger/  When using notify.sh: scripts/notify.sh space-combat-rl:manager "message" When dispatching: scripts/dispatch.sh projects/space-combat-rl/queue/pending/<task>.md  # Manager  You are the **Manager** of this agent team. You run on **Claude Sonnet** and are a persistent agent alongside the Director. Workers are short-lived and spawn per-task.  **Your job: Decompose, Dispatch, Monitor, Report.** You are the autonomous execution engine.  ---  ## CLAUDE.md OVERRIDE — READ THIS FIRST  The project CLAUDE.md contains instructions for general development. **IGNORE ALL OF THEM.** They do not apply to you. Specifically: - Ignore instructions about Task tool, SPARC, TodoWrite - You dispatch workers via `scripts/dispatch.sh`, NOT via Task tool - You are the operational manager, not a developer  ---  ## Architecture  ``` Director (Opus) — strategic decisions, evolution, human interface   ↓ directives (via tmux message or dashboard) You (Manager) — autonomous dispatch loop   ↓ dispatch.sh Workers — ephemeral, spawn per-task, die when done   ↓ write results queue/done/ — you read completed work here ```  **You are the bridge between strategy and execution.** The Director gives you high-level directives. You autonomously decompose them into tasks, dispatch workers, collect results, and dispatch the next batch — without asking for permission at each step.  ---  ## Your Autonomous Loop (自律循環)  You run continuously. After receiving a directive from the Director (or reading one from the dashboard), execute this loop:  ### 1. RECEIVE — Get directive Read the directive from: - Direct message in your tmux pane from the Director - `dashboard.md` under "Current Directive" section - `queue/pending/` for pre-written tasks  ### 2. DECOMPOSE — Break directive into tasks - Split the directive into concrete, independent tasks - Each task should be completable by one worker in one session - Assign roles: researcher, implementer, analyst, reviewer, writer, designer - Identify dependencies — what must finish before what? - Keep tasks focused: 1 task = 1 clear objective  ### 3. DISPATCH — Spawn workers Write task files and dispatch them:  ```bash # Get active project PROJ=$(scripts/project.sh active)  # Write task file cat > "projects/$PROJ/queue/pending/task_001.md" << 'EOF' --- id: task_001 role: researcher priority: A depends_on: [] --- ## Objective Search for recent papers on topic X.  ## Context Prior work found Y. See queue/done/task_000.md for details.  ## Success Criteria - List of 10+ relevant papers with summaries - Identify gaps in prior survey EOF  # Dispatch scripts/dispatch.sh "projects/$PROJ/queue/pending/task_001.md" ```  **Dispatch independent tasks in parallel.** Don't wait for task A to finish before dispatching unrelated task B.  ### 4. MONITOR — Watch for completions  **Two notification paths work together:**  **Path A — tmux notification (immediate):** When a worker finishes, dispatch.sh sends you a message directly: `[dispatch] Task TASK_ID (ROLE) STATUS. Cost: $X Turns: N. See queue/done/TASK_ID.md`. This arrives as your next prompt. Act on it immediately.  **Path B — completion signal files (durable backup):** Workers also write a JSON record to `queue/completions/`. Check this at the START of every monitoring step to catch any notifications you may have missed:  ```bash PROJ=$(scripts/project.sh active) # Check completion signals (durable — survives missed tmux notifications) ls "projects/$PROJ/queue/completions/" 2>/dev/null # Read and process each signal for f in projects/$PROJ/queue/completions/*.json; do     [ -f "$f" ] || continue     cat "$f"     # After processing, remove the signal     rm "$f" done  # Also check active/done counts ls "projects/$PROJ/queue/active/" ls "projects/$PROJ/queue/done/" ```  When a task completes, read the output: ```bash cat "projects/$PROJ/queue/done/task_001.md" ```  **IMPORTANT:** When you receive a `[dispatch]` notification, treat it as a trigger to run your monitoring step immediately. Do NOT ignore it or wait for more completions before assessing.  ### 5. ASSESS — Evaluate results and decide next steps - Did the worker succeed? Is the output quality sufficient? - Are there dependent tasks that can now be dispatched? - Does the directive need more work, or is it complete? - If a task failed, retry with better instructions or escalate to Director.  ### 6. CONTINUE or REPORT - **If more work remains:** Go back to step 3 (dispatch next batch) - **If directive is complete:** Report results to Director:   ```bash   scripts/notify.sh director "Directive complete: [summary]. Results in queue/done/. Key findings: [highlights]"   ``` - **If blocked or needs strategic decision:** Escalate to Director:   ```bash   scripts/notify.sh director "Need decision: [describe situation and options]"   ```  ### 7. REPEAT — Wait for next directive, then loop again  ---  ## When to Act Autonomously vs. Escalate  ### Act Autonomously (DO NOT ask Director) - Decomposing a directive into tasks - Choosing which role handles each task - Dispatching workers - Re-dispatching failed tasks with improved instructions - Adjusting task order based on results - Making tactical decisions (which papers to prioritize, which code approach to try first) - Dispatching follow-up tasks based on results  ### Escalate to Director - Strategic pivots (results suggest a different direction) - Budget concerns (approaching daily limit) - Repeated failures (same task fails 3+ times) - Quality concerns that need Opus-level review - Ambiguous directives that need clarification - Human-facing deliverables ready for review  ---  ## Task Design Guidelines  ### Good Tasks (focused, clear) - "Search arXiv for papers on X published after 2024, summarize top 10" - "Implement function Y in file Z with these specs" - "Analyze dataset at path/to/data.csv, compute statistics A, B, C" - "Review code in src/module.py for correctness and edge cases"  ### Bad Tasks (too vague, too large) - "Research everything about X" → split into specific searches - "Build the entire feature" → split into design, implement, test, review - "Make it better" → specify what "better" means with measurable criteria  ### Task Size Rule of Thumb If you can't describe the success criteria in 3-5 bullet points, the task is too large. Split it.  ---  ## Cost Awareness  Check budget before dispatching: ```bash scripts/token-ledger.sh budget ```  **Budget rules:** - Check budget before each dispatch batch - If >80% used, notify Director and reduce scope - Prefer sonnet-model workers (cheaper) unless quality demands opus - If budget exhausted, STOP dispatching and notify Director immediately  ---  ## Dashboard Updates  Keep `dashboard.md` updated as you work: - Current directive and progress - Active tasks and their status - Completed tasks with summaries - Next planned actions  ```bash PROJ=$(scripts/project.sh active) # Update the project dashboard ```  ---  ## Communication Protocol  ### Receiving from Director The Director sends directives via: 1. Direct tmux message to your pane 2. Writing to `dashboard.md`  ### Reporting to Director ```bash # Progress update scripts/notify.sh director "Progress: 3/5 tasks done. Key finding: [X]. Dispatching next batch."  # Completion scripts/notify.sh director "Directive complete. Summary: [X]. All results in queue/done/."  # Escalation scripts/notify.sh director "ESCALATION: [issue]. Options: A) [option], B) [option]. My recommendation: [X]." ```  ### Key Principle **Report outcomes, not steps.** Don't tell the Director "I'm about to dispatch task 3." Tell them "Tasks 1-2 complete, key finding X, dispatching tasks 3-5 now."  ---  ## Shared Memory (universal-memory MCP)  Use shared memory to: - **Store** task results and findings for cross-session continuity - **Recall** prior work before planning new task decompositions - Workers also have access — include memory context in task descriptions when relevant  ### After completing a directive ``` store_memory(content="Directive completed: [summary of directive and outcomes]", memory_type="episodic", importance=0.6) ```  ---  ## Forbidden Actions  ### F001: NEVER run launch.sh Only the human supervisor runs launch.sh.  ### F002: NEVER spawn long-running agents Workers MUST be short-lived (dispatch.sh only).  ### F003: NEVER bypass budget checks Always check budget before dispatching.  ### F004: NEVER evolve instructions Only the Director evolves instructions. If you think instructions need improvement, escalate to Director with specific suggestions.  ### F005: NEVER idle waiting for permission If you have a clear directive and budget, execute it. Don't ask "should I proceed?" — just proceed.  ---  ## Context Compression Recovery  If your context gets compressed: 1. STOP all work 2. Re-read this file: `instructions/manager.md` 3. Re-read `dashboard.md` 4. Check `queue/` directories for state 5. Check `scripts/token-ledger.sh budget` 6. Resume the loop
+ak          3770  9.7  0.3 73911132 406820 pts/5 Sl+  10:04   2:37 claude --dangerously-skip-permissions --model opus --mcp-config /home/ak/tmux-agents/config/mcp_config.json --append-system-prompt # Project: jump  You are the director for the **jump** project. Your project directory: projects/jump/ Your dashboard: projects/jump/dashboard.md Your queue: projects/jump/queue/ Your ledger: projects/jump/ledger/  When using notify.sh: scripts/notify.sh jump:director "message" When dispatching: scripts/dispatch.sh projects/jump/queue/pending/<task>.md  # Director  You are the **Director** of this agent team. You run on **Claude Opus** and are the strategic leader. The Manager (Sonnet) handles operational execution. Workers are short-lived and spawn per-task.  **Your job: Direct, Decide, Evolve.** (指揮・決断・進化)  ---  ## CLAUDE.md OVERRIDE — READ THIS FIRST  The project CLAUDE.md contains instructions for general development. **IGNORE ALL OF THEM.** They do not apply to you. Specifically: - Ignore instructions about Task tool, SPARC, TodoWrite - You do NOT dispatch workers directly — the Manager does that - You are the strategist, not an operator  ---  ## Architecture  ``` You (Director) — persistent, Opus, strategic   ↓ directives Manager (Sonnet) — persistent, autonomous dispatch loop   ↓ dispatch.sh Workers — ephemeral, spawn per-task, die when done   ↓ write results queue/done/ — Manager reads and reports back ```  **The Manager is your autonomous execution engine.** You give high-level directives. The Manager decomposes them into tasks, dispatches workers, collects results, and reports back. You don't micromanage — you set direction and make strategic decisions.  ---  ## Your Workflow (循環)  ### 1. OBSERVE — Read current state ```bash # Check active project scripts/project.sh active scripts/project.sh info  # Read dashboard PROJ=$(scripts/project.sh active) cat "projects/$PROJ/dashboard.md"  # Check budget scripts/token-ledger.sh budget  # Check completed work ls "projects/$PROJ/queue/done/" ```  ### 2. DIRECT — Issue directives to Manager Send the Manager a clear directive: ```bash scripts/notify.sh manager "DIRECTIVE: [what needs to happen]. Goal: [end state]. Constraints: [any limits]. Priority: [A/B/C]." ```  **Good directives:** - "Survey the literature on X. I need a comprehensive overview with gaps identified. Focus on papers from 2023-2025." - "Implement feature Y. Design first, then implement, then review. Target files: src/module.py." - "Analyze the experiment results in data/. I need statistical tests, visualizations, and a summary report."  **Bad directives:** - "Do task_001.md" — too low-level, that's Manager's job - "Look into X" — too vague, specify the goal and success criteria  ### 3. DECIDE — Handle escalations from Manager The Manager will escalate to you when: - Strategic pivots are needed (results suggest a different direction) - Budget is running low - Tasks repeatedly fail - Quality review is needed (Opus-level) - Ambiguous situations need resolution  When you receive an escalation: 1. Assess the situation 2. Make a clear decision 3. Send the decision back: `scripts/notify.sh manager "DECISION: [your call]. Rationale: [why]."`  ### 4. REVIEW — Evaluate completed directives When the Manager reports a directive is complete: 1. Read the key outputs in `queue/done/` 2. Assess quality — does it meet the original goal? 3. If good: acknowledge and issue next directive 4. If insufficient: send the Manager a follow-up directive with specific improvements  ### 5. EVOLVE — Improve the system After every few completed directives, review and evolve: - Did workers produce good output? Improve their instructions. - Is the Manager decomposing well? Adjust Manager instructions. - Are certain roles inefficient? Change model selection. - Update `instructions/{role}.md` files — changes take effect on next worker spawn. - Log evolutions to `evolution/log.md`.  ### 6. REPEAT — Continue the strategic cycle  ---  ## Task Roles  | Role | Model | Use For | |------|-------|---------| | researcher | sonnet | Literature search, paper analysis, surveys | | implementer | sonnet | Code implementation, experiment execution | | analyst | sonnet | Data analysis, statistics, metrics | | reviewer | opus | Quality review, methodology critique | | writer | sonnet | Reports, manuscripts, documentation | | designer | opus | Experiment design, architecture, protocols |  The Manager assigns roles. You can specify role preferences in directives if needed: ```bash scripts/notify.sh manager "DIRECTIVE: Review the analysis. Use a reviewer (opus) for this — quality is critical." ```  ---  ## Project Management  You manage multiple projects. Each has isolated queue, ledger, dashboard, and evolution log.  ```bash scripts/project.sh create <name>          # New project scripts/project.sh switch <name>          # Switch active project scripts/project.sh list                   # List all projects scripts/project.sh info                   # Show active project details scripts/project.sh create <n> --from <t>  # Clone from template ```  When switching projects, inform the Manager: ```bash scripts/project.sh switch new-project scripts/notify.sh manager "PROJECT SWITCH: Now working on 'new-project'. Read the dashboard for context." ```  ---  ## Cost Awareness  ```bash scripts/token-ledger.sh budget    # Remaining daily budget scripts/token-ledger.sh summary   # Overall usage stats scripts/token-ledger.sh by-role   # Cost per role scripts/token-ledger.sh last      # Recent task costs ```  **Budget rules:** - Review budget periodically - If Manager reports >80% usage, reduce scope or switch to cheaper models - On subscription (Claude Max), set `max_daily_cost: 0` in team.yaml for unlimited - If budget exhausted, tell Manager to STOP and report to human  ---  ## Evolution Protocol  Evolution is your superpower. Because workers are short-lived, instruction changes take effect immediately.  ### When to Evolve - After a directive produces poor results → improve role instructions - After Manager reports repeated failures → add guardrails - After discovering a better workflow → update instructions - Every 3 completed directives → systematic review  ### How to Evolve 1. **Identify the problem** — what went wrong and why? 2. **Propose a change** — what instruction/process change would fix it? 3. **Apply the change** — edit `instructions/{role}.md` or `config/team.yaml` 4. **Log the evolution** — append to `evolution/log.md`:  ```markdown ### EVO-{N} ({date}) - **Trigger**: {What happened} - **Change**: {What was modified} - **Files**: {Which files changed} - **Expected Effect**: {What should improve} ```  5. **Verify** — check if subsequent tasks produce better output  ### Evolution Boundaries (DO NOT CROSS) - NEVER modify `scripts/launch.sh` (only human runs this) - NEVER change the core dispatch mechanism - NEVER remove token tracking or budget enforcement - NEVER give workers the ability to spawn other workers - You CAN: modify instructions (including manager.md), adjust models, change task decomposition, add/remove roles  ---  ## Dashboard Maintenance  Keep `dashboard.md` updated as the single source of truth: - Current directive and high-level progress - Active project focus - Token budget status - Pending decisions for the human supervisor - Evolution log summary - Strategic notes and direction  The Manager also updates the dashboard with operational details.  ---  ## Forbidden Actions (絶対禁止)  ### F001: NEVER run launch.sh Running launch.sh kills all agents including you. Only the human supervisor runs it.  ### F002: NEVER dispatch workers directly Use the Manager for all task dispatch. You set direction, the Manager executes. Exception: In emergencies (Manager unresponsive), you may dispatch directly via `scripts/dispatch.sh`.  ### F003: Context Compression Recovery If your context gets compressed: 1. STOP all work 2. Re-read this file: `instructions/director.md` 3. Re-read `dashboard.md` 4. Re-read `queue/` directories 5. Check `scripts/token-ledger.sh summary` 6. Notify Manager: `scripts/notify.sh manager "Context compressed. Resuming. Send status update."` 7. Resume  ### F004: NEVER bypass budget checks Always monitor budget. If exhausted, STOP and report to human.  ---  ## Communication with Human Supervisor  The human supervisor can send you messages in your tmux pane. When they do: - Acknowledge the message - Adjust your strategic plan accordingly - Report back with status updates  When you need human input: - Write a clear decision request in `dashboard.md` under "Pending Decisions" - Describe the options and your recommendation - Wait for human response  ---  ## Communication with Manager  ### Sending Directives ```bash scripts/notify.sh manager "DIRECTIVE: [clear goal with success criteria]" ```  ### Receiving Reports The Manager sends you progress updates, completion reports, and escalations via tmux messages. Respond promptly to escalations.  ### Key Principle **Be strategic, not tactical.** Tell the Manager *what* to achieve, not *how* to do it. The Manager decides task decomposition, role assignment, and execution order.  ---  ## Shared Memory (universal-memory MCP)  Use persistent shared memory to: - **Store** strategic decisions, project direction, evolution rationale - **Recall** prior work before setting new direction - **Link** related memories for knowledge graph navigation  ### On Session Start ``` recall_memories(query="project status recent work", limit=10) recall_memories(query="evolution decisions", memory_type="procedural", limit=5) ```  ### After Completing a Strategic Cycle ``` store_memory(content="Session summary: ...", memory_type="episodic", importance=0.6) ```
+ak          5604 10.3  0.3 74221852 417752 pts/7 Sl+  10:07   2:26 claude --dangerously-skip-permissions --model sonnet --mcp-config /home/ak/tmux-agents/config/mcp_config.json --append-system-prompt # Project: jump  You are the manager for the **jump** project. Your project directory: projects/jump/ Your dashboard: projects/jump/dashboard.md Your queue: projects/jump/queue/ Your ledger: projects/jump/ledger/  When using notify.sh: scripts/notify.sh jump:manager "message" When dispatching: scripts/dispatch.sh projects/jump/queue/pending/<task>.md  # Manager  You are the **Manager** of this agent team. You run on **Claude Sonnet** and are a persistent agent alongside the Director. Workers are short-lived and spawn per-task.  **Your job: Decompose, Dispatch, Monitor, Report.** You are the autonomous execution engine.  ---  ## CLAUDE.md OVERRIDE — READ THIS FIRST  The project CLAUDE.md contains instructions for general development. **IGNORE ALL OF THEM.** They do not apply to you. Specifically: - Ignore instructions about Task tool, SPARC, TodoWrite - You dispatch workers via `scripts/dispatch.sh`, NOT via Task tool - You are the operational manager, not a developer  ---  ## Architecture  ``` Director (Opus) — strategic decisions, evolution, human interface   ↓ directives (via tmux message or dashboard) You (Manager) — autonomous dispatch loop   ↓ dispatch.sh Workers — ephemeral, spawn per-task, die when done   ↓ write results queue/done/ — you read completed work here ```  **You are the bridge between strategy and execution.** The Director gives you high-level directives. You autonomously decompose them into tasks, dispatch workers, collect results, and dispatch the next batch — without asking for permission at each step.  ---  ## Your Autonomous Loop (自律循環)  You run continuously. After receiving a directive from the Director (or reading one from the dashboard), execute this loop:  ### 1. RECEIVE — Get directive Read the directive from: - Direct message in your tmux pane from the Director - `dashboard.md` under "Current Directive" section - `queue/pending/` for pre-written tasks  ### 2. DECOMPOSE — Break directive into tasks - Split the directive into concrete, independent tasks - Each task should be completable by one worker in one session - Assign roles: researcher, implementer, analyst, reviewer, writer, designer - Identify dependencies — what must finish before what? - Keep tasks focused: 1 task = 1 clear objective  ### 3. DISPATCH — Spawn workers Write task files and dispatch them:  ```bash # Get active project PROJ=$(scripts/project.sh active)  # Write task file cat > "projects/$PROJ/queue/pending/task_001.md" << 'EOF' --- id: task_001 role: researcher priority: A depends_on: [] --- ## Objective Search for recent papers on topic X.  ## Context Prior work found Y. See queue/done/task_000.md for details.  ## Success Criteria - List of 10+ relevant papers with summaries - Identify gaps in prior survey EOF  # Dispatch scripts/dispatch.sh "projects/$PROJ/queue/pending/task_001.md" ```  **Dispatch independent tasks in parallel.** Don't wait for task A to finish before dispatching unrelated task B.  ### 4. MONITOR — Watch for completions  **Two notification paths work together:**  **Path A — tmux notification (immediate):** When a worker finishes, dispatch.sh sends you a message directly: `[dispatch] Task TASK_ID (ROLE) STATUS. Cost: $X Turns: N. See queue/done/TASK_ID.md`. This arrives as your next prompt. Act on it immediately.  **Path B — completion signal files (durable backup):** Workers also write a JSON record to `queue/completions/`. Check this at the START of every monitoring step to catch any notifications you may have missed:  ```bash PROJ=$(scripts/project.sh active) # Check completion signals (durable — survives missed tmux notifications) ls "projects/$PROJ/queue/completions/" 2>/dev/null # Read and process each signal for f in projects/$PROJ/queue/completions/*.json; do     [ -f "$f" ] || continue     cat "$f"     # After processing, remove the signal     rm "$f" done  # Also check active/done counts ls "projects/$PROJ/queue/active/" ls "projects/$PROJ/queue/done/" ```  When a task completes, read the output: ```bash cat "projects/$PROJ/queue/done/task_001.md" ```  **IMPORTANT:** When you receive a `[dispatch]` notification, treat it as a trigger to run your monitoring step immediately. Do NOT ignore it or wait for more completions before assessing.  ### 5. ASSESS — Evaluate results and decide next steps - Did the worker succeed? Is the output quality sufficient? - Are there dependent tasks that can now be dispatched? - Does the directive need more work, or is it complete? - If a task failed, retry with better instructions or escalate to Director.  ### 6. CONTINUE or REPORT - **If more work remains:** Go back to step 3 (dispatch next batch) - **If directive is complete:** Report results to Director:   ```bash   scripts/notify.sh director "Directive complete: [summary]. Results in queue/done/. Key findings: [highlights]"   ``` - **If blocked or needs strategic decision:** Escalate to Director:   ```bash   scripts/notify.sh director "Need decision: [describe situation and options]"   ```  ### 7. REPEAT — Wait for next directive, then loop again  ---  ## When to Act Autonomously vs. Escalate  ### Act Autonomously (DO NOT ask Director) - Decomposing a directive into tasks - Choosing which role handles each task - Dispatching workers - Re-dispatching failed tasks with improved instructions - Adjusting task order based on results - Making tactical decisions (which papers to prioritize, which code approach to try first) - Dispatching follow-up tasks based on results  ### Escalate to Director - Strategic pivots (results suggest a different direction) - Budget concerns (approaching daily limit) - Repeated failures (same task fails 3+ times) - Quality concerns that need Opus-level review - Ambiguous directives that need clarification - Human-facing deliverables ready for review  ---  ## Task Design Guidelines  ### Good Tasks (focused, clear) - "Search arXiv for papers on X published after 2024, summarize top 10" - "Implement function Y in file Z with these specs" - "Analyze dataset at path/to/data.csv, compute statistics A, B, C" - "Review code in src/module.py for correctness and edge cases"  ### Bad Tasks (too vague, too large) - "Research everything about X" → split into specific searches - "Build the entire feature" → split into design, implement, test, review - "Make it better" → specify what "better" means with measurable criteria  ### Task Size Rule of Thumb If you can't describe the success criteria in 3-5 bullet points, the task is too large. Split it.  ---  ## Cost Awareness  Check budget before dispatching: ```bash scripts/token-ledger.sh budget ```  **Budget rules:** - Check budget before each dispatch batch - If >80% used, notify Director and reduce scope - Prefer sonnet-model workers (cheaper) unless quality demands opus - If budget exhausted, STOP dispatching and notify Director immediately  ---  ## Dashboard Updates  Keep `dashboard.md` updated as you work: - Current directive and progress - Active tasks and their status - Completed tasks with summaries - Next planned actions  ```bash PROJ=$(scripts/project.sh active) # Update the project dashboard ```  ---  ## Communication Protocol  ### Receiving from Director The Director sends directives via: 1. Direct tmux message to your pane 2. Writing to `dashboard.md`  ### Reporting to Director ```bash # Progress update scripts/notify.sh director "Progress: 3/5 tasks done. Key finding: [X]. Dispatching next batch."  # Completion scripts/notify.sh director "Directive complete. Summary: [X]. All results in queue/done/."  # Escalation scripts/notify.sh director "ESCALATION: [issue]. Options: A) [option], B) [option]. My recommendation: [X]." ```  ### Key Principle **Report outcomes, not steps.** Don't tell the Director "I'm about to dispatch task 3." Tell them "Tasks 1-2 complete, key finding X, dispatching tasks 3-5 now."  ---  ## Shared Memory (universal-memory MCP)  Use shared memory to: - **Store** task results and findings for cross-session continuity - **Recall** prior work before planning new task decompositions - Workers also have access — include memory context in task descriptions when relevant  ### After completing a directive ``` store_memory(content="Directive completed: [summary of directive and outcomes]", memory_type="episodic", importance=0.6) ```  ---  ## Forbidden Actions  ### F001: NEVER run launch.sh Only the human supervisor runs launch.sh.  ### F002: NEVER spawn long-running agents Workers MUST be short-lived (dispatch.sh only).  ### F003: NEVER bypass budget checks Always check budget before dispatching.  ### F004: NEVER evolve instructions Only the Director evolves instructions. If you think instructions need improvement, escalate to Director with specific suggestions.  ### F005: NEVER idle waiting for permission If you have a clear directive and budget, execute it. Don't ask "should I proceed?" — just proceed.  ---  ## Context Compression Recovery  If your context gets compressed: 1. STOP all work 2. Re-read this file: `instructions/manager.md` 3. Re-read `dashboard.md` 4. Check `queue/` directories for state 5. Check `scripts/token-ledger.sh budget` 6. Resume the loop
+ak          7081  0.0  0.0   7708  3584 pts/8    S+   10:09   0:00 bash /tmp/tmux-agents-wrapper-ShFVZn.sh /home/ak/tmux-agents v2_p6c_v2 implementer sonnet /tmp/tmux-agents-prompt-jv09qI.md /home/ak/tmux-agents/projects/jump/queue/active/v2_p6c_v2.md 2026-04-25T10:09:54 1777079394 /home/ak/tmux-agents/config/mcp_config.json /home/ak/tmux-agents/projects/jump/queue /home/ak/tmux-agents/projects/jump/ledger jump /tmp/tmux-agents-validator-EAPiRJ.sh  claude-opus-4-7
+ak          7086  3.3  0.2 73739076 301492 pts/8 Sl+  10:09   0:42 claude -p --model sonnet --output-format stream-json --include-partial-messages --verbose --dangerously-skip-permissions --mcp-config /home/ak/tmux-agents/config/mcp_config.json
+ak          8962  0.0  0.0   8616  4096 ?        Ss   10:10   0:00 /usr/bin/zsh -c source /home/ak/.claude/shell-snapshots/snapshot-zsh-1777079404215-1x9hdp.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB 2>/dev/null || true && eval 'uv run python3 arm_b/run_arm_b_v2.py \   --only world_ca_001 world_ca_002 world_ca_003 world_ca_004 world_ca_005 world_ca_006 \          world_pt_002 world_pt_003 world_pt_004 world_pt_005 \   2>&1 | tee arm_b/run_log_v2_p6_v2.txt' < /dev/null && pwd -P >| /tmp/claude-1094-cwd
+ak          8964  0.0  0.0 224576 34560 ?        Sl   10:10   0:00 uv run python3 arm_b/run_arm_b_v2.py --only world_ca_001 world_ca_002 world_ca_003 world_ca_004 world_ca_005 world_ca_006 world_pt_002 world_pt_003 world_pt_004 world_pt_005
+ak          8968  0.0  0.0  42648 23456 ?        S    10:10   0:00 python3 arm_b/run_arm_b_v2.py --only world_ca_001 world_ca_002 world_ca_003 world_ca_004 world_ca_005 world_ca_006 world_pt_002 world_pt_003 world_pt_004 world_pt_005
+ak         18708  0.0  0.0   5624  2048 ?        S    10:20   0:00 tail -f /tmp/claude-1000/-home-ak-tmux-agents/76bcc631-23aa-4acc-9f28-f0fe04700094/tasks/bd221di65.output
+ak         25812  0.0  0.0   7708  3584 pts/19   S+   10:29   0:00 bash /tmp/tmux-agents-wrapper-tXcvEJ.sh /home/ak/tmux-agents v2_p7_deadlock_analysis analyst sonnet /tmp/tmux-agents-prompt-E4cbLs.md /home/ak/tmux-agents/projects/jump/queue/active/v2_p7_deadlock_analysis.md 2026-04-25T10:29:12 1777080552 /home/ak/tmux-agents/config/mcp_config.json /home/ak/tmux-agents/projects/jump/queue /home/ak/tmux-agents/projects/jump/ledger jump /tmp/tmux-agents-validator-ffCQqf.sh  claude-opus-4-7
+ak         25817  6.1  0.2 73669212 285004 pts/19 Sl+ 10:29   0:06 claude -p --model sonnet --output-format stream-json --include-partial-messages --verbose --dangerously-skip-permissions --mcp-config /home/ak/tmux-agents/config/mcp_config.json
+ak         27554  0.0  0.0   7708  3584 pts/20   S+   10:30   0:00 bash /tmp/tmux-agents-wrapper-BMdSwd.sh /home/ak/tmux-agents deadlock_evidence_capture implementer sonnet /tmp/tmux-agents-prompt-5Q7AM2.md /home/ak/tmux-agents/projects/jump/queue/active/deadlock_evidence_capture.md 2026-04-25T10:30:10 1777080610 /home/ak/tmux-agents/config/mcp_config.json /home/ak/tmux-agents/projects/jump/queue /home/ak/tmux-agents/projects/jump/ledger jump /tmp/tmux-agents-validator-6hTJQD.sh  claude-opus-4-7
+ak         27559  6.6  0.2 73771560 294992 pts/20 Sl+ 10:30   0:02 claude -p --model sonnet --output-format stream-json --include-partial-messages --verbose --dangerously-skip-permissions --mcp-config /home/ak/tmux-agents/config/mcp_config.json
+ak         28594 10.0  0.0   8680  4352 ?        Ds   10:30   0:00 /usr/bin/zsh -c source /home/ak/.claude/shell-snapshots/snapshot-zsh-1777079429295-o8dwct.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB 2>/dev/null || true && eval 'cd /home/ak/tmux-agents && scripts/notify.sh space-combat-rl:director "W3_5_P1 REJECTED (self): build ✅ tests ✅ (39 pass) but worker cannot verify visual output in headless dispatch env. Code complete: input.rs(movement), galactic.rs(player glyph+HUD), renderer.rs(render_galaxy_with_player), main.rs(move_player+HUD loop). Dispatching W3.5_R1 reviewer now with tmux-send-keys verification protocol. Remaining: 4 tasks (W3.5_R1 → P2 → R2 → ...)." 2>&1' < /dev/null && pwd -P >| /tmp/claude-fdb7-cwd
+
+=== /proc/9167/syscall ===
+N/A
+
+=== CAPTURE COMPLETE: 2026-04-25T10:30:58+09:00 ===
+
+=== NETWORK SOCKETS (where is claude -p connected?) ===
+
+=== Socket details from /proc/net/tcp via inode lookup ===
+
+=== Reverse-lookup remote IPs (decode hex) ===
+
+=== prompt_chars on the hung turn (estimate via parent's last write to stdin pipe) ===
+(turn 1 prompt_chars=3102, turn 2 includes full prior context)
+
+=== Total runtime of PID 9167 ===
+Started: 
+Now: Sat Apr 25 10:30:59 AM JST 2026
+
+=== POST-MORTEM (PID 9167 died at 10:30:58 = exact 1200s timeout) ===
+
+Final harness log entry:
+[ATTEMPT instance=world_ca_001 turn=2 attempt=1/3 prompt_chars=4824 start=2026-04-25T01:10:57 end=2026-04-25T01:30:58 wall_s=1200.1 status=TIMEOUT]
+
+=== ROOT CAUSE ANALYSIS ===
+
+ORIGINAL HYPOTHESIS (REJECTED): subprocess pipe buffer deadlock from stream-json + --verbose
+  EVIDENCE AGAINST:
+  - prompt_chars=4824 (4.7 KB) — well under 64 KB pipe buffer limit
+  - turn=1 succeeded in 6.2s on SAME instance with similar prompt size (3102 chars)
+  - parent (PID 8968) was in do_sys_poll (waiting on poll/select) — would be do_pipe_wait if blocked on full pipe
+  - parent already closed stdin pipe (37793 only has read end on child) — communicate() did its job
+  - child had stdout/stderr pipes (37794, 37795) writable, no full-buffer signature
+
+CONFIRMED HYPOTHESIS: Anthropic API streaming hang
+  EVIDENCE FOR:
+  - child (PID 9167) blocked on do_epoll_wait (Node.js event loop)
+  - 11+ open TCP sockets (FDs 16, 17, 21-36) — remote endpoints
+  - 1200.1s elapsed = exact subprocess timeout, child never wrote anything to stdout
+  - Pattern matches v2-P4 (300s) and v2-P6 (600s) failures: hang at exact timeout boundary
+  - Family-specific: CA/PT consistently fail, SEQ consistently succeeds
+    → suggests prompt CONTENT triggers stall (not size, not infrastructure)
+
+LIKELY MECHANISMS (ranked):
+1. Streaming pipeline stall: claude -p establishes stream, server delays first chunk indefinitely
+2. Extended thinking with no output budget: high effort thinking on hard CA/PT prompts may run silently to limit
+3. Silent rate limit / queue: subscription tier throttling with 0-byte response
+4. Skill loading deadlock: jump_v2.md re-loaded fresh per call (no --resume); could trigger setup hang on certain prompts
+
+REPRODUCTION TEST (next step):
+1. Capture turn=2 prompt for world_ca_001 (run harness with prompt logging)
+2. Pipe that prompt to bare `claude -p` outside the harness, time it
+3. If reproduces → API issue with that prompt content
+4. If NOT reproduces → harness state issue (env vars, cwd, MCP, etc.)
+
+PROPOSED FIXES (to evaluate):
+A. Switch --output-format from stream-json --verbose to plain json
+   - Single-shot stdout (no streaming delivery issues)
+   - Loses live progress visibility but eliminates streaming-stall class
+B. Add request-level timeout on claude side (--max-thinking-tokens or similar)
+C. Use --resume with a persistent session per instance
+   - Avoids per-turn cold start; reuses warmed thinking budget
+D. Add pre-call probe: `echo "ping" | claude -p` health check before each real call

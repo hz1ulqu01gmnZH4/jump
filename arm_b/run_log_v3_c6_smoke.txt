@@ -1,0 +1,93 @@
+Arm B v3 (MCP) — 1 instances, model=claude-opus-4-7, output=arm_b/results_v3_c6_smoke.json
+  world_ca_001 (cellular_automata, medium)...[11:50:50] event: system
+[11:50:50] event: system
+[11:50:51] event: rate_limit_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] tool_use: name=ToolSearch input_keys=['query', 'max_results']
+[11:50:54] event: stream_event
+[11:50:54] event: stream_event
+[11:50:54] event: user
+[11:50:54] event: stream_event
+[11:50:54] event: system
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[11:50:56] event: stream_event
+[11:50:56] event: stream_event
+[11:50:56] event: user
+[11:50:56] event: stream_event
+[11:50:56] event: system
+[11:50:58] event: stream_event
+[11:50:58] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:17] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] event: stream_event
+[11:54:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[11:54:18] event: stream_event
+[11:54:19] event: stream_event
+[11:54:19] event: user
+[11:54:19] event: stream_event
+[11:54:19] event: system
+[11:54:22] event: stream_event
+[11:54:22] event: stream_event
+[STUCK_REASONING instance=world_ca_001 attempt=1 wall_s=815.0 since_last_tool_s=603.5 tool_use_count=3]
+ acc=None n_int=0 [FAIL_STUCK_REASONING] wall_s=815 capture=None
+[FAIL_STUCK_REASONING instance=world_ca_001 wall_s=815 since_last_tool_s=603]
+
+Results written to arm_b/results_v3_c6_smoke.json (1 entries)
+
+=== Arm B v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=1

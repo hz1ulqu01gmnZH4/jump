@@ -1,0 +1,13 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_004_run2.json
+  world_pt_004 (particle_system, hard)...[21:43:18] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:43:18] tool_result: id=orT94AmHA6OoVl1kDeetO7aWMPX3zRns content_len=5039
+[21:46:24] no tool_calls — finish_reason=length
+[ATTEMPT instance=world_pt_004 attempt=1/2 wall_s=188.1 start=2026-04-27T12:43:16Z end=2026-04-27T12:46:24Z]
+ acc=None n_int=0 [FAIL_NO_SUBMIT] wall_s=188 capture=None
+[FAIL_NO_SUBMIT instance=world_pt_004]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_004_run2.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0

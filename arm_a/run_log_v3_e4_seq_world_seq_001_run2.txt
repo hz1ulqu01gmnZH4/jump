@@ -1,0 +1,30 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_seq_world_seq_001_run2.json
+  world_seq_001 (pattern_puzzle, medium)...[21:35:28] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:35:28] tool_result: id=pIKRlwYRm2864IS2FKmUZggUVcV6JSoJ content_len=1506
+[21:35:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:35:55] tool_result: id=b86fXk53NIHD2TFYdr5tyNP7LqxTY3ml content_len=7
+[21:35:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:35:56] tool_result: id=s7UfisvcSDHC8OljelKlSnvmsejdMvqT content_len=7
+[21:36:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:04] tool_result: id=9lHyQdsc8uudL6RQpCTXp5ks1jYYbTmk content_len=7
+[21:36:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:04] tool_result: id=6ww4raB0n9BwaCPHBGzMb7y17g0aaht9 content_len=7
+[21:36:05] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:05] tool_result: id=oE2TdrPRHTJxGm05v6fFax4t0I3MdwuE content_len=51
+[21:36:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:06] tool_result: id=EjjKLiH55GkqJw3y0vLipBJbVpqq6VtG content_len=57
+[21:36:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:08] tool_result: id=DXYdSl30tcu9K60fBVqXANGeov3IjB0U content_len=57
+[21:36:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[21:36:09] tool_result: id=uwyHWaS5fONubPhWnlvzIdMiS7e5oIb8 content_len=57
+[21:36:19] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[21:36:19] tool_result: id=RcGDDke9QGlo1EiWQZmTi1X2eCwNitoP content_len=52
+[ATTEMPT instance=world_seq_001 attempt=1/2 wall_s=54.6 start=2026-04-26T12:35:25Z end=2026-04-26T12:36:20Z]
+ acc=1.000 n_int=8 [submitted] wall_s=55 capture=mcp_file
+[OK instance=world_seq_001 acc=1.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_seq_world_seq_001_run2.json (1 entries)
+
+=== Arm A v3 mean accuracy: 1.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

@@ -1,0 +1,17 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_ca_world_ca_003_run1.json
+  world_ca_003 (cellular_automata, medium)...[15:48:17] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[15:48:17] tool_result: id=jcBA9VbTExvXZeONj7ikCOxk47EXTZDC content_len=3056
+[15:49:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:49:41] tool_result: id=8KFHe4WP7AIgQnStQUdrNKv8HYWlkdX1 content_len=23
+[15:49:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:49:43] tool_result: id=yvjoGGxlRDOkHq87MJQ4odpVO7ZCtG8u content_len=23
+[15:49:43] no tool_calls — finish_reason=stop
+[ATTEMPT instance=world_ca_003 attempt=1/2 wall_s=88.3 start=2026-04-29T06:48:15Z end=2026-04-29T06:49:43Z]
+ acc=None n_int=2 [FAIL_NO_SUBMIT] wall_s=88 capture=None
+[FAIL_NO_SUBMIT instance=world_ca_003]
+
+Results written to arm_a/results_v3_e4_ca_world_ca_003_run1.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0

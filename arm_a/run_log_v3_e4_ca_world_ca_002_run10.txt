@@ -1,0 +1,27 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_ca_world_ca_002_run10.json
+  world_ca_002 (cellular_automata, hard)...[15:43:25] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[15:43:25] tool_result: id=wpxPwF0RrvjTDxlEv2gbyBfagbpe2C5e content_len=3286
+[15:43:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:43:27] tool_result: id=p0EMZ6pt0lBEvzGxIXci96Dvuijen0OF content_len=217
+[15:43:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:43:29] tool_result: id=LTpSqyfyyPmTV4j5kBHZc2YvwqODB6l8 content_len=217
+[15:43:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:43:30] tool_result: id=K1SQrmhgMOBMg2kudsbagsLQRazBzpzf content_len=217
+[15:43:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:43:34] tool_result: id=2GrO2IudYgWNmlnRPd4jrknf483b7Qwy content_len=217
+[15:43:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row']
+[15:43:37] tool_result: id=8l6ATPi7tkTtma2i79EVEAg9u5xtQz7b content_len=206
+[15:44:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:44:52] tool_result: id=U9HeFCBayvhxSToTP0ZmT7UlwL5ULYJW content_len=207
+[15:44:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:44:55] tool_result: id=kjkG53EJ5RVPrx1vkVcVFErDnWUMgZVc content_len=217
+[15:48:14] no tool_calls — finish_reason=stop
+[ATTEMPT instance=world_ca_002 attempt=1/2 wall_s=290.6 start=2026-04-29T06:43:23Z end=2026-04-29T06:48:14Z]
+ acc=None n_int=7 [FAIL_NO_SUBMIT] wall_s=291 capture=None
+[FAIL_NO_SUBMIT instance=world_ca_002]
+
+Results written to arm_a/results_v3_e4_ca_world_ca_002_run10.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0

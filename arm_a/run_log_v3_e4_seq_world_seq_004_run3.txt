@@ -1,0 +1,555 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_seq_world_seq_004_run3.json
+  world_seq_004 (pattern_puzzle, medium)...[22:19:15] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[22:19:15] tool_result: id=5lllxbOCGXygr4TGS4e7nzseIINA1wws content_len=1321
+[22:19:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:33] tool_result: id=cXOvTG7YM0DQXIK6dUxckkSMr5hzZizZ content_len=7
+[22:19:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:34] tool_result: id=L6uy8dmmfUtfc0P4hBRvPwqdHcnJRZuS content_len=7
+[22:19:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:35] tool_result: id=0rXQhXWWtaEmN1Gl1v27CLU4mL2T3No2 content_len=7
+[22:19:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:35] tool_result: id=WBdNoX3ocuZ6jWj10auYmhvpCjgr1rda content_len=7
+[22:19:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:36] tool_result: id=VyNE751a8bBvTcQStmBTNSTDYSFQnDeV content_len=7
+[22:19:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:37] tool_result: id=52s9xHMN5Ed7eME3JfyIZz6sYp8rNwY5 content_len=7
+[22:19:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:37] tool_result: id=SG4hCVxQVvztPBeZOyOkhtFnFO0ZxTW4 content_len=7
+[22:19:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:38] tool_result: id=m802sIyqwsVk7BARGKLpMVkEG6IJdojV content_len=7
+[22:19:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:38] tool_result: id=5Br8gT1rM0GuojxwEpSRGOKPTmRlaQwZ content_len=7
+[22:19:39] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:39] tool_result: id=UcT7s983un7P033ZWKCmqw1nKdA4Cmxc content_len=7
+[22:19:39] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:39] tool_result: id=StSUBC5NTFvTgGJYWIyc4RMSlHy8pGUA content_len=7
+[22:19:40] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:40] tool_result: id=gSB6uIwoK9gP3QAK6Z5bk7wqAJqL3DR4 content_len=7
+[22:19:40] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:40] tool_result: id=0OfRqcL4RqmphyhaYTe1uHZH0udRd2e8 content_len=7
+[22:19:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:41] tool_result: id=UW4Cwcs3qiXQdGivqXeOqcHNtejCEjLm content_len=7
+[22:19:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:41] tool_result: id=4sOMvKOGbJ063kOaZl9Rd9ytnD3Ki5dt content_len=7
+[22:19:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:42] tool_result: id=zg0hFbIVVFh6WWqXesHHSA7tKnzIswKm content_len=7
+[22:19:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:43] tool_result: id=96Vkwpu8UFjSpKbgbEsqcBmJnWoAWLVZ content_len=7
+[22:19:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:43] tool_result: id=QGSbbYKtm8QeaHI7PffLd3SL2hFjRciC content_len=7
+[22:19:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:44] tool_result: id=cAGGGYnu60IolTNLF3UPgTRKn54f8XFg content_len=7
+[22:19:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:44] tool_result: id=Z1UXtjtcelKm01moPaUviNUCoPC7a0jX content_len=7
+[22:19:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:45] tool_result: id=vxj9z2N6CUMBd4BZsq0lmTT0LgefQjs1 content_len=7
+[22:19:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:45] tool_result: id=noJjkRS1kx8z8MafXvPcMD2rjskvJ4Uh content_len=7
+[22:19:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:46] tool_result: id=ti3KxiQ3ggyf423z06NxNVXv7AWhmZk9 content_len=7
+[22:19:47] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:47] tool_result: id=lM3FmMz9VNbHhroIGv8o5MiiyyHpGUjW content_len=7
+[22:19:47] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:47] tool_result: id=XKDQbXlnX0rDH4iOCPNtTnp68slzZdd0 content_len=7
+[22:19:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:48] tool_result: id=N24wtHwVevMfqyC7jnzoda5R0EWpOX9q content_len=7
+[22:19:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:48] tool_result: id=YbTfTg1U2TD6wTYRy1XsmeWMU3bEfU3K content_len=7
+[22:19:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:49] tool_result: id=n5ZqaaTBQFohHAsMBer5k7kmxpJds8d7 content_len=7
+[22:19:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:49] tool_result: id=gtTHV0zbDdSQblzj98g4BHWsYsyMudEP content_len=7
+[22:19:50] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:50] tool_result: id=XkReEtCosZu0Zxcd59J9GFNhJOk69zc8 content_len=7
+[22:19:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:51] tool_result: id=6fL4Zlqqm4KceHZPewi2nYjyRRJEkCOV content_len=7
+[22:19:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:51] tool_result: id=T6Ti4JJqPqDBQIO7J2FIJq5R3qBT7rqs content_len=7
+[22:19:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:52] tool_result: id=4UOE73MeQGj6UtM1dXJiFKyCZbgFOjzX content_len=7
+[22:19:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:52] tool_result: id=OAz2b4EVi8n7ZwFEZgEfQozYo9v4GidJ content_len=7
+[22:19:53] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:53] tool_result: id=YyC6KBmvdK9wbvQV6lCeUbuAFZw6zajm content_len=7
+[22:19:53] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:53] tool_result: id=Kjrq4e0vlUZbvsE17UNmDQNx2a7NEyZC content_len=7
+[22:19:54] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:54] tool_result: id=ldbDlJ98wOx1HzjuQ7NLt6kCmG4wT0wl content_len=7
+[22:19:54] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:54] tool_result: id=6MMX1G5wLp4vocnfAnBNWsBBvz4gdfJO content_len=7
+[22:19:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:55] tool_result: id=UuHIw1SJv6HAP08xg0OeV9iaaV8t7z0H content_len=7
+[22:19:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:55] tool_result: id=R56Pi7ePZjlYKvVTYhU8OD32YyiRk2DX content_len=7
+[22:19:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:56] tool_result: id=Skml9LvefnQXTFgcJHQWmH4JmdyEYfII content_len=7
+[22:19:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:56] tool_result: id=2W2xY3nlegiNTwiYsGjw90pAwZywCgG2 content_len=7
+[22:19:57] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:57] tool_result: id=NSWKkXZW2PXsOGXvikTGzjpETkbRUUHv content_len=7
+[22:19:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:58] tool_result: id=mFuj1s7pNlxLWBoY7fd1eznMygkuD8cu content_len=7
+[22:19:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:58] tool_result: id=Dr0sJt2avidW7xIAilzPVT2RUXP4Gx2X content_len=7
+[22:19:59] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:59] tool_result: id=YKZ2btv4MOfpzdteD3j2z7jEBCJBCs5S content_len=7
+[22:19:59] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:19:59] tool_result: id=A7tCDTghtGI5ix3mqemKImDfghQfdz9J content_len=7
+[22:20:00] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:00] tool_result: id=Da97Tkz9w9Llet72l9dnikOFzd0ioPjH content_len=7
+[22:20:00] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:00] tool_result: id=yE6W6SK6DlgOvf6koezqQYVvXM6lGSP9 content_len=7
+[22:20:01] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:01] tool_result: id=7aImttVcxmxwgdSwG148qaMPrtt3j9ph content_len=7
+[22:20:01] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:01] tool_result: id=5jQzmgkeB63wYSx7ltcYRrZM7FeAJJAl content_len=7
+[22:20:02] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:02] tool_result: id=rbvOtpCwy3NImBxFtXzi3FyfPgIeiZqI content_len=7
+[22:20:02] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:02] tool_result: id=DujXgBQaQEW98Jk3t4Rx9GirVNTF5HhD content_len=7
+[22:20:03] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:03] tool_result: id=WSn9GputgkIPFJAoesW2K5KTVwzQlm2y content_len=7
+[22:20:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:04] tool_result: id=UrtJ64iBGwETe30hAVWFZpfA0UIluQ5k content_len=7
+[22:20:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:04] tool_result: id=YsPwDTgAjHVHRUn4q5Tn0OTFWzySBCbW content_len=7
+[22:20:05] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:05] tool_result: id=pJ3qRwXdgRMaDkWMzTtZWTONvFBu0Ovp content_len=7
+[22:20:05] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:05] tool_result: id=WGJ39WSPIYtuc0IdzcM8uMk4YdSXHekB content_len=7
+[22:20:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:06] tool_result: id=NGAb8jcbUDlmrJJZB9MDjKxXJ5Iudrd9 content_len=7
+[22:20:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:06] tool_result: id=47mFpnlBMNKk8Fl99Hvk8pY4dqyJcO3j content_len=7
+[22:20:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:07] tool_result: id=6O3WO4bNW4xczqD05yCSQyHJ6O1NxZen content_len=7
+[22:20:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:07] tool_result: id=xS7JtujYxgIQdLrRC9Qcd2GZtnDUMNZT content_len=7
+[22:20:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:08] tool_result: id=hoxJLlrVALrT3XC3tJcSriFAct0wj7Ft content_len=7
+[22:20:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:09] tool_result: id=S7ExB6tm0Y5QXCyBGqHoPIYKskDlLJid content_len=7
+[22:20:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:09] tool_result: id=T3H1NqmBNdmfuQVapfhGnXkgTkNYFkX6 content_len=7
+[22:20:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:10] tool_result: id=6jHhLX2CV1dy2Yvh2SImMvO3TtW3GVKk content_len=7
+[22:20:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:10] tool_result: id=gOtLrG4cmJFphvBljDKoEWpABhZVGNUP content_len=7
+[22:20:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:11] tool_result: id=qAm6gQNZEAncZ48tX2g1546IJBkaVbKY content_len=7
+[22:20:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:11] tool_result: id=EstblJjWAmtJU6cjWk7zCL3IriBxkJwG content_len=7
+[22:20:12] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:12] tool_result: id=PIfQfaW3ilHU6wrvxkyAJA2qc5tjvVJW content_len=7
+[22:20:13] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:13] tool_result: id=p7rfE9DUZ2gbXDC29MNyMkAWFsASBFR1 content_len=7
+[22:20:13] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:13] tool_result: id=eViZM9Pmp2NphQB4InJeTrVsukfg49lX content_len=7
+[22:20:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:14] tool_result: id=1gk6i6JNAFFOVvO9m2NILDseENDv8WfB content_len=7
+[22:20:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:14] tool_result: id=5yF4cF46XY1vq8vyoKqWaeczQELFnICk content_len=7
+[22:20:15] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:15] tool_result: id=xj5PCPbkr5Xgt7fFqXI1wnmPguLfSYqj content_len=7
+[22:20:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:16] tool_result: id=xZlRVgayuuwOk50h7pRSyuDSebknctIZ content_len=7
+[22:20:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:16] tool_result: id=s5ia6q1mi04oz5KwQPCYNWc0ZXhjnDFF content_len=7
+[22:20:17] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:17] tool_result: id=sYqYrD0zMho6WyTl811R6Ua9fvoze2jD content_len=7
+[22:20:17] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:17] tool_result: id=hbIlP2tNCe32G26PvAT9OO08E6cw5KoX content_len=7
+[22:20:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:18] tool_result: id=m5rFwoyW9DQPdhQhlMTIA2gf09UJjJEG content_len=7
+[22:20:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:18] tool_result: id=bCjsLx9X6dcpy8dfkCJrsesqs51ixQdX content_len=7
+[22:20:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:19] tool_result: id=VLOdaITuHJWHibePrTyf2xu5qVwqYEiQ content_len=7
+[22:20:20] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:20] tool_result: id=fsM38cOCCHH4utRMFqx4eXvENsCPnJXL content_len=7
+[22:20:20] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:20] tool_result: id=C5oGvvehp9BziFeMCP8xNFeqhCCjMMqi content_len=7
+[22:20:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:21] tool_result: id=sju57uYFB06Naxf05Ludm8W3Ob83y9hM content_len=7
+[22:20:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:21] tool_result: id=SCTIT0pLQvhKX1150kebwTE4GE0Jjqcg content_len=7
+[22:20:22] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:22] tool_result: id=nqelLKHvKySBIvUTBLqdTkUkFOGRZ2cP content_len=7
+[22:20:23] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:23] tool_result: id=zUYQehMzDJRPT30FPVYlYSxkHs5L4fxJ content_len=7
+[22:20:23] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:23] tool_result: id=Yh2mnq2aTTSuI3sVm5VQha9qjWwUgu4c content_len=7
+[22:20:24] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:24] tool_result: id=7X2g4ianEaTN0yxZSlgQUC1P4yaZPCKR content_len=7
+[22:20:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:25] tool_result: id=ib9kjojYiHTfvfcnOuqAKCQGrAoNOVzY content_len=7
+[22:20:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:25] tool_result: id=U0tqBoG4Fq3mAJxQboXrIqfD39b6hK4h content_len=7
+[22:20:26] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:26] tool_result: id=bGCAu1QPp3BydB7W0KgxmCib0H0WtRwA content_len=7
+[22:20:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:27] tool_result: id=r8qq5caD7aScHq2rBH2UfiNZUkZWg9CF content_len=7
+[22:20:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:27] tool_result: id=wk38ZWkidiasIeZSvB1Sosp6hPedKlyn content_len=7
+[22:20:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:28] tool_result: id=0nNSyEq8NRsLLMzINiaGqi0hBTz0jnZv content_len=7
+[22:20:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:28] tool_result: id=IrFgJH0qEtYATDCvXtDWtS3jhtjqv0Qd content_len=7
+[22:20:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:29] tool_result: id=PMiXUCiDg7c0XeIwNe7ZvMBrsJcAKdHZ content_len=7
+[22:20:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:30] tool_result: id=KqEciz4Q1N21n65qgRZ0uAXaRF0VP9cu content_len=7
+[22:20:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:30] tool_result: id=rw7iTWTmtCby3t51Nqp44WtuzJv43Br6 content_len=7
+[22:20:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:31] tool_result: id=6vrWNQh5VvSJbE2Srs8o5GWhi3vaJ5nI content_len=7
+[22:20:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:31] tool_result: id=zoO55lqVCgkfEtwVHOBY5w8ehuGSe8t5 content_len=7
+[22:20:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:32] tool_result: id=WhDSCS8dUN8jMIIptgBNNljo9E5F52wk content_len=7
+[22:20:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:32] tool_result: id=XCnjJALjt3dvlsR9FrWiQ01NwKxKRyaF content_len=7
+[22:20:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:33] tool_result: id=tTGj7pds7IUmpaNK3G3PFwQRGUaQlLJT content_len=7
+[22:20:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:34] tool_result: id=YINsR1wDFzngAMEbAPqQyzBz2IJUfNLT content_len=7
+[22:20:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:34] tool_result: id=igVaEr5cmzEK1YCNIrf4SV1pY6a6P6ee content_len=7
+[22:20:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:35] tool_result: id=KGX3JOHEimiaBaKIuEu2EWYJhlxwUUYo content_len=7
+[22:20:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:36] tool_result: id=OpRzVdvPBwIx3PA36KaqOZgFXeTjb9of content_len=7
+[22:20:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:36] tool_result: id=VpUkwa3Q1jr3tabJwbAGpMIFzbzgjmDc content_len=7
+[22:20:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:37] tool_result: id=QNgTZZSkumzTggPDx2NQfczn4sJSWdmH content_len=7
+[22:20:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:37] tool_result: id=Bw6tO6oFkn1gx84R0B5UcuQ1F0QBc30H content_len=7
+[22:20:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:38] tool_result: id=EDWyLLowjdCyGxQjbbSmeXk4QDBqrcUN content_len=7
+[22:20:39] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:39] tool_result: id=SLRm7nQ2KiP6VqaZZN89maDb5C8aTiCK content_len=7
+[22:20:39] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:39] tool_result: id=4ggFeNq5lDk5vfXOPfxHQH9YT4ma6iza content_len=7
+[22:20:40] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:40] tool_result: id=itFO80DpLczYwvZBPPiQyVt7kOI1EaaS content_len=7
+[22:20:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:41] tool_result: id=5nnAHhTwqfWh85nl8f9VlLIG8zGdl1dc content_len=7
+[22:20:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:41] tool_result: id=wQFisaWHxhToFK7aqdFW3YCeDyupkZri content_len=7
+[22:20:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:42] tool_result: id=lm1PmYaGy08KTRKjBKh2SL8LJs9xZRV7 content_len=7
+[22:20:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:42] tool_result: id=O50LbwTCLuw9hfTwVuzDIOXP0xlRHSyb content_len=7
+[22:20:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:43] tool_result: id=GwVvmryoPf1Mw2pa0enNmVGxkMJak3XY content_len=7
+[22:20:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:44] tool_result: id=yOSTL7ID7Sk9sP5UnV1s98QE8K5k5hTK content_len=7
+[22:20:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:44] tool_result: id=VGv8BvXzmnj5PFX4oo45OPMRkFOfazgX content_len=88
+[22:20:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:45] tool_result: id=kfHa1hrR3Diz4JXAyIqcBMHWPz7p7Zxz content_len=7
+[22:20:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:46] tool_result: id=agL66nzPkkFttGbkZ9x1izpvhNSjjX7e content_len=7
+[22:20:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:46] tool_result: id=RhOZfbLaetVFWT5tCBkY0XHPMbEIKiqr content_len=7
+[22:20:47] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:47] tool_result: id=DXUVW0ianiM3erPNtjI71GWgqqbWzEmB content_len=7
+[22:20:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:48] tool_result: id=tLQ5zKSMg2frbWJ2gEz74Mq5l9oKO977 content_len=7
+[22:20:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:48] tool_result: id=ytbidFNtAkjEmcf8NUoraKhcoSS2OZzq content_len=7
+[22:20:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:49] tool_result: id=cSH6V8rzGkTHanhNqNJ4JaMXUUomxAbT content_len=7
+[22:20:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:49] tool_result: id=5E94DIFWaxGHZkte13QUVEFMV7IyMXnw content_len=7
+[22:20:50] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:50] tool_result: id=wd4OjrxNwyJWB7nyOkYhk1cpfgxFXHpV content_len=7
+[22:20:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:51] tool_result: id=JmWWxMgBbYaTlq7SxG3lRte5Rhfk6S0K content_len=7
+[22:20:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:51] tool_result: id=TtlUvPb3OSOk5tMTYAnhksK8LrGCtDjK content_len=7
+[22:20:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:52] tool_result: id=NfBYzDz3M86Eb4aj0bjLXoy9ti3xbioI content_len=7
+[22:20:53] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:53] tool_result: id=Fx5dwCHUW92ipDTUZ1ttdRhfqMNbWtZW content_len=7
+[22:20:53] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:53] tool_result: id=YGDVvT25FxXqSQb9jv8iYxPYGbkQmUWZ content_len=7
+[22:20:54] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:54] tool_result: id=410g7kbbHjD5UIVlwmCIvGLWD5aOEIvd content_len=7
+[22:20:54] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:54] tool_result: id=9yQGI6FoVygeXGWCVZaqrBvTohOjIFaR content_len=7
+[22:20:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:55] tool_result: id=c1fLRoFZjkMWNM7BrfYCFLpSCCKbsMQ8 content_len=7
+[22:20:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:56] tool_result: id=CwDsD7pvRiOnK4DS7wCqNPGiaghjZGMA content_len=7
+[22:20:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:56] tool_result: id=ffxKhVXXlL9LblPvjC17xWxzumayJavi content_len=7
+[22:20:57] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:57] tool_result: id=m1ubOOMEpEzKp8mDXKlmM8Q1ze2480ZM content_len=7
+[22:20:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:58] tool_result: id=H2qFWPt112mjIxwSjRnX1by82LwMQ7ra content_len=7
+[22:20:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:58] tool_result: id=lWeZ7rmLOFLlXnyd6aFdDGWJNaQcaQyC content_len=7
+[22:20:59] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:20:59] tool_result: id=0alOIY1cGmoC36SxZKgJyfK0nIXWrSzL content_len=7
+[22:21:00] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:00] tool_result: id=nxdL0JOgMGQmSWp17bMSOPYGgUNrKM5y content_len=7
+[22:21:00] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:00] tool_result: id=jnOIocDrdsugXtMrH0VHOK9cQGyatbSI content_len=7
+[22:21:01] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:01] tool_result: id=DBgjdULqoDK0ruzgPyFsPq8aqDrSIf3B content_len=7
+[22:21:02] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:02] tool_result: id=jl5u6T0HlK3DpAoF2UJhTMbwkC7fTS0D content_len=7
+[22:21:02] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:02] tool_result: id=bbzzvl5mMv1VS4jUNQRiAe2xO6QvAK9P content_len=7
+[22:21:03] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:03] tool_result: id=mHPGa71LiZmHKP72RavIBaFMbbProkIV content_len=7
+[22:21:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:04] tool_result: id=AtjPOv5fHboCBGE1H1LJ4ThSGYFtPpYQ content_len=7
+[22:21:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:04] tool_result: id=iXW7OQS0YRqWuGlIeHccbYJb2xJi4oMB content_len=7
+[22:21:05] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:05] tool_result: id=4LBHZvuGdpdo7ijkW9RzQ1gHUXpIB1YU content_len=7
+[22:21:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:06] tool_result: id=5KbqUZhpdi4entwHMOEg20k49i2DvktT content_len=7
+[22:21:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:06] tool_result: id=5MEJj5ADUjHUoLnDStJ4U6KgAGXD5lq1 content_len=7
+[22:21:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:07] tool_result: id=qPooxbTPh1cfQkAtU873yawuFumtKLI4 content_len=7
+[22:21:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:08] tool_result: id=RCciFrorR1MFV6t2RjdHmyXXuMlM2mwr content_len=7
+[22:21:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:08] tool_result: id=KIsvBQoAvAf5jdBKZBiwfJ6El5OXfcOS content_len=7
+[22:21:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:09] tool_result: id=zPFSFEwHTtNyV5QBJbqo93N9mTlpfFVk content_len=7
+[22:21:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:10] tool_result: id=DLXnJmJShvoavcTdxB5Izl6cxhgir6Ev content_len=7
+[22:21:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:10] tool_result: id=HZWcME1vMFek5DWHgEjG5T8LkzEhCy3a content_len=7
+[22:21:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:11] tool_result: id=b5gm0A8fVmuDwBfSGT41msXmc6SxxsMP content_len=7
+[22:21:12] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:12] tool_result: id=0jT7E2h2Kb8JWpQ39S98TxbnBsXIrVZW content_len=7
+[22:21:12] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:12] tool_result: id=pIT5kNh7tf9MYWKZqo9DD2yIfwgcp3pO content_len=7
+[22:21:13] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:13] tool_result: id=wjKO7FjBDRe6Mil9fYdR31dGveYWTAD6 content_len=7
+[22:21:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:14] tool_result: id=4o8oOlyLdTKSAlUv834mUigkxFoCfIGv content_len=7
+[22:21:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:14] tool_result: id=cqVHyf53yhqB09Ib60On1LzX0dv4oWK3 content_len=7
+[22:21:15] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:15] tool_result: id=nE8R0X3jrG1s6edW7YC97yxwWfFaJM1U content_len=7
+[22:21:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:16] tool_result: id=wEpnaGFdLerm4DNzYU7WEJfBZtZuCo1F content_len=7
+[22:21:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:16] tool_result: id=k92qdXIzOaWKWWkVWXwYi1cRrh53xqnx content_len=7
+[22:21:17] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:17] tool_result: id=G1Jf02nMZuM2NJGG26UtaGa6H7prggV0 content_len=7
+[22:21:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:18] tool_result: id=MyrslZuGpImrujhUFwWAQZnWHqw51jwH content_len=7
+[22:21:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:19] tool_result: id=V1S4fT5ZecCVgIogxKSjehBsG8v3uy7c content_len=7
+[22:21:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:19] tool_result: id=gXMXKpXd4hQmeXoLqzYrsV2xBMeE5DKU content_len=7
+[22:21:20] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:20] tool_result: id=eIiN8aIBfS2qY1wEqunOARw48Xvu8mAz content_len=7
+[22:21:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:21] tool_result: id=Zn2js4npiGX02KJZOcterreb9fsSRo8G content_len=7
+[22:21:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:21] tool_result: id=Rj6pxQDIsR8sqE26fE5nOMgsOIYNrDad content_len=7
+[22:21:22] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:22] tool_result: id=ra6rremJKSfF9ZG7ul2B6fso7zaHEy1K content_len=7
+[22:21:23] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:23] tool_result: id=FOraI2DwmrykeaIav4t01P5aPYIMpgJo content_len=7
+[22:21:24] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:24] tool_result: id=LardoINd4g2R0Zr4xEzpLoRFyijkAvqA content_len=7
+[22:21:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:25] tool_result: id=IRhycIzGwsDNu5Cbt59EvzFNicLXr4eY content_len=7
+[22:21:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:25] tool_result: id=D3Mxa6T4pI8diDt7b1rnRtz3McdT5xC6 content_len=7
+[22:21:26] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:26] tool_result: id=kZT0mkYc5gpzVTaHXNlWnEjCyymY3SaE content_len=7
+[22:21:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:27] tool_result: id=2f1x25hVvFDPDSOWEdEm8jX7xeYSql2z content_len=7
+[22:21:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:27] tool_result: id=seyt0QzXDq3orDCtUebtnQTQHpehsH0G content_len=7
+[22:21:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:28] tool_result: id=SeCBA1aSStoAD52LI6GRdyKg6TssiYyq content_len=7
+[22:21:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:29] tool_result: id=rpEDNRVCGnzQkXP6egDpz329Bczr1R6Y content_len=7
+[22:21:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:30] tool_result: id=g7QqVMol8zptcvBgB4egryQ9uREMGPK6 content_len=7
+[22:21:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:31] tool_result: id=Ql1nfHu0eMerxgC733FoLneffjtfxTky content_len=7
+[22:21:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:31] tool_result: id=gnsBwM7KLqanaMAHKtvbdUnWEhsJ656j content_len=7
+[22:21:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:32] tool_result: id=2ik5AimlC6segUrT9J7m8rHFEsQ4Nuaf content_len=7
+[22:21:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:33] tool_result: id=VG0rXKFr2P1h8S4KnJW1Px4hhrnVihAE content_len=7
+[22:21:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:34] tool_result: id=dQisjzzJkB0hn2DB1yKNpWhONKdfNkwg content_len=7
+[22:21:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:35] tool_result: id=AKAbLKejqJ6rCPM8T4dfjoUyFMbfovKk content_len=7
+[22:21:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:35] tool_result: id=mgekgAnmUszAQOgqmnt6iCv1gx48SkXI content_len=7
+[22:21:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:36] tool_result: id=3gDUvCyph2qqkCEVJceMXNywxi3A0bB0 content_len=7
+[22:21:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:37] tool_result: id=1XsZradYfkkJJhTnbMALLqAWfhlfyliT content_len=7
+[22:21:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:38] tool_result: id=aauTGS5l1v6F5MyCAOHdMzh3z02jkDZP content_len=7
+[22:21:38] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:38] tool_result: id=7mVax4gr3K6Nve0ryTT4NmTYFKDPf2kE content_len=7
+[22:21:39] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:39] tool_result: id=bBhZWxoZeohPNpYQdi9VzVcTDVIrxoD5 content_len=7
+[22:21:40] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:40] tool_result: id=cUDlozFApp2Ztbwzxq3QPvVxAVpPuOFm content_len=7
+[22:21:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:41] tool_result: id=HgWSivt1Pxpie63qATsfabTyJS3CHrCJ content_len=7
+[22:21:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:41] tool_result: id=PVI9Nc1auhrCkNjg7nF0PQ9rWDInepB8 content_len=7
+[22:21:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:42] tool_result: id=SfDxNsmp5CrilEq3DveIzPqwt41mctnu content_len=7
+[22:21:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:43] tool_result: id=y8NAVtK3FonC9kbfMR3ZQkiggEwnde38 content_len=7
+[22:21:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:44] tool_result: id=lNzILauluejvzBLkijgKKQZruEThA813 content_len=7
+[22:21:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:44] tool_result: id=64IAD4FWTbvMq4u6TgM79YEDmhgvHAY9 content_len=7
+[22:21:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:45] tool_result: id=qlfBVMRuEdduK94CJG9s5m3X7UUEM51P content_len=7
+[22:21:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:46] tool_result: id=IyHX5oAlfrqbzrO63pDcRqhdCoGLqz19 content_len=7
+[22:21:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:46] tool_result: id=GxNWEVMeX32MJrBbkm1DVGIpKkPAnHyC content_len=7
+[22:21:47] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:47] tool_result: id=KrNc3ecRhXBxwvcTigHw6WVOAAZm9AO4 content_len=7
+[22:21:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:48] tool_result: id=kJaGQ2fE5U30kl651Ei74WOEcJ9KYqUO content_len=7
+[22:21:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:49] tool_result: id=4tuG5sawu5j8v35umaSQyR303DD6LvBg content_len=7
+[22:21:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:49] tool_result: id=0BbzAPjrmMHrJiL3y30kufMcZZXl7giR content_len=7
+[22:21:50] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:50] tool_result: id=6in2Pyie2SgWWBB4QAJL2dwdbTCEUV42 content_len=7
+[22:21:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:51] tool_result: id=r6im9inWUDzSbXN90mxP8pvtMZILodwu content_len=7
+[22:21:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:52] tool_result: id=unWVPPbXnS2GwNSWHy67xvgJq3rsR0jE content_len=7
+[22:21:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:52] tool_result: id=HPwsGwl0BqG5bEAPWpmgkG33Uk8PIJYP content_len=7
+[22:21:53] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:53] tool_result: id=VsftLyWIxLQSI1Rje6ZyeLcytCrKzZ7m content_len=7
+[22:21:54] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:54] tool_result: id=pNMe50TBQjQw9TXqT6vguplooc1zcuI9 content_len=7
+[22:21:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:55] tool_result: id=Egt0LZ0IBwvVEP5Od3Wjzd1UHAsUEnhV content_len=7
+[22:21:55] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:55] tool_result: id=ivsHHDEcncHgFjEfjn2NJyeNttDNQHGc content_len=7
+[22:21:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:56] tool_result: id=T8aVEp52UBHd2HwdusJECc9uDRMfOWdH content_len=7
+[22:21:57] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:57] tool_result: id=PRMvYrZFZ4znhKHtvhWOJldDrqzZGrlC content_len=7
+[22:21:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:58] tool_result: id=f7hDC0HeuFlSZyJ6u5eXQQ6BRr8juH6p content_len=7
+[22:21:58] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:58] tool_result: id=IVtPFWmKXS7e43JqrM3AP5oMtfv4mChL content_len=7
+[22:21:59] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:21:59] tool_result: id=GhvVb6faTRFVOlqJrbY8yYS9cFy9uxoa content_len=7
+[22:22:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:04] tool_result: id=7cqGVyKk8kIUK0x6DGLY4LfLNgXBgfdo content_len=7
+[22:22:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:04] tool_result: id=gCNJH0cHg7qDqJ3IzI9KlL9ZeBYL7qPk content_len=7
+[22:22:05] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:05] tool_result: id=SNVOXqQxiLPggJQK4zpUrjasOtk2RaeZ content_len=7
+[22:22:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:06] tool_result: id=xzqIl8ZrFbkteTYKTz37qeHq3vsyNsLF content_len=7
+[22:22:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:07] tool_result: id=dx0vq3nZOQolXwGG8HpdW3LBbZ5EHmUM content_len=7
+[22:22:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:07] tool_result: id=lnfIUZmZZXom3HrC2twSBWXVo28xcksD content_len=7
+[22:22:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:08] tool_result: id=EktMgQywTV4URxqggfPdcT96li3C8Ukl content_len=7
+[22:22:09] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:09] tool_result: id=CZKlqUc0yDoazPYMCHbG4zgefxY1kvlW content_len=7
+[22:22:10] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:10] tool_result: id=zlerJQJgA9yrLGbDTgH09MQO5Je5so50 content_len=7
+[22:22:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:11] tool_result: id=jKRGBkyt7ObyK9AklVShkzFoftNPh38Z content_len=7
+[22:22:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:11] tool_result: id=DR58iDobXeXFkJQhcDDTJ47B0puQ2Zxb content_len=7
+[22:22:12] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:12] tool_result: id=1OU2gBzu6nnBsy02LOr3ljTLomCpGTe0 content_len=7
+[22:22:13] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:13] tool_result: id=jkdYwoFt1NzZldQQcH5nM6boPCoLyLMg content_len=7
+[22:22:14] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:14] tool_result: id=Qk8bQ5VkQ8DhXuKlEqnYk3hgiicOYAUK content_len=7
+[22:22:15] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:15] tool_result: id=6U8vJfUZsKWUowXeW80eLrFYLb2S4N8w content_len=7
+[22:22:15] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:15] tool_result: id=mlfdLQYGPr2whMNWbMiNu5vspRSrKDzP content_len=7
+[22:22:16] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:16] tool_result: id=YaFoMyzuGmQMqd04w0fYN73kRL1p4pHv content_len=7
+[22:22:17] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:17] tool_result: id=UR6MhGLd6HZKxxCQegQl7eIcP8ntd0rL content_len=7
+[22:22:18] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:18] tool_result: id=5xH3xQevJkVC2WtijaVuuIBYhpGu8wr4 content_len=7
+[22:22:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:19] tool_result: id=u8x60pVl9LyZYkqqDJ6n60QYYbPkVxEk content_len=7
+[22:22:19] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:19] tool_result: id=v99S1msiFHh1E8aRrIWNtTaWNt0hJnyE content_len=7
+[22:22:20] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:20] tool_result: id=kJoGYszdMaucf0oZYq5QIUnYxl19pbkt content_len=7
+[22:22:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:21] tool_result: id=fObwIy0ZbiVgOg87v59Mm121w9PQ1ibS content_len=7
+[22:22:22] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:22] tool_result: id=IS5glhE9DRSwoMTrEWA9bef6X2o422FC content_len=7
+[22:22:23] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:23] tool_result: id=dikHxH4QE8D3lcKzoN1CJZtoTU7WUG88 content_len=7
+[22:22:23] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:23] tool_result: id=qhvPjKMra3qiLitg04ZW7YiIVPkbLGhb content_len=7
+[22:22:24] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:24] tool_result: id=tuv3G60993pxbNYnNHY7XJlQ3M7g0UWt content_len=7
+[22:22:25] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:25] tool_result: id=eqQz9w5U7neAwmXaA8IkVjckTRspX5I1 content_len=7
+[22:22:26] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:26] tool_result: id=YO7we5Bk1hHCJzSHXoH5d2fkXIN2EGHL content_len=7
+[22:22:27] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:27] tool_result: id=JVmx8ATXQT4RGc0XiJOZOits0zK88cxh content_len=7
+[22:22:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:28] tool_result: id=LSvx8rxSZBSPenkAH3DomqTdOeCCu6dW content_len=7
+[22:22:28] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:28] tool_result: id=S47MRFGscckgqUfSMWJJyyVtRb2g56Aq content_len=7
+[22:22:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:29] tool_result: id=dYqjdu8A5PAiMFeA921gdqmbkPYipVTj content_len=7
+[22:22:30] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:30] tool_result: id=MqsJ4r18twLltVgjYlkwnsyvrYXLnVux content_len=7
+[22:22:31] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:31] tool_result: id=K5NfoHPNk8qPyQWotcKlXIcpuE5hi0p8 content_len=7
+[22:22:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:32] tool_result: id=iEbkX3F0S3WCmzFxwNdcBBGatJCYooI4 content_len=7
+[22:22:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:32] tool_result: id=ZARcspduLaF6XOEGwLjSGcKtKJGhXVtF content_len=7
+[22:22:33] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:33] tool_result: id=r3rS9F0ybKd13y7SqjWX8JyscCXdAJ9P content_len=7
+[22:22:34] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:34] tool_result: id=uWvVrxiG0820qA9iUA0IBRa5d3uiEJTh content_len=7
+[22:22:35] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:35] tool_result: id=IJjr4mnn6TZJubsRBmLoCMH4CxfYDxDH content_len=7
+[22:22:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:36] tool_result: id=3jAFle72wKRTcEIkzNYFVfhgewcmWi7U content_len=7
+[22:22:37] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[22:22:37] tool_result: id=KmY5nvsEvcAjBXtWT0vGrLVJa9lCsC0c content_len=7
+[22:22:37] no tool_calls — finish_reason=stop
+[ATTEMPT instance=world_seq_004 attempt=1/2 wall_s=203.2 start=2026-04-26T13:19:14Z end=2026-04-26T13:22:37Z]
+ acc=None n_int=271 [FAIL_NO_SUBMIT] wall_s=203 capture=None
+[FAIL_NO_SUBMIT instance=world_seq_004]
+
+Results written to arm_a/results_v3_e4_seq_world_seq_004_run3.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0

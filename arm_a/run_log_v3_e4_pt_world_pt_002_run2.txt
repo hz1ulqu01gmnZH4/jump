@@ -1,0 +1,20 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_002_run2.json
+  world_pt_002 (particle_system, medium)...[23:35:06] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[23:35:06] tool_result: id=HcH4tMzvJePmO7tFoDi1mnkfFx2aUh0J content_len=5314
+[23:36:03] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[23:36:03] tool_result: id=h7J7qDPnXIXcOghTLk2gNO3xlr8MLNS2 content_len=382
+[23:36:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[23:36:08] tool_result: id=HMnbm5hHPZ1FQuYbOxztYt0QmBPRoXAP content_len=378
+[23:36:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[23:36:11] tool_result: id=QsxWPJUM0Br37QZOhLXvoynimlHrpCRb content_len=310
+[23:38:44] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[23:38:44] tool_result: id=ZVez4fMWUtuDMPgjhQH0KjZxf6LGBxMt content_len=52
+[ATTEMPT instance=world_pt_002 attempt=1/2 wall_s=219.7 start=2026-04-26T14:35:04Z end=2026-04-26T14:38:44Z]
+ acc=0.000 n_int=3 [submitted] wall_s=220 capture=mcp_file
+[OK instance=world_pt_002 acc=0.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_002_run2.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

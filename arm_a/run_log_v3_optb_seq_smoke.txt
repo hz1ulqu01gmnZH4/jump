@@ -1,0 +1,26 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_optb_seq_smoke.json
+  world_seq_001 (pattern_puzzle, medium)...[19:24:05] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[19:24:05] tool_result: id=PXcsPsmI242InQbQuePdLChBXdoy7Pen content_len=1506
+[19:24:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'mod']
+[19:24:41] tool_result: id=8OELtlbTWcN598MytqhTvNAXes13CK5V content_len=7
+[19:24:42] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[19:24:42] tool_result: id=F5wc4rsNOeMob69pso2b67zNlIn6wi2a content_len=63
+[19:24:43] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[19:24:43] tool_result: id=NISg7cGVg2vycMguNWwlKG1ouuY160PZ content_len=63
+[19:24:44] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[19:24:44] tool_result: id=3ct0e9tIcGcdiCvxUYBNktoawgkpmez2 content_len=51
+[19:24:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[19:24:45] tool_result: id=FpGFAZeirTf3jJ7WvqXuaaySstzIIaHT content_len=57
+[19:24:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'index', 'delta']
+[19:24:45] tool_result: id=MaTWJZHTToyBhmvOCsoTiijgFG7vSgCg content_len=63
+[19:24:47] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[19:24:47] tool_result: id=sL0VEm8KWVhDFZ9V2ZzuukzH36Pzif7V content_len=52
+[ATTEMPT instance=world_seq_001 attempt=1/2 wall_s=43.4 start=2026-04-26T10:24:04Z end=2026-04-26T10:24:48Z]
+ acc=1.000 n_int=6 [submitted] wall_s=43 capture=mcp_file
+[OK instance=world_seq_001 acc=1.000 capture=mcp_file]
+
+Results written to arm_a/results_v3_optb_seq_smoke.json (1 entries)
+
+=== Arm A v3 mean accuracy: 1.000 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

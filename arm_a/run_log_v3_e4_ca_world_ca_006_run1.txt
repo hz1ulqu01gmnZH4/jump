@@ -1,0 +1,35 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_ca_world_ca_006_run1.json
+  world_ca_006 (cellular_automata, hard)...[15:01:01] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[15:01:01] tool_result: id=Z97treRTH9z65TBSguJraMl0geTuvU5s content_len=2780
+[15:01:45] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:45] tool_result: id=kYbz1WNLlstTVjJ3VTE53stpa3C3VVeS content_len=158
+[15:01:46] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:46] tool_result: id=5SzFhjLpIgkwUYkRpQ1DfvmEaTDrABuS content_len=158
+[15:01:47] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:47] tool_result: id=XLvwhUOhJzerkJWxmDaWd0K6RGZcIKOo content_len=158
+[15:01:48] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:48] tool_result: id=4T1eaqP3GUr9v9NLTA1LiQvDNrWmqy6y content_len=163
+[15:01:49] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:49] tool_result: id=Y5QPhkKLBDFFeADGrAW4tFxRfQ32D4wY content_len=158
+[15:01:50] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:50] tool_result: id=l2y9pEBIFFNLkFlVLFbRuLdkjaQw1ZMW content_len=158
+[15:01:50] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:50] tool_result: id=t4652EWdci1bNWgMGIkhe0LqY9a3W3li content_len=158
+[15:01:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:51] tool_result: id=ovxspApuPB7yjSjorr8sTJ9CrS0smVUG content_len=158
+[15:01:52] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[15:01:52] tool_result: id=gfvdo0HtNGw3y1rAtIMat1i7lURhF1kz content_len=158
+[15:01:56] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row']
+[15:01:56] tool_result: id=uY9KdUorVjMcQG0O92KewWaa57lNGMjG content_len=148
+[15:02:07] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'pattern']
+[15:02:07] tool_result: id=CLsNCU7CQxf9Tf4vHNfJ0uc0yfyvbXhr content_len=148
+[15:05:40] no tool_calls — finish_reason=length
+[ATTEMPT instance=world_ca_006 attempt=1/2 wall_s=281.6 start=2026-04-29T06:00:59Z end=2026-04-29T06:05:40Z]
+ acc=None n_int=11 [FAIL_NO_SUBMIT] wall_s=282 capture=None
+[FAIL_NO_SUBMIT instance=world_ca_006]
+
+Results written to arm_a/results_v3_e4_ca_world_ca_006_run1.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0

@@ -1,0 +1,26 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_004_run4.json
+  world_pt_004 (particle_system, hard)...[21:51:48] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:51:48] tool_result: id=zRI4nCMgO9fOgkHBCGtbSTQXFFKO5een content_len=5039
+[21:54:04] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'row', 'col', 'value']
+[21:54:04] tool_result: id=R8r52wONcFOHNqpcMob5WJIUNK5BVfzv content_len=97
+[21:54:06] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:54:06] tool_result: id=ZaVn9q52TWVT8ZZGXLUb2FrXN4h6Erkv content_len=316
+[21:54:08] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:54:08] tool_result: id=SbVjyV7gUqT7ohjzslP3ZI7w3Z8pv43B content_len=316
+[21:54:11] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y']
+[21:54:11] tool_result: id=exOZUnlIpZU7jQI5FBgtm9zjUS7mGsXu content_len=246
+[21:54:36] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'vx', 'vy']
+[21:54:36] tool_result: id=qFGR6vwzL2iRWNyZt1sYE1HP10KUUv3j content_len=316
+[21:55:41] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:55:41] tool_result: id=ueRr0sU3b1mMR5bem88K5AWumvBiPh0R content_len=316
+[21:56:04] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=['hypothesis_source']
+[21:56:04] tool_result: id=f0QUBNbjYQj34RpodaTln3rTn8zpz4H1 content_len=67
+[ATTEMPT instance=world_pt_004 attempt=1/2 wall_s=258.0 start=2026-04-27T12:51:46Z end=2026-04-27T12:56:04Z]
+ acc=0.333 n_int=6 [submitted] wall_s=258 capture=mcp_file
+[OK instance=world_pt_004 acc=0.333 capture=mcp_file]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_004_run4.json (1 entries)
+
+=== Arm A v3 mean accuracy: 0.333 over 1/1 (excluded 0 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=0

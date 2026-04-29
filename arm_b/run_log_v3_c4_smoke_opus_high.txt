@@ -1,0 +1,55 @@
+Arm B v3 (MCP) — 1 instances, model=claude-opus-4-7, output=arm_b/results_v3_c4_smoke_opus_high.json
+  world_ca_001 (cellular_automata, medium)...[10:53:41] event: system
+[10:53:41] event: system
+[10:53:42] event: rate_limit_event
+[10:53:52] event: stream_event
+[10:53:52] event: stream_event
+[10:53:52] event: stream_event
+[10:53:52] event: stream_event
+[10:53:52] event: stream_event
+[10:53:52] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] tool_use: name=ToolSearch input_keys=['query', 'max_results']
+[10:53:53] event: stream_event
+[10:53:53] event: stream_event
+[10:53:53] event: user
+[10:53:53] event: stream_event
+[10:53:53] event: system
+[10:53:55] event: stream_event
+[10:53:55] event: stream_event
+[10:53:55] event: stream_event
+[10:53:55] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[10:53:55] event: stream_event
+[10:53:55] event: stream_event
+[10:53:55] event: user
+[10:53:55] event: stream_event
+[10:53:55] event: system
+[10:53:57] event: stream_event
+[10:53:57] event: stream_event
+[STUCK_REASONING instance=world_ca_001 attempt=1 wall_s=320.0 since_last_tool_s=302.9 tool_use_count=2]
+ acc=None n_int=0 [FAIL_STUCK_REASONING] wall_s=320 capture=None
+[FAIL_STUCK_REASONING instance=world_ca_001 wall_s=320 since_last_tool_s=303]
+
+Results written to arm_b/results_v3_c4_smoke_opus_high.json (1 entries)
+
+=== Arm B v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=0 exception=0 stuck_reasoning=1

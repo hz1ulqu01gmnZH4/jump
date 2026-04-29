@@ -1,0 +1,62 @@
+# jump_v2 — World Abduction Skill
+
+You are probing an unknown world to discover its hidden rule. The world has invented primitives — names you have not seen before. Do NOT import external domain knowledge. Discover the rule from observations and interventions alone.
+
+## Tool protocol
+
+You have three tools. Call them by outputting a JSON object on a line by itself, with no surrounding text:
+
+**Observe:**
+{"tool": "get_train_obs"}
+Returns a list of {state, next_state} training pairs.
+
+**Intervene:**
+{"tool": "intervene", "action": "<action_name>", "state": <state_value>, "<param>": <value>}
+Applies an action to a state, returns {modified_state, next_state}. Use to probe causal structure.
+
+**Submit hypothesis:**
+{"tool": "submit_hypothesis", "hypothesis_source": "def hidden_rule_fn(state):\n    ..."}
+Submit exactly once. Must define hidden_rule_fn(state) -> next_state as valid Python. Scored on held-out test observations.
+
+## Abductive loop
+
+1. Call get_train_obs — inspect state shapes and transitions
+2. Form a candidate hypothesis from patterns you observe
+3. Call intervene to test the hypothesis (modify a state, check if the result matches your prediction)
+4. Refine hypothesis based on intervention results
+5. Repeat steps 3-4 until confident
+6. Call submit_hypothesis with complete Python source
+
+## Hypothesis format
+
+def hidden_rule_fn(state):
+    # state format matches train_obs[0]["state"]
+    # return the next state
+    ...
+
+- Must be named exactly hidden_rule_fn
+- Must handle the exact state type (list, list-of-lists, list-of-dicts)
+- Use only Python stdlib — no numpy, no external imports
+- No hardcoded lookup of training data — the rule must generalise to unseen states
+
+## Key abductive principle
+
+The best hypothesis is the one that:
+- Explains ALL training observations, not just most
+- Predicts intervention results correctly
+- Is the simplest rule that fits (Occam's razor)
+- Uses the world's invented vocabulary structurally, not as labels
+
+Do NOT guess. Do NOT submit until interventions support your hypothesis.
+
+---
+World instance: {"id": "world_ca_001", "family": "cellular_automata", "difficulty": "medium", "intervention_api": [{"action": "set_cell", "params": ["row", "col", "state"], "description": "write state into (row, col) of current grid"}, {"action": "flip_row", "params": ["row"], "description": "cycle every cell in row by ZORK->PLOON->QUAV->ZORK"}, {"action": "inject_pattern", "params": ["row", "col", "pattern"], "description": "stamp a 2D pattern (list-of-lists; None wildcards leave untouched) at top-left (row, col)"}], "primitive_glossary": {"ZORK": "one of three cell states; represented as 0 in encoded grids", "PLOON": "one of three cell states; represented as 1", "QUAV": "one of three cell states; represented as 2", "diagonal-tetrad": "the four cells at NE, NW, SE, SW of a target cell (toroidal wrap)", "d_z, d_p, d_q": "the count of ZORK, PLOON, QUAV cells respectively in the diagonal-tetrad"}}
+
+## Interaction history so far:
+
+### Tool: get_train_obs
+Result: [{"state": [[2, 0, 0, 2], [1, 0, 0, 0], [2, 0, 2, 2], [2, 0, 2, 1]], "next_state": [[1, 0, 0, 2], [1, 2, 0, 2], [1, 0, 1, 2], [1, 2, 1, 1]]}, {"state": [[0, 0, 0, 0], [0, 2, 2, 0], [2, 0, 2, 2], [2, 2, 1, 0]], "next_state": [[0, 0, 0, 0], [0, 1, 1, 0], [1, 0, 1, 2], [1, 1, 1, 0]]}, {"state": [[1, 2, 1, 0], [0, 2, 1, 1], [1, 0, 0, 1], [0, 0, 1, 0]], "next_state": [[2, 2, 2, 1], [0, 2, 2, 2], [2, 1, 0, 1], [0, 0, 2, 0]]}, {"state": [[1, 1, 2, 1], [0, 2, 1, 2], [0, 1, 0, 2], [1, 2, 2, 1]], "next_state": [[2, 1, 2, 1], [0, 1, 2, 1], [2, 1, 2, 2], [2, 1, 2, 2]]}, {"state": [[2, 0, 2, 0], [0, 2, 0, 1], [0, 0, 0, 1], [1, 1, 2, 1]], "next_state": [[2, 0, 2, 0], [0, 1, 0, 1], [0, 0, 0, 2], [2, 1, 1, 1]]}, {"state": [[0, 1, 1, 0], [2, 1, 2, 2], [2, 0, 2, 2], [0, 2, 2, 0]], "next_state": [[0, 1, 2, 2], [1, 2, 1, 2], [2, 2, 2, 1], [0, 2, 1, 0]]}, {"state": [[0, 1, 1, 1], [2, 2, 2, 0], [2, 1, 0, 0], [0, 1, 1, 1]], "next_state": [[1, 2, 1, 2], [2, 1, 2, 0], [2, 2, 1, 0], [0, 2, 2, 2]]}, {"state": [[0, 0, 2, 2], [1, 0, 2, 1], [1, 2, 1, 0], [1, 0, 0, 2]], "next_state": [[0, 1, 1, 2], [1, 1, 1, 1], [2, 2, 2, 1], [1, 1, 0, 2]]}, {"state": [[2, 2, 1, 2], [2, 1, 2, 1], [1, 0, 0, 2], [1, 0, 0, 0]], "next_state": [[2, 2, 1, 2], [1, 1, 1, 1], [1, 0, 1, 2], [1, 1, 2, 1]]}, {"state": [[0, 2, 0, 2], [1, 2, 0, 1], [1, 2, 1, 2], [1, 2, 0, 2]], "next_state": [[2, 2, 2, 2], [1, 2, 2, 1], [2, 2, 2, 2], [1, 2, 2, 2]]}, {"state": [[2, 0, 2, 2], [1, 2, 1, 0], [1, 1, 0, 1], [0, 2, 2, 1]], "next_state": [[2, 1, 2, 2], [1, 2, 1, 0], [2, 1, 0, 1], [1, 2, 2, 2]]}, {"state": [[2, 0, 2, 0], [2, 1, 2, 2], [2, 0, 0, 1], [0, 2, 2, 0]], "next_state": [[2, 2, 2, 2], [1, 1, 1, 1], [2, 2, 0, 1], [0, 1, 1, 2]]}]
+
+
+10 turns remaining. Continue investigating or submit.
+Output ONLY one JSON object on its own line.

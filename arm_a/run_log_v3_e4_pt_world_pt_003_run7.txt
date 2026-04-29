@@ -1,0 +1,25 @@
+[llama-server] model confirmed: Qwen3.6-35B-A3B-MXFP4_MOE.gguf
+Arm A v3 (Path B: OpenAI+MCP) — 1 instances, model=Qwen3.6-35B-A3B-MXFP4_MOE.gguf, output=arm_a/results_v3_e4_pt_world_pt_003_run7.json
+  world_pt_003 (particle_system, hard)...[21:20:28] tool_use: name=mcp__jump-world__get_train_obs input_keys=[]
+[21:20:28] tool_result: id=iuRokks5iCwI0YZy1bsOkF5r3KADXyFm content_len=4535
+[21:21:21] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'vx', 'vy']
+[21:21:21] tool_result: id=2wdqdfwj56TSjNkdN9suoupbXSv2hMfX content_len=316
+[21:21:22] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:21:22] tool_result: id=TG4d6k4t2BSegWRK7TkciVTwlO2Zm2LO content_len=316
+[21:21:32] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:21:32] tool_result: id=uHrnUhj0ny55ZeJRpT8oPUGIMq4mDRam content_len=316
+[21:21:51] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:21:51] tool_result: id=2B7j7zX0Uwq6ZTjdH9CWCGVUgWwgUzQ1 content_len=316
+[21:22:29] tool_use: name=mcp__jump-world__intervene input_keys=['action', 'state', 'x', 'y', 'new_type']
+[21:22:29] tool_result: id=PlRSxICfME78JgSxLO7eXyQv0ufJMoAA content_len=316
+[21:25:56] args parse error for mcp__jump-world__submit_hypothesis: Unterminated string starting at: line 1 column 23 (char 22)
+[21:25:56] tool_use: name=mcp__jump-world__submit_hypothesis input_keys=[]
+[21:25:56] tool_result: id=HkqP8doeckEaMpZTXeiWJT4E4L9vt2D2 content_len=66
+[ATTEMPT instance=world_pt_003 attempt=1/2 wall_s=330.0 start=2026-04-27T12:20:26Z end=2026-04-27T12:25:56Z]
+ acc=None n_int=5 [FAIL_NO_SUBMIT] wall_s=330 capture=None
+[FAIL_NO_SUBMIT instance=world_pt_003]
+
+Results written to arm_a/results_v3_e4_pt_world_pt_003_run7.json (1 entries)
+
+=== Arm A v3 mean accuracy: nan over 0/1 (excluded 1 FAIL_*) ===
+FAIL counts: timeout=0 no_submit=1 exception=0 stuck_reasoning=0
