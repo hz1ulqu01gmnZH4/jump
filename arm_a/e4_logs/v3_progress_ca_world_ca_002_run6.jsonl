@@ -1,0 +1,15 @@
+{"t": 2.34, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 2.34, "event": "tool_result", "id": "uqqoJ93yXCqEgzAkKW6MMPTVNagx2fo3", "content_len": 3286}
+{"t": 21.72, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 21.73, "event": "tool_result", "id": "xLqlITFXJbUNjocrybKbohB2RWyCjM2Y", "content_len": 207}
+{"t": 37.5, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 37.51, "event": "tool_result", "id": "bkTMm53dIOPQvmrz1MO0dd06oDDEgDAh", "content_len": 391}
+{"t": 39.52, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 39.52, "event": "tool_result", "id": "ZGs7WD8szfkza3CdLPNhNGxvveKF1Nwu", "content_len": 389}
+{"t": 41.25, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 41.25, "event": "tool_result", "id": "MwtymXHpg6ZwyksD4tOjluBrWXwRBdHW", "content_len": 389}
+{"t": 43.02, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 43.03, "event": "tool_result", "id": "55x8RTD7mnObI1XelySKJJul6FbFWuit", "content_len": 389}
+{"t": 44.73, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 44.74, "event": "tool_result", "id": "lc33A0LbVaWB9J2InfyY0wftUZah0Czb", "content_len": 389}
+{"t": 237.69, "event": "no_tool_call", "finish_reason": "length"}

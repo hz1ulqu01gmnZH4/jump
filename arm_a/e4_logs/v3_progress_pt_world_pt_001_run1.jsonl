@@ -1,0 +1,5 @@
+{"t": 1.21, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 1.22, "event": "tool_result", "id": "kUbhYjlsyS7iJ9nam6khIcslMEPHKUuI", "content_len": 4916}
+{"t": 82.68, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "x", "y", "vx", "vy"]}
+{"t": 82.69, "event": "tool_result", "id": "a3Ks22HQ6ZZPW4GWr4oqKPW2UEFNT3p0", "content_len": 304}
+{"t": 296.34, "event": "no_tool_call", "finish_reason": "length"}

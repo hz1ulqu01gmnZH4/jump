@@ -1,0 +1,305 @@
+{
+  "per_instance": {
+    "world_ca_001": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "6/10",
+      "submit_pct": 60.0,
+      "mean_acc": 0.083,
+      "std_acc": 0.204,
+      "mean_wall_s": 260.5,
+      "mean_n_int": 4.2,
+      "failure_modes": {
+        "submitted": 6,
+        "FAIL_NO_SUBMIT": 4,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_ca_002": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "6/10",
+      "submit_pct": 60.0,
+      "mean_acc": 0.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 261.4,
+      "mean_n_int": 6.7,
+      "failure_modes": {
+        "submitted": 6,
+        "FAIL_NO_SUBMIT": 4,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_ca_003": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "2/10",
+      "submit_pct": 20.0,
+      "mean_acc": 0.417,
+      "std_acc": 0.589,
+      "mean_wall_s": 189.1,
+      "mean_n_int": 6.8,
+      "failure_modes": {
+        "submitted": 2,
+        "FAIL_NO_SUBMIT": 8,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_ca_004": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "4/10",
+      "submit_pct": 40.0,
+      "mean_acc": 0.042,
+      "std_acc": 0.083,
+      "mean_wall_s": 362.8,
+      "mean_n_int": 33.5,
+      "failure_modes": {
+        "submitted": 4,
+        "FAIL_NO_SUBMIT": 6,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_ca_005": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "5/10",
+      "submit_pct": 50.0,
+      "mean_acc": 0.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 277.1,
+      "mean_n_int": 3.7,
+      "failure_modes": {
+        "submitted": 5,
+        "FAIL_NO_SUBMIT": 5,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_ca_006": {
+      "family": "ca",
+      "n_runs": 10,
+      "submit_rate": "7/10",
+      "submit_pct": 70.0,
+      "mean_acc": 0.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 192.6,
+      "mean_n_int": 7.1,
+      "failure_modes": {
+        "submitted": 7,
+        "FAIL_NO_SUBMIT": 3,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_pt_001": {
+      "family": "pt",
+      "n_runs": 10,
+      "submit_rate": "4/10",
+      "submit_pct": 40.0,
+      "mean_acc": 0.542,
+      "std_acc": 0.344,
+      "mean_wall_s": 214.8,
+      "mean_n_int": 1.1,
+      "failure_modes": {
+        "submitted": 4,
+        "FAIL_NO_SUBMIT": 6,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_pt_002": {
+      "family": "pt",
+      "n_runs": 10,
+      "submit_rate": "3/10",
+      "submit_pct": 30.0,
+      "mean_acc": 0.444,
+      "std_acc": 0.509,
+      "mean_wall_s": 204.6,
+      "mean_n_int": 6,
+      "failure_modes": {
+        "submitted": 3,
+        "FAIL_NO_SUBMIT": 7,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_pt_003": {
+      "family": "pt",
+      "n_runs": 10,
+      "submit_rate": "7/10",
+      "submit_pct": 70.0,
+      "mean_acc": 0.333,
+      "std_acc": 0.347,
+      "mean_wall_s": 296.4,
+      "mean_n_int": 4.5,
+      "failure_modes": {
+        "submitted": 7,
+        "FAIL_NO_SUBMIT": 3,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_pt_004": {
+      "family": "pt",
+      "n_runs": 10,
+      "submit_rate": "8/10",
+      "submit_pct": 80.0,
+      "mean_acc": 0.333,
+      "std_acc": 0.0,
+      "mean_wall_s": 284.0,
+      "mean_n_int": 10.6,
+      "failure_modes": {
+        "submitted": 8,
+        "FAIL_NO_SUBMIT": 2,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_pt_005": {
+      "family": "pt",
+      "n_runs": 10,
+      "submit_rate": "6/10",
+      "submit_pct": 60.0,
+      "mean_acc": 0.389,
+      "std_acc": 0.375,
+      "mean_wall_s": 220.1,
+      "mean_n_int": 6.3,
+      "failure_modes": {
+        "submitted": 6,
+        "FAIL_NO_SUBMIT": 4,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_001": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "10/10",
+      "submit_pct": 100.0,
+      "mean_acc": 0.9,
+      "std_acc": 0.316,
+      "mean_wall_s": 91.4,
+      "mean_n_int": 17.2,
+      "failure_modes": {
+        "submitted": 10,
+        "FAIL_NO_SUBMIT": 0,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_002": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "10/10",
+      "submit_pct": 100.0,
+      "mean_acc": 0.9,
+      "std_acc": 0.316,
+      "mean_wall_s": 128.8,
+      "mean_n_int": 2.6,
+      "failure_modes": {
+        "submitted": 10,
+        "FAIL_NO_SUBMIT": 0,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_003": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "5/10",
+      "submit_pct": 50.0,
+      "mean_acc": 1.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 40.4,
+      "mean_n_int": 31.1,
+      "failure_modes": {
+        "submitted": 5,
+        "FAIL_NO_SUBMIT": 5,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_004": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "8/10",
+      "submit_pct": 80.0,
+      "mean_acc": 1.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 52.0,
+      "mean_n_int": 37.8,
+      "failure_modes": {
+        "submitted": 8,
+        "FAIL_NO_SUBMIT": 2,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_005": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "9/10",
+      "submit_pct": 90.0,
+      "mean_acc": 0.889,
+      "std_acc": 0.333,
+      "mean_wall_s": 106.6,
+      "mean_n_int": 9.9,
+      "failure_modes": {
+        "submitted": 9,
+        "FAIL_NO_SUBMIT": 1,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    },
+    "world_seq_006": {
+      "family": "seq",
+      "n_runs": 10,
+      "submit_rate": "8/10",
+      "submit_pct": 80.0,
+      "mean_acc": 1.0,
+      "std_acc": 0.0,
+      "mean_wall_s": 69.1,
+      "mean_n_int": 10,
+      "failure_modes": {
+        "submitted": 8,
+        "FAIL_NO_SUBMIT": 2,
+        "FAIL_STUCK_REASONING": 0,
+        "other": 0
+      }
+    }
+  },
+  "per_family": {
+    "seq": {
+      "n_instances": 6,
+      "n_runs": 60,
+      "submit_rate": "50/60",
+      "submit_pct": 83.3,
+      "mean_acc": 0.94
+    },
+    "pt": {
+      "n_instances": 5,
+      "n_runs": 50,
+      "submit_rate": "28/50",
+      "submit_pct": 56.0,
+      "mean_acc": 0.387
+    },
+    "ca": {
+      "n_instances": 6,
+      "n_runs": 60,
+      "submit_rate": "30/60",
+      "submit_pct": 50.0,
+      "mean_acc": 0.05
+    }
+  },
+  "overall": {
+    "n_runs": 170,
+    "submit_rate": "108/170",
+    "submit_pct": 63.5,
+    "mean_acc": 0.549
+  }
+}

@@ -1,0 +1,36 @@
+{"t": 1.85, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 1.85, "event": "tool_result", "id": "9vS1zszxqHi94tqgqy7TXNNETTLyoE0A", "content_len": 2780}
+{"t": 7.45, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 7.46, "event": "tool_result", "id": "klrDvIMtL6KIHo7kx9SzjQYPkhmCWvk1", "content_len": 309}
+{"t": 8.73, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 8.73, "event": "tool_result", "id": "hELQ8e3HYnZHyhLwXnujXKEUah7M1RMR", "content_len": 149}
+{"t": 9.83, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 9.84, "event": "tool_result", "id": "1PLB9Q1LjLqTN0Si0Rnl2URQfFU6DqZK", "content_len": 180}
+{"t": 12.35, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 12.36, "event": "tool_result", "id": "Way3AOwsG7h8cU6QvKj8y0WuY5pZo813", "content_len": 309}
+{"t": 13.83, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 13.84, "event": "tool_result", "id": "eEdSPrAg0AXBJX7bTdagakHHpeRQ8vfm", "content_len": 180}
+{"t": 15.56, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 15.57, "event": "tool_result", "id": "SKOPdM6abK8cvJokHvDYJ97IiF2svAyK", "content_len": 309}
+{"t": 16.8, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 16.8, "event": "tool_result", "id": "mCmnOI5TKxxF111zfUd8IGmnHh31VZII", "content_len": 180}
+{"t": 18.9, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 18.91, "event": "tool_result", "id": "6I7RqZ08iRqdJ8d2If5T12g2B6vO6ciN", "content_len": 180}
+{"t": 22.7, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 22.71, "event": "tool_result", "id": "QOW6NhWFwxsp1wo0G4eFoAuEIot8rRXf", "content_len": 180}
+{"t": 24.36, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 24.36, "event": "tool_result", "id": "FSf7n14VXXQPDlvo2x9XS3NkaCXP4mf7", "content_len": 180}
+{"t": 26.63, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 26.64, "event": "tool_result", "id": "gJjQIDvMvxRf0mY8e0rYKuU5JeD79MCb", "content_len": 180}
+{"t": 29.34, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 29.35, "event": "tool_result", "id": "vFP8UunTXvK8Bkmcdv7V6Z0LLDMCbQYA", "content_len": 180}
+{"t": 32.44, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 32.45, "event": "tool_result", "id": "rDvl4VVfBjsDiWkbNEyDIUm6Ot9nXZWc", "content_len": 180}
+{"t": 35.43, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row", "col", "value"]}
+{"t": 35.44, "event": "tool_result", "id": "gYHyBAyDZY6MutNqHPD2x0yTO8V3i33s", "content_len": 180}
+{"t": 90.45, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row"]}
+{"t": 90.46, "event": "tool_result", "id": "5vGtWAtEO911phEUFQ6v3xdDPsvY2Vmf", "content_len": 148}
+{"t": 198.82, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "row"]}
+{"t": 198.82, "event": "tool_result", "id": "MK4TPrY2W9pP6CLOrgeGDdwLHZVIgkwx", "content_len": 148}
+{"t": 305.17, "event": "tool_use", "name": "mcp__jump-world__submit_hypothesis", "input_keys": ["hypothesis_source"]}
+{"t": 305.18, "event": "tool_result", "id": "XoDlO7wnkiNXVtKgnxijFZ0k2Kj1PuBg", "content_len": 52}

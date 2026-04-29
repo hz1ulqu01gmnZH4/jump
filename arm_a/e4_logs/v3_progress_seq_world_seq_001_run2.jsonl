@@ -1,0 +1,20 @@
+{"t": 2.7, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 2.71, "event": "tool_result", "id": "pIKRlwYRm2864IS2FKmUZggUVcV6JSoJ", "content_len": 1506}
+{"t": 29.96, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 29.97, "event": "tool_result", "id": "b86fXk53NIHD2TFYdr5tyNP7LqxTY3ml", "content_len": 7}
+{"t": 30.75, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 30.75, "event": "tool_result", "id": "s7UfisvcSDHC8OljelKlSnvmsejdMvqT", "content_len": 7}
+{"t": 38.7, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 38.7, "event": "tool_result", "id": "9lHyQdsc8uudL6RQpCTXp5ks1jYYbTmk", "content_len": 7}
+{"t": 39.53, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 39.54, "event": "tool_result", "id": "6ww4raB0n9BwaCPHBGzMb7y17g0aaht9", "content_len": 7}
+{"t": 40.1, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 40.11, "event": "tool_result", "id": "oE2TdrPRHTJxGm05v6fFax4t0I3MdwuE", "content_len": 51}
+{"t": 41.32, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 41.32, "event": "tool_result", "id": "EjjKLiH55GkqJw3y0vLipBJbVpqq6VtG", "content_len": 57}
+{"t": 42.65, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 42.65, "event": "tool_result", "id": "DXYdSl30tcu9K60fBVqXANGeov3IjB0U", "content_len": 57}
+{"t": 43.83, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "delta"]}
+{"t": 43.84, "event": "tool_result", "id": "uwyHWaS5fONubPhWnlvzIdMiS7e5oIb8", "content_len": 57}
+{"t": 54.55, "event": "tool_use", "name": "mcp__jump-world__submit_hypothesis", "input_keys": ["hypothesis_source"]}
+{"t": 54.56, "event": "tool_result", "id": "RcGDDke9QGlo1EiWQZmTi1X2eCwNitoP", "content_len": 52}

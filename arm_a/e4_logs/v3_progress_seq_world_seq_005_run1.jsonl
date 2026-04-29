@@ -1,0 +1,20 @@
+{"t": 1.73, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 1.73, "event": "tool_result", "id": "XlTxD2y2Cdrkpljn26bjBypkdYBN0mgz", "content_len": 1307}
+{"t": 63.1, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 63.11, "event": "tool_result", "id": "TncSMCJG3Qs8D9EvoxP0hV4NiLtn1oaG", "content_len": 1307}
+{"t": 73.62, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 73.63, "event": "tool_result", "id": "C871WOnWxQbcZXryhtD3UNDd7esqCI7R", "content_len": 7}
+{"t": 80.28, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 80.29, "event": "tool_result", "id": "FKdtHHsdWs7OGzT9y8v8jorcG1RWFNab", "content_len": 7}
+{"t": 81.51, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 81.52, "event": "tool_result", "id": "YvEjthBkbgeeWtnQxERLh90KLsM8ixuV", "content_len": 7}
+{"t": 81.93, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index"]}
+{"t": 81.93, "event": "tool_result", "id": "DbItJBZcAIRvUvOmzgntg3Kiz2iBTvhx", "content_len": 7}
+{"t": 96.71, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 96.72, "event": "tool_result", "id": "nNQkrNVfwelxU6b3D550pKKIBjMLxqqG", "content_len": 7}
+{"t": 97.53, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 97.53, "event": "tool_result", "id": "sklsSrVnjyGRNkqU8huak5B58evhjur1", "content_len": 7}
+{"t": 107.19, "event": "tool_use", "name": "mcp__jump-world__intervene", "input_keys": ["action", "state", "index", "mod"]}
+{"t": 107.2, "event": "tool_result", "id": "jTRCVCZPjced4I6CkbHBlNSt3aWRg6yC", "content_len": 7}
+{"t": 113.91, "event": "tool_use", "name": "mcp__jump-world__submit_hypothesis", "input_keys": ["hypothesis_source"]}
+{"t": 113.91, "event": "tool_result", "id": "ECYn61MJrM1c51ZsNyS3s9yaiex0XJTQ", "content_len": 52}

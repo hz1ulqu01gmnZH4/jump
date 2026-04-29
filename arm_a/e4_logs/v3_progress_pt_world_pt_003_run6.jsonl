@@ -1,0 +1,3 @@
+{"t": 2.05, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input_keys": []}
+{"t": 2.05, "event": "tool_result", "id": "0HtTUicDnPKal7yQKXJNt2qZjEuuYPGQ", "content_len": 4535}
+{"t": 196.61, "event": "no_tool_call", "finish_reason": "length"}
