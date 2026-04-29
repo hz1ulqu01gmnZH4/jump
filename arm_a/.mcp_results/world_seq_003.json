@@ -1,0 +1,31 @@
+{
+  "instance_id": "world_seq_003",
+  "family": "pattern_puzzle",
+  "difficulty": "medium",
+  "accuracy": 1.0,
+  "hypothesis_source": "def hidden_rule_fn(state):\n    # For all training states, the state has length 2 and transitions to length 3\n    # The appended element is (state[0] * state[1]) % 11\n    # This corresponds to blorf-mul operation (splid-sum of index 2 = 2, 2 mod 3 = 2)\n    n = len(state)\n    if n == 0:\n        return state\n    # Determine the operation based on splid-sum of the next index (n)\n    # splid-sum(n) = sum of decimal digits of n\n    splid = sum(int(d) for d in str(n))\n    mod3 = splid % 3\n    last = state[-1]\n    second_last = state[-2] if n >= 2 else 0\n    if mod3 == 0:\n        # blorf-add: (last + second_last) % 11\n        new_val = (last + second_last) % 11\n    elif mod3 == 1:\n        # blorf-XOR: (last XOR second_last) % 11\n        new_val = (last ^ second_last) % 11\n    else:\n        # blorf-mul: (last * second_last) % 11\n        new_val = (last * second_last) % 11\n    return state + [new_val]\n",
+  "interaction_log": [
+    {
+      "tool": "get_train_obs",
+      "t": 50650.433260625
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 0,
+        "delta": 1
+      },
+      "next_state_preview": "[5, 9, 1]",
+      "t": 50665.360077384
+    },
+    {
+      "tool": "submit_hypothesis",
+      "hypothesis_source": "def hidden_rule_fn(state):\n    # For all training states, the state has length 2 and transitions to length 3\n    # The appended element is (state[0] * state[1]) % 11\n    # This corresponds to blorf-mul operation (splid-sum of index 2 = 2, 2 mod 3 = 2)\n    n = len(state)\n    if n == 0:\n        return state\n    # Determine the operation based on splid-sum of the next index (n)\n    # splid-sum(n) = sum of decimal digits of n\n    splid = sum(int(d) for d in str(n))\n    mod3 = splid % 3\n    last = state[-1]\n    second_last = state[-2] if n >= 2 else 0\n    if mod3 == 0:\n        # blorf-add: (last + second_last) % 11\n        new_val = (last + second_last) % 11\n    elif mod3 == 1:\n        # blorf-XOR: (last XOR second_last) % 11\n        new_val = (last ^ second_last) % 11\n    else:\n        # blorf-mul: (last * second_last) % 11\n        new_val = (last * second_last) % 11\n    return state + [new_val]\n",
+      "accuracy": 1.0,
+      "t": 50720.624754975
+    }
+  ],
+  "submitted": true,
+  "t_end": "2026-04-26T13:17:44Z"
+}

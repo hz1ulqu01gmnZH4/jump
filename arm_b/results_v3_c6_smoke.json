@@ -1,0 +1,21 @@
+[
+  {
+    "instance_id": "world_ca_001",
+    "family": "cellular_automata",
+    "difficulty": "medium",
+    "accuracy": null,
+    "hypothesis_source": null,
+    "hypothesis_status": "FAIL_STUCK_REASONING",
+    "n_interventions": 0,
+    "n_turns": null,
+    "fallback": true,
+    "capture_path": null,
+    "wall_s": 815.0391053410003,
+    "stuck_since_last_tool_s": 603.4733688000015,
+    "stuck_tool_use_count": 3,
+    "model": "claude-opus-4-7",
+    "effort": "high",
+    "arm": "B",
+    "version": "v3"
+  }
+]

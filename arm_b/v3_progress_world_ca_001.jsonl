@@ -1,0 +1,4 @@
+{"t": 7.3, "event": "tool_use", "name": "ToolSearch", "input": {"query": "select:mcp__jump-world__get_train_obs,mcp__jump-world__intervene,mcp__jump-world__submit_hypothesis", "max_results": 3}}
+{"t": 9.39, "event": "tool_use", "name": "mcp__jump-world__get_train_obs", "input": {}}
+{"t": 211.57, "event": "tool_use", "name": "mcp__jump-world__intervene", "input": {"action": "set_cell", "state": [[2, 0, 0, 2], [1, 0, 0, 0], [2, 0, 2, 2], [2, 0, 2, 1]], "row": 1, "col": 1, "value": 1}}
+{"t": 815.02, "event": "stuck_reasoning_kill", "since_last_tool_s": 603.46, "tool_use_count": 3, "cap_s": 600}

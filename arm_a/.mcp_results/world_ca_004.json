@@ -1,0 +1,108 @@
+{
+  "instance_id": "world_ca_004",
+  "family": "cellular_automata",
+  "difficulty": "hard",
+  "accuracy": 0.0,
+  "hypothesis_source": "# Rule: next[i] = (sum of range-hexad values mod 3 + count of KRIV (0) in range-hexad) mod 3\n# Note: This worked for most training observations but may need refinement\n\ndef hidden_rule_fn(state):\n    n = len(state[0])\n    result = []\n    for i in range(n):\n        # Compute range-hexad: indices (i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n\n        indices = [(i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n]\n        values = [state[0][idx] for idx in indices]\n        s = sum(values) % 3\n        ck = values.count(0)\n        next_val = (s + ck) % 3\n        result.append(next_val)\n    return [result]",
+  "interaction_log": [
+    {
+      "tool": "get_train_obs",
+      "t": 12530.636083746
+    },
+    {
+      "tool": "intervene",
+      "action": "flip_row",
+      "kwargs": {
+        "row": 0
+      },
+      "next_state_preview": "[[2, 0, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0]]",
+      "t": 12680.380924687
+    },
+    {
+      "tool": "intervene",
+      "action": "inject_pattern",
+      "kwargs": {
+        "row": 0,
+        "col": 0,
+        "pattern": [
+          [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        ]
+      },
+      "next_state_preview": "[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]",
+      "t": 12783.986525959
+    },
+    {
+      "tool": "intervene",
+      "action": "inject_pattern",
+      "kwargs": {
+        "row": 0,
+        "col": 0,
+        "pattern": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "next_state_preview": "[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]",
+      "t": 12786.553220954
+    },
+    {
+      "tool": "intervene",
+      "action": "inject_pattern",
+      "kwargs": {
+        "row": 0,
+        "col": 0,
+        "pattern": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "next_state_preview": "[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]",
+      "t": 12788.107889083
+    },
+    {
+      "tool": "submit_hypothesis",
+      "hypothesis_source": "# Rule: next[i] = (sum of range-hexad values mod 3 + count of KRIV (0) in range-hexad) mod 3\n# Note: This worked for most training observations but may need refinement\n\ndef hidden_rule_fn(state):\n    n = len(state[0])\n    result = []\n    for i in range(n):\n        # Compute range-hexad: indices (i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n\n        indices = [(i-3)%n, (i-2)%n, (i-1)%n, (i+1)%n, (i+2)%n, (i+3)%n]\n        values = [state[0][idx] for idx in indices]\n        s = sum(values) % 3\n        ck = values.count(0)\n        next_val = (s + ck) % 3\n        result.append(next_val)\n    return [result]",
+      "accuracy": 0.0,
+      "t": 12893.225550639
+    }
+  ],
+  "submitted": true,
+  "t_end": "2026-04-29T05:14:39Z"
+}

@@ -1,0 +1,78 @@
+{
+  "instance_id": "world_pt_003",
+  "family": "particle_system",
+  "difficulty": "hard",
+  "accuracy": 0.0,
+  "hypothesis_source": "def hidden_rule_fn(state):\n    # Build a dict of position -> type\n    pos_to_type = {}\n    for p in state:\n        pos_to_type[(p['x'], p['y'])] = p['type']\n    \n    # Compute splurn for a pair of particles\n    def splurn(p1, p2):\n        return (p1['x'] + p1['y'] + p2['x'] + p2['y']) % 2\n    \n    # Compute Chebyshev distance on toroidal grid\n    def cheb_dist(p1, p2):\n        dx = min(abs(p1['x'] - p2['x']), 8 - abs(p1['x'] - p2['x']))\n        dy = min(abs(p1['y'] - p2['y']), 8 - abs(p1['y'] - p2['y']))\n        return max(dx, dy)\n    \n    # Find swap pairs: different types, Chebyshev distance 1, splurn 0\n    n = len(state)\n    swapped = [False] * n\n    swap_target = [None] * n\n    \n    for i in range(n):\n        for j in range(i+1, n):\n            if state[i]['type'] != state[j]['type'] and cheb_dist(state[i], state[j]) == 1 and splurn(state[i], state[j]) == 0:\n                swap_target[i] = (state[j]['x'], state[j]['y'])\n                swap_target[j] = (state[i]['x'], state[i]['y'])\n                swapped[i] = True\n                swapped[j] = True\n    \n    # Build next state\n    next_state = []\n    for i in range(n):\n        if swapped[i]:\n            next_state.append({'type': state[i]['type'], 'x': swap_target[i][0], 'y': swap_target[i][1]})\n        else:\n            # Movement for non-swapping particles\n            # Based on observed patterns, try a simple formula\n            x, y = state[i]['x'], state[i]['y']\n            t = state[i]['type']\n            \n            if t == 'BLINX':\n                dx = (y % 2) * 2 - 1\n                dy = (x % 2) * 2 - 1\n            else:  # TORVE\n                dx = -(y % 2) * 2 + 1\n                dy = (x % 2) * 2 - 1\n            \n            new_x = (x + dx) % 8\n            new_y = (y + dy) % 8\n            next_state.append({'type': t, 'x': new_x, 'y': new_y})\n    \n    return next_state\n",
+  "interaction_log": [
+    {
+      "tool": "get_train_obs",
+      "t": 3567.607267505
+    },
+    {
+      "tool": "intervene",
+      "action": "change_type",
+      "kwargs": {
+        "x": 0,
+        "y": 2,
+        "new_type": "BLINX"
+      },
+      "next_state_preview": "[{'type': 'TORVE', 'x': 7, 'y': 0}, {'type': 'BLINX', 'x': 7, 'y': 4}, {'type': ",
+      "t": 3630.502971608
+    },
+    {
+      "tool": "intervene",
+      "action": "change_type",
+      "kwargs": {
+        "x": 4,
+        "y": 5,
+        "new_type": "BLINX"
+      },
+      "next_state_preview": "[{'type': 'BLINX', 'x': 5, 'y': 0}, {'type': 'BLINX', 'x': 3, 'y': 4}, {'type': ",
+      "t": 3633.012669011
+    },
+    {
+      "tool": "intervene",
+      "action": "set_velocity",
+      "kwargs": {
+        "x": 7,
+        "y": 0,
+        "vx": 0,
+        "vy": 0
+      },
+      "next_state_preview": "[{'type': 'TORVE', 'x': 7, 'y': 0}, {'type': 'BLINX', 'x': 0, 'y': 4}, {'type': ",
+      "t": 3637.784342567
+    },
+    {
+      "tool": "intervene",
+      "action": "set_velocity",
+      "kwargs": {
+        "x": 4,
+        "y": 0,
+        "vx": 1,
+        "vy": -1
+      },
+      "next_state_preview": "[{'type': 'BLINX', 'x': 6, 'y': 0}, {'type': 'TORVE', 'x': 3, 'y': 6}, {'type': ",
+      "t": 3669.043815116
+    },
+    {
+      "tool": "intervene",
+      "action": "change_type",
+      "kwargs": {
+        "x": 7,
+        "y": 4,
+        "new_type": "BLINX"
+      },
+      "next_state_preview": "[{'type': 'BLINX', 'x': 0, 'y': 3}, {'type': 'TORVE', 'x': 1, 'y': 0}, {'type': ",
+      "t": 3754.551964363
+    },
+    {
+      "tool": "submit_hypothesis",
+      "hypothesis_source": "def hidden_rule_fn(state):\n    # Build a dict of position -> type\n    pos_to_type = {}\n    for p in state:\n        pos_to_type[(p['x'], p['y'])] = p['type']\n    \n    # Compute splurn for a pair of particles\n    def splurn(p1, p2):\n        return (p1['x'] + p1['y'] + p2['x'] + p2['y']) % 2\n    \n    # Compute Chebyshev distance on toroidal grid\n    def cheb_dist(p1, p2):\n        dx = min(abs(p1['x'] - p2['x']), 8 - abs(p1['x'] - p2['x']))\n        dy = min(abs(p1['y'] - p2['y']), 8 - abs(p1['y'] - p2['y']))\n        return max(dx, dy)\n    \n    # Find swap pairs: different types, Chebyshev distance 1, splurn 0\n    n = len(state)\n    swapped = [False] * n\n    swap_target = [None] * n\n    \n    for i in range(n):\n        for j in range(i+1, n):\n            if state[i]['type'] != state[j]['type'] and cheb_dist(state[i], state[j]) == 1 and splurn(state[i], state[j]) == 0:\n                swap_target[i] = (state[j]['x'], state[j]['y'])\n                swap_target[j] = (state[i]['x'], state[i]['y'])\n                swapped[i] = True\n                swapped[j] = True\n    \n    # Build next state\n    next_state = []\n    for i in range(n):\n        if swapped[i]:\n            next_state.append({'type': state[i]['type'], 'x': swap_target[i][0], 'y': swap_target[i][1]})\n        else:\n            # Movement for non-swapping particles\n            # Based on observed patterns, try a simple formula\n            x, y = state[i]['x'], state[i]['y']\n            t = state[i]['type']\n            \n            if t == 'BLINX':\n                dx = (y % 2) * 2 - 1\n                dy = (x % 2) * 2 - 1\n            else:  # TORVE\n                dx = -(y % 2) * 2 + 1\n                dy = (x % 2) * 2 - 1\n            \n            new_x = (x + dx) % 8\n            new_y = (y + dy) % 8\n            next_state.append({'type': t, 'x': new_x, 'y': new_y})\n    \n    return next_state\n",
+      "accuracy": 0.0,
+      "t": 3811.740622374
+    }
+  ],
+  "submitted": true,
+  "t_end": "2026-04-27T12:38:27Z"
+}

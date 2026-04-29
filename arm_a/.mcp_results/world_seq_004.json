@@ -1,0 +1,61 @@
+{
+  "instance_id": "world_seq_004",
+  "family": "pattern_puzzle",
+  "difficulty": "medium",
+  "accuracy": 1.0,
+  "hypothesis_source": "def hidden_rule_fn(state):\n    # A-strand: even-indexed elements\n    # B-strand: odd-indexed elements\n    # The next state appends one element computed as:\n    #   If appending to even position (A-strand): (last_A + last_B) % 8\n    #   If appending to odd position (B-strand): (last_A ^ last_B ^ len_A) % 8\n    \n    A = [state[i] for i in range(0, len(state), 2)]\n    B = [state[i] for i in range(1, len(state), 2)]\n    \n    last_A = A[-1] if A else 0\n    last_B = B[-1] if B else 0\n    len_A = len(A)\n    \n    new_pos = len(state)  # position of the new element\n    \n    if new_pos % 2 == 0:\n        # Appending to A-strand\n        new_value = (last_A + last_B) % 8\n    else:\n        # Appending to B-strand\n        new_value = (last_A ^ last_B ^ len_A) % 8\n    \n    return state + [new_value]\n",
+  "interaction_log": [
+    {
+      "tool": "get_train_obs",
+      "t": 51222.85019768
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 2,
+        "delta": 1
+      },
+      "next_state_preview": "[5, 4, 2, 4]",
+      "t": 51240.84294262
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 2,
+        "delta": 1
+      },
+      "next_state_preview": "[6, 0, 0, 2]",
+      "t": 51242.507370353
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 3,
+        "delta": 1
+      },
+      "next_state_preview": "[6, 0, 0, 3, 3]",
+      "t": 51243.924188312
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 1
+      },
+      "next_state_preview": "[6, 0, 0, 3, 4, 4]",
+      "t": 51245.398174822
+    },
+    {
+      "tool": "submit_hypothesis",
+      "hypothesis_source": "def hidden_rule_fn(state):\n    # A-strand: even-indexed elements\n    # B-strand: odd-indexed elements\n    # The next state appends one element computed as:\n    #   If appending to even position (A-strand): (last_A + last_B) % 8\n    #   If appending to odd position (B-strand): (last_A ^ last_B ^ len_A) % 8\n    \n    A = [state[i] for i in range(0, len(state), 2)]\n    B = [state[i] for i in range(1, len(state), 2)]\n    \n    last_A = A[-1] if A else 0\n    last_B = B[-1] if B else 0\n    len_A = len(A)\n    \n    new_pos = len(state)  # position of the new element\n    \n    if new_pos % 2 == 0:\n        # Appending to A-strand\n        new_value = (last_A + last_B) % 8\n    else:\n        # Appending to B-strand\n        new_value = (last_A ^ last_B ^ len_A) % 8\n    \n    return state + [new_value]\n",
+      "accuracy": 1.0,
+      "t": 51249.487772192
+    }
+  ],
+  "submitted": true,
+  "t_end": "2026-04-26T13:26:33Z"
+}

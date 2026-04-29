@@ -1,0 +1,151 @@
+{
+  "instance_id": "world_seq_001",
+  "family": "pattern_puzzle",
+  "difficulty": "medium",
+  "accuracy": 0.0,
+  "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    a = state[n-2]\n    b = state[n-1]\n    \n    def is_prime(x):\n        if x < 2:\n            return False\n        for i in range(2, x):\n            if x % i == 0:\n                return False\n        return True\n    \n    if is_prime(n):\n        return (a ^ b) % 7\n    else:\n        # For non-prime positions, use grolp-sum\n        s = a + b\n        if s == 6:\n            return (s + 5) % 7\n        return (s + 3) % 7\n",
+  "interaction_log": [
+    {
+      "tool": "get_train_obs",
+      "t": 48724.141586327
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 3
+      },
+      "next_state_preview": "[2, 5, 0, 5, 1, 0, 1, 1]",
+      "t": 48785.898694178
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 1
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 1, 3]",
+      "t": 48860.258393552
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 2
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 2, 4]",
+      "t": 48863.559498837
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 1
+      },
+      "next_state_preview": "[1, 3, 2, 1, 0, 0, 3]",
+      "t": 48880.429799794
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 2
+      },
+      "next_state_preview": "[1, 3, 2, 1, 1, 0, 4]",
+      "t": 48894.516258448
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 3
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 3, 5]",
+      "t": 48902.813287682
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 3
+      },
+      "next_state_preview": "[1, 3, 2, 1, 2, 0, 5]",
+      "t": 48920.049751327
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 4
+      },
+      "next_state_preview": "[1, 3, 2, 1, 3, 0, 6]",
+      "t": 48921.429611979
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 5
+      },
+      "next_state_preview": "[1, 3, 2, 1, 4, 0, 0]",
+      "t": 48922.635414105
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 4,
+        "delta": 6
+      },
+      "next_state_preview": "[1, 3, 2, 1, 5, 0, 1]",
+      "t": 48923.594279419
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 4
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 4, 6]",
+      "t": 48925.458176981
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 5
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 5, 0]",
+      "t": 48926.411978379
+    },
+    {
+      "tool": "intervene",
+      "action": "apply_perturbation",
+      "kwargs": {
+        "index": 5,
+        "delta": 6
+      },
+      "next_state_preview": "[1, 3, 2, 1, 6, 6, 1]",
+      "t": 48927.315318673
+    },
+    {
+      "tool": "submit_hypothesis",
+      "hypothesis_source": "def hidden_rule_fn(state):\n    n = len(state)\n    a = state[n-2]\n    b = state[n-1]\n    \n    def is_prime(x):\n        if x < 2:\n            return False\n        for i in range(2, x):\n            if x % i == 0:\n                return False\n        return True\n    \n    if is_prime(n):\n        return (a ^ b) % 7\n    else:\n        # For non-prime positions, use grolp-sum\n        s = a + b\n        if s == 6:\n            return (s + 5) % 7\n        return (s + 3) % 7\n",
+      "accuracy": 0.0,
+      "t": 49012.152450099
+    }
+  ],
+  "submitted": true,
+  "t_end": "2026-04-26T12:49:15Z"
+}
