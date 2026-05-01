@@ -1,0 +1,3 @@
+# Arm D — breadth-first ideation pipeline.
+# Pure stdlib for the MVP. No pysat, no networkx, no numpy.
+# pydantic optional for schema validation when wiring P-D2.
