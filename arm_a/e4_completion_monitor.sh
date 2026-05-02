@@ -1,7 +1,7 @@
 #!/bin/bash
 # Monitors for E4 completion, then runs aggregation and writes task output
 set -euo pipefail
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 
 echo "=== E4 Completion Monitor started $(date -u) ==="
 

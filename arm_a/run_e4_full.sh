@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 
 mkdir -p arm_a/e4_logs
 

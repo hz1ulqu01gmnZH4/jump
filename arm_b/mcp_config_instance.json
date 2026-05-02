@@ -7,7 +7,7 @@
         "python",
         "arm_b/arm_b_mcp_server.py"
       ],
-      "cwd": "/home/ak/tmux-agents/projects/jump/repo",
+      "cwd": "/home/ak/projects/jump",
       "env": {
         "JUMP_INSTANCE_ID": "world_ca_001",
         "JUMP_RESULTS_PATH": "arm_b/.mcp_results/world_ca_001.json"

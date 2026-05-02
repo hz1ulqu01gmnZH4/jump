@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Wait for all 20 runs to complete, then compile results
 
-REPO=/home/ak/tmux-agents/projects/jump/repo
+REPO=/home/ak/projects/jump
 LOG="$REPO/arm_a/e3_logs/master.log"
 
 echo "Waiting for experiment to complete..."
@@ -16,7 +16,7 @@ echo "Experiment complete! Compiling results..."
 python3 << 'EOF'
 import json, glob, os
 
-repo = '/home/ak/tmux-agents/projects/jump/repo'
+repo = '/home/ak/projects/jump'
 log_dir = f'{repo}/arm_a/e3_logs'
 
 def get_metrics(prefix, run_idx):

@@ -200,7 +200,7 @@ async def open_mcp_session(instance_id, results_path):
     params = StdioServerParameters(
         command="uv",
         args=["run", "python", "arm_a/arm_a_mcp_server.py"],
-        cwd="/home/ak/tmux-agents/projects/jump/repo",
+        cwd="/home/ak/projects/jump",
         env={
             **os.environ,
             "JUMP_INSTANCE_ID": instance_id,
@@ -312,7 +312,7 @@ progress file). Submit-mandate enforcement is harness-side: see §5 row.
 ### Dependencies to install
 
 ```bash
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 uv pip install openai>=1.40.0   # mcp 1.27.0 already present
 ```
 
@@ -402,7 +402,7 @@ Five executable checks for the reviewer once Implementer ships:
 
 1. `python3 -c "from arm_a.run_arm_a_v3 import DEADLINE_NUDGE; from arm_b.run_arm_b_v3 import DEADLINE_NUDGE as B; assert DEADLINE_NUDGE == B"` — **DEADLINE_NUDGE byte-identical** between arms.
 2. `grep -E "STUCK_REASONING_CAP_S\s*=\s*600" arm_a/run_arm_a_v3.py` returns one match — **watchdog cap is 600 s**.
-3. Run `cd /home/ak/tmux-agents/projects/jump/repo && llama-server -m … &` then `python3 arm_a/run_arm_a_v3.py --only world_seq_001 --output arm_a/results_v3_smoke_seq.json`; the resulting JSON must contain `arm == "A"`, `version == "v3"`, `accuracy` non-null, `n_interventions >= 1`, `hypothesis_status == "submitted"` — **smoke parity with Arm B C₅ SEQ baseline**.
+3. Run `cd /home/ak/projects/jump && llama-server -m … &` then `python3 arm_a/run_arm_a_v3.py --only world_seq_001 --output arm_a/results_v3_smoke_seq.json`; the resulting JSON must contain `arm == "A"`, `version == "v3"`, `accuracy` non-null, `n_interventions >= 1`, `hypothesis_status == "submitted"` — **smoke parity with Arm B C₅ SEQ baseline**.
 4. `jq 'keys' arm_a/results_v3_smoke_seq.json[0]` and `jq 'keys' arm_b/results_v3_c5_seq_regression.json[0]` produce identical key sets except `effort` may be `null` in Arm A — **output schema parity**.
 5. Trigger watchdog on purpose: `python3 arm_a/run_arm_a_v3.py --only world_ca_001 --max-intervenes 0 …` (or comparable forced-stuck path); verify `hypothesis_status == "FAIL_STUCK_REASONING"`, `stuck_since_last_tool_s` populated, exit code 0 (instance recorded, not crashed) — **failure-path symmetry**.
 

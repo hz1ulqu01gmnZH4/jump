@@ -68,7 +68,7 @@ def write_instance_mcp_config(instance_id: str, results_path: Path) -> None:
             "jump-world": {
                 "command": "uv",
                 "args": ["run", "python", "arm_b/arm_b_mcp_server.py"],
-                "cwd": "/home/ak/tmux-agents/projects/jump/repo",
+                "cwd": "/home/ak/projects/jump",
                 "env": {
                     "JUMP_INSTANCE_ID": instance_id,
                     "JUMP_RESULTS_PATH": str(results_path),
@@ -314,7 +314,7 @@ def run_one_instance(instance: dict, model: str = "claude-opus-4-7", effort: str
                     cmd, prompt,
                     timeout=INSTANCE_HARD_CAP,
                     env=env,
-                    cwd="/home/ak/tmux-agents/projects/jump/repo",
+                    cwd="/home/ak/projects/jump",
                     progress_file=progress_file,
                 )
                 t_end = time.time()

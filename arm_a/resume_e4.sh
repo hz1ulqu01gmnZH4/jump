@@ -4,7 +4,7 @@
 # Safe to launch if run_e4_full.sh dies or system reboots.
 
 set -uo pipefail  # NOT -e: tolerate individual failures
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 
 mkdir -p arm_a/e4_logs
 

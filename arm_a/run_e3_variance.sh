@@ -2,7 +2,7 @@
 # E3 variance baseline: 10xCA + 5xSEQ + 5xPT
 set -euo pipefail
 
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 
 LOG_DIR="arm_a/e3_logs"
 mkdir -p "$LOG_DIR"

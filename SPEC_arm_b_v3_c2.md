@@ -401,7 +401,7 @@ All edits are in `arm_b/run_arm_b_v3.py` unless noted. Line numbers are approxim
 8. **Smoke command** (no code change — for reviewer/implementer to execute after
    1–7):
    ```bash
-   cd /home/ak/tmux-agents/projects/jump/repo
+   cd /home/ak/projects/jump
    uv run python arm_b/run_arm_b_v3.py --only world_ca_001 \
        --output arm_b/results_v3_c2_smoke.json \
        2>&1 | tee arm_b/run_log_v3_c2_smoke.txt

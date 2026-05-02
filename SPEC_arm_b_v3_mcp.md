@@ -208,7 +208,7 @@ Dependencies: `mcp` Python SDK (`mcp>=1.0`). Added to `arm_b/requirements.txt`.
     "jump-world": {
       "command": "uv",
       "args": ["run", "python", "arm_b/arm_b_mcp_server.py"],
-      "cwd": "/home/ak/tmux-agents/projects/jump/repo",
+      "cwd": "/home/ak/projects/jump",
       "env": {
         "JUMP_INSTANCE_ID": "${JUMP_INSTANCE_ID}",
         "JUMP_RESULTS_PATH": "${JUMP_RESULTS_PATH}"
@@ -473,7 +473,7 @@ def run_one_instance(instance: dict) -> dict:
             stdout, stderr, rc, wall_s = run_subprocess(
                 CLAUDE_CMD, prompt,
                 timeout=INSTANCE_HARD_CAP, env=env,
-                cwd="/home/ak/tmux-agents/projects/jump/repo",
+                cwd="/home/ak/projects/jump",
             )
             break
         except subprocess.TimeoutExpired:

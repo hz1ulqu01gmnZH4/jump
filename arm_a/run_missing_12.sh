@@ -2,7 +2,7 @@
 # Run the 12 missing E4 CA runs that failed with 503 during the main resume.
 # Missing: ca_002 runs 7-10, ca_003 runs 1-8
 set -uo pipefail
-cd /home/ak/tmux-agents/projects/jump/repo
+cd /home/ak/projects/jump
 
 LOG=/tmp/e4_missing12.log
 echo "=== MISSING-12 START $(date -u +%Y-%m-%dT%H:%M:%SZ) ===" | tee -a "$LOG"
