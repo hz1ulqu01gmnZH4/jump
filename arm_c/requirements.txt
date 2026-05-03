@@ -1,0 +1,4 @@
+# Arm C — symbolic graph-based abductive solver.
+# Pure stdlib for the MVP; pysat slot-in for CEGIS at P-C1c.
+# numpy used only for fast feature extraction; could be dropped.
+numpy>=1.24

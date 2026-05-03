@@ -1,0 +1,27 @@
+Arm D (mock generator) — 17 instances, output=arm_d/results_v2.json
+  world_ca_001 (cellular_automata, medium)... acc=0.000 pool=1005 top_train=0.10 mut=False xover=False wall=2.06s [submitted]
+  world_ca_002 (cellular_automata, hard)... acc=0.000 pool=1101 top_train=0.00 mut=True xover=True wall=4.03s [submitted]
+  world_ca_003 (cellular_automata, medium)... acc=0.000 pool=1098 top_train=0.00 mut=True xover=True wall=4.04s [submitted]
+  world_ca_004 (cellular_automata, hard)... acc=0.000 pool=503 top_train=0.10 mut=True xover=True wall=1.00s [submitted]
+  world_ca_005 (cellular_automata, easy)... acc=0.000 pool=1098 top_train=0.00 mut=True xover=True wall=3.46s [submitted]
+  world_ca_006 (cellular_automata, hard)... acc=0.000 pool=1098 top_train=0.00 mut=True xover=True wall=3.13s [submitted]
+  world_pt_001 (particle_system, medium)... acc=1.000 pool=300 top_train=1.00 mut=False xover=False wall=1.54s [submitted]
+  world_pt_002 (particle_system, medium)... acc=0.000 pool=383 top_train=0.00 mut=True xover=True wall=3.32s [submitted]
+  world_pt_003 (particle_system, hard)... acc=0.333 pool=300 top_train=0.40 mut=False xover=False wall=2.02s [submitted]
+  world_pt_004 (particle_system, hard)... acc=0.333 pool=300 top_train=0.40 mut=False xover=False wall=2.68s [submitted]
+  world_pt_005 (particle_system, medium)... acc=0.000 pool=300 top_train=0.10 mut=False xover=False wall=3.38s [submitted]
+  world_seq_001 (pattern_puzzle, medium)... acc=0.833 pool=46 top_train=0.80 mut=False xover=False wall=0.05s [submitted]
+  world_seq_002 (pattern_puzzle, easy)... acc=1.000 pool=19 top_train=1.00 mut=False xover=False wall=0.07s [submitted]
+  world_seq_003 (pattern_puzzle, medium)... acc=1.000 pool=28 top_train=1.00 mut=False xover=False wall=0.04s [submitted]
+  world_seq_004 (pattern_puzzle, medium)... acc=1.000 pool=37 top_train=1.00 mut=False xover=False wall=0.05s [submitted]
+  world_seq_005 (pattern_puzzle, easy)... acc=1.000 pool=19 top_train=1.00 mut=False xover=False wall=0.05s [submitted]
+  world_seq_006 (pattern_puzzle, hard)... acc=0.167 pool=10 top_train=0.40 mut=False xover=False wall=0.03s [submitted]
+
+Results written to arm_d/results_v2.json (17 entries)
+
+=== Arm D mean accuracy: 0.392 over 17/17 (excluded 0 FAIL_*) ===
+Reference: C-random=0.010, C-induce=0.127, C-retrieval=1.000, Arm A=0.343, Arm B=0.451 (with timeout caveats).
+  cellular_automata: Arm D=0.000 (n=6/6)
+  particle_system: Arm D=0.333 (n=5/5)
+  pattern_puzzle: Arm D=0.833 (n=6/6)
+FAIL counts: timeout=0 no_submit=0 no_hypothesis=0 exception=0
