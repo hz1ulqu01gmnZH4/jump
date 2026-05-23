@@ -40,17 +40,40 @@ def build_matrix(worlds: list, models: list, conditions: list, temps: list, seed
 
 
 def run_matrix(worlds: list, models: list, conditions: list, seeds: list,
-               output_dir: str = 'arm_e/runs', temps: list = None) -> tuple:
+               output_dir: str = 'arm_e/runs', temps: list = None,
+               resume_log: str = None) -> tuple:
     """
     Run a fully-crossed matrix of Arm E agent episodes.
 
+    resume_log: path to existing JSONL to resume from (idempotent — skips done cells).
     Returns (records: list[dict], log_path: str).
     """
     if temps is None:
         temps = [1.0]
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
-    log_path = Path(output_dir) / f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
+
+    # Idempotent resume: load existing records from resume_log
+    done_cells: set = set()
+    existing_records: list = []
+    if resume_log and Path(resume_log).exists():
+        log_path = Path(resume_log)
+        with open(log_path) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    r = json.loads(line)
+                    existing_records.append(r)
+                    done_cells.add((r['world_id'], r['model'], r['condition'],
+                                    float(r.get('temp', 1.0)), int(r['seed'])))
+                except (json.JSONDecodeError, KeyError):
+                    pass
+        print(f"[run_matrix] resume: loaded {len(existing_records)} existing records, "
+              f"{len(done_cells)} done cells", flush=True)
+    else:
+        log_path = Path(output_dir) / f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
 
     # Probe server once — fail loudly if unreachable
     actual_model_name = probe_llama_server()
@@ -58,7 +81,9 @@ def run_matrix(worlds: list, models: list, conditions: list, seeds: list,
     all_instances = {inst['id']: inst for inst in generate_minimal_pairs()}
     matrix = build_matrix(worlds, models, conditions, temps, seeds)
     total = len(matrix)
-    print(f"[run_matrix] {total} runs → {log_path}", flush=True)
+    skipped = sum(1 for cell in matrix if cell in done_cells)
+    print(f"[run_matrix] {total} total, {skipped} already done, "
+          f"{total - skipped} to run → {log_path}", flush=True)
 
     # Pre-compute kappa once per world
     kappa_cache = {}
@@ -91,13 +116,36 @@ def run_matrix(worlds: list, models: list, conditions: list, seeds: list,
         )
         k_w_cache[world_id] = k_w
 
-    records = []
-    n_done = 0
+    # Seed existing records into cell_sigs for hg post-processing
+    records = list(existing_records)
+    n_done = len(existing_records)
 
     # Group by (world, model, condition, temp) for within-cell hg analysis
-    cell_sigs = defaultdict(dict)
+    cell_sigs: dict = defaultdict(dict)
+    for r in existing_records:
+        if r.get('hypothesis_src'):
+            probes = probe_cache.get(r['world_id'])
+            truth_sig = truth_cache.get(r['world_id'])
+            if probes and truth_sig:
+                try:
+                    ns2 = {}
+                    exec(r['hypothesis_src'], ns2)
+                    sig = prediction_signature(ns2['hidden_rule_fn'], probes)
+                except Exception:
+                    sig = tuple(('__fallback__', r['model'], r['condition'],
+                                 r.get('temp', 1.0), r['seed'], i)
+                                for i in range(len(truth_sig)))
+            else:
+                sig = None
+            if sig is not None:
+                cell_key = (r['world_id'], r['model'], r['condition'], float(r.get('temp', 1.0)))
+                cell_sigs[cell_key][f'seed_{r["seed"]}'] = sig
 
     for world_id, model_id, condition, temp, seed in matrix:
+        cell = (world_id, model_id, condition, temp, seed)
+        if cell in done_cells:
+            continue  # idempotent skip
+
         inst = all_instances[world_id]
         harness = WorldHarness(inst)
         kappa = kappa_cache[world_id]
@@ -214,6 +262,8 @@ def main():
     parser.add_argument('--temps', nargs='+', type=float, default=[1.0])
     parser.add_argument('--seeds', nargs='+', type=int, default=[0, 1, 2, 3, 4])
     parser.add_argument('--output-dir', default='arm_e/runs')
+    parser.add_argument('--resume-log', default=None,
+                        help='Path to existing JSONL to resume from (idempotent skip of done cells)')
     args = parser.parse_args()
 
     if args.worlds is None:
@@ -229,6 +279,7 @@ def main():
         seeds=args.seeds,
         output_dir=args.output_dir,
         temps=args.temps,
+        resume_log=args.resume_log,
     )
     print(f"\nLog: {log_path}")
     print(f"Records: {len(records)}")
