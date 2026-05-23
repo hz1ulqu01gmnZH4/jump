@@ -1413,6 +1413,547 @@ def _make_world_seq_006(seed=1500):
 
 
 # ---------------------------------------------------------------------------
+# ========== MINIMAL PAIRS (W1 — REQ-3) ==========
+# ---------------------------------------------------------------------------
+# Each factory returns (inst_A, inst_B) sharing identical input-state columns.
+# Seeds are in the 9000-range to avoid collisions with existing world seeds.
+
+_MP_CA_GLOSSARY = {
+    'ZORK': 'one of three cell states; represented as 0',
+    'PLOON': 'one of three cell states; represented as 1',
+    'QUAV': 'one of three cell states; represented as 2',
+}
+_MP_CA_API = [
+    {'action': 'set_cell', 'params': ['row', 'col', 'state'],
+     'description': 'write state into (row, col) of current grid'},
+    {'action': 'flip_row', 'params': ['row'],
+     'description': 'cycle every cell in row by ZORK->PLOON->QUAV->ZORK'},
+    {'action': 'inject_pattern', 'params': ['row', 'col', 'pattern'],
+     'description': 'stamp a 2D pattern (list-of-lists; None wildcards leave untouched) at top-left (row, col)'},
+]
+
+_MP_PT_API = [
+    {'action': 'spawn', 'params': ['type', 'x', 'y'],
+     'description': 'add a particle at (x,y); no-op if cell already occupied'},
+    {'action': 'remove', 'params': ['x', 'y'],
+     'description': 'delete any particle at (x,y)'},
+    {'action': 'set_velocity', 'params': ['x', 'y', 'vx', 'vy'],
+     'description': 'displace particle at (x,y) to ((x+vx)%8,(y+vy)%8) immediately'},
+    {'action': 'change_type', 'params': ['x', 'y', 'new_type'],
+     'description': 'replace the type of the particle at (x,y)'},
+]
+
+_MP_SEQ_API = [
+    {'action': 'set_element', 'params': ['index', 'value'],
+     'description': 'overwrite state[index] with value'},
+    {'action': 'insert', 'params': ['index', 'value'],
+     'description': 'insert value at position index'},
+    {'action': 'apply_perturbation', 'params': ['index', 'delta'],
+     'description': 'state[index] = (state[index] + delta) % modulus'},
+]
+
+
+def _make_paired_ca_001():
+    """mp_ca_001: VN-sum vs diagonal-sum (both mod 3). Same 4x4 grid, 3 states."""
+    seed, rows, cols = 9001, 4, 4
+    alphabet = [0, 1, 2]
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    vn = [(-1,0),(1,0),(0,-1),(0,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in vn]\n"
+        "            nxt[r][c] = sum(nb) % 3\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    diag = [(-1,-1),(-1,1),(1,-1),(1,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in diag]\n"
+        "            nxt[r][c] = sum(nb) % 3\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_ca_random_state(rows, cols, alphabet, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'cellular_automata', 'difficulty': 'medium',
+            'primitive_glossary': _MP_CA_GLOSSARY, 'intervention_api': _MP_CA_API}
+    inst_A = {**base, 'id': 'world_mp_ca_001_A', 'pair_id': 'mp_ca_001', 'pair_member': 'A',
+              'hidden_rule': 'next[r][c] = sum of von Neumann (N,S,E,W) neighbours mod 3',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_ca_001_B', 'pair_id': 'mp_ca_001', 'pair_member': 'B',
+              'hidden_rule': 'next[r][c] = sum of diagonal (NE,NW,SE,SW) neighbours mod 3',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_ca_002():
+    """mp_ca_002: majority-vote over VN vs diagonal neighbours. Same 4x4 grid, 3 states."""
+    seed, rows, cols = 9002, 4, 4
+    alphabet = [0, 1, 2]
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    vn = [(-1,0),(1,0),(0,-1),(0,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in vn]\n"
+        "            c0,c1,c2 = nb.count(0),nb.count(1),nb.count(2)\n"
+        "            if c0>c1 and c0>c2: nxt[r][c]=0\n"
+        "            elif c1>c0 and c1>c2: nxt[r][c]=1\n"
+        "            elif c2>c0 and c2>c1: nxt[r][c]=2\n"
+        "            else: nxt[r][c]=state[r][c]\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    diag = [(-1,-1),(-1,1),(1,-1),(1,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in diag]\n"
+        "            c0,c1,c2 = nb.count(0),nb.count(1),nb.count(2)\n"
+        "            if c0>c1 and c0>c2: nxt[r][c]=0\n"
+        "            elif c1>c0 and c1>c2: nxt[r][c]=1\n"
+        "            elif c2>c0 and c2>c1: nxt[r][c]=2\n"
+        "            else: nxt[r][c]=state[r][c]\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_ca_random_state(rows, cols, alphabet, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'cellular_automata', 'difficulty': 'medium',
+            'primitive_glossary': _MP_CA_GLOSSARY, 'intervention_api': _MP_CA_API}
+    inst_A = {**base, 'id': 'world_mp_ca_002_A', 'pair_id': 'mp_ca_002', 'pair_member': 'A',
+              'hidden_rule': 'majority vote among VN (N,S,E,W) neighbours; ties keep current state',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_ca_002_B', 'pair_id': 'mp_ca_002', 'pair_member': 'B',
+              'hidden_rule': 'majority vote among diagonal (NE,NW,SE,SW) neighbours; ties keep current state',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_ca_003():
+    """mp_ca_003: outer-totalistic advance-by-PLOON-count (VN vs diagonal). Same 4x4 grid, 3 states."""
+    seed, rows, cols = 9003, 4, 4
+    alphabet = [0, 1, 2]
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    vn = [(-1,0),(1,0),(0,-1),(0,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in vn]\n"
+        "            nxt[r][c] = (state[r][c] + nb.count(1)) % 3\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    rows = len(state); cols = len(state[0])\n"
+        "    nxt = [[0]*cols for _ in range(rows)]\n"
+        "    diag = [(-1,-1),(-1,1),(1,-1),(1,1)]\n"
+        "    for r in range(rows):\n"
+        "        for c in range(cols):\n"
+        "            nb = [state[(r+dr)%rows][(c+dc)%cols] for dr,dc in diag]\n"
+        "            nxt[r][c] = (state[r][c] + nb.count(1)) % 3\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_ca_random_state(rows, cols, alphabet, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'cellular_automata', 'difficulty': 'medium',
+            'primitive_glossary': _MP_CA_GLOSSARY, 'intervention_api': _MP_CA_API}
+    inst_A = {**base, 'id': 'world_mp_ca_003_A', 'pair_id': 'mp_ca_003', 'pair_member': 'A',
+              'hidden_rule': 'next[r][c] = (cur + count_of_PLOON_in_VN) mod 3',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_ca_003_B', 'pair_id': 'mp_ca_003', 'pair_member': 'B',
+              'hidden_rule': 'next[r][c] = (cur + count_of_PLOON_in_diagonal) mod 3',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+_MP_PT_001_GLOSSARY = {
+    'FREL': 'first particle type',
+    'SMOR': 'second particle type',
+    'cheby': 'Chebyshev distance: max(|wrap_dx|, |wrap_dy|) on the 8x8 toroidal grid',
+}
+
+_MP_PT_002_GLOSSARY = {
+    'GRIV': 'first particle type',
+    'WELN': 'second particle type',
+    'taxicab': 'Manhattan distance: |wrap_dx| + |wrap_dy| on the 8x8 toroidal grid',
+}
+
+_MP_PT_003_GLOSSARY = {
+    'BLUNK': 'first particle type',
+    'TROVE': 'second particle type',
+    'cheby': 'Chebyshev distance: max(|wrap_dx|, |wrap_dy|) on the 8x8 toroidal grid',
+}
+
+_PT_WRAP_CHEBY = (
+    "    def wrap_delta(a, b):\n"
+    "        d = (b - a) % grid_size\n"
+    "        return d - grid_size if d > grid_size // 2 else d\n"
+    "    def cheby(p, q):\n"
+    "        return max(abs(wrap_delta(p['x'],q['x'])), abs(wrap_delta(p['y'],q['y'])))\n"
+    "    def step_toward(p, tgt):\n"
+    "        ddx = wrap_delta(p['x'], tgt['x'])\n"
+    "        ddy = wrap_delta(p['y'], tgt['y'])\n"
+    "        sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n"
+    "        sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n"
+    "        return sx, sy\n"
+)
+
+
+def _make_paired_pt_001():
+    """mp_pt_001: cross-type attraction vs cross-type repulsion. FREL/SMOR, 4 particles, 8x8."""
+    seed = 9011
+    n_particles, types, grid_size = 4, ['FREL', 'SMOR'], 8
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _PT_WRAP_CHEBY +
+        "    nxt = []\n"
+        "    for p in state:\n"
+        "        other = 'SMOR' if p['type']=='FREL' else 'FREL'\n"
+        "        targets = [q for q in state if q['type']==other]\n"
+        "        if not targets:\n"
+        "            nxt.append(dict(p)); continue\n"
+        "        tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "        sx, sy = step_toward(p, tgt)\n"
+        "        nxt.append({'type':p['type'],'x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _PT_WRAP_CHEBY +
+        "    nxt = []\n"
+        "    for p in state:\n"
+        "        other = 'SMOR' if p['type']=='FREL' else 'FREL'\n"
+        "        targets = [q for q in state if q['type']==other]\n"
+        "        if not targets:\n"
+        "            nxt.append(dict(p)); continue\n"
+        "        tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "        sx, sy = step_toward(p, tgt)\n"
+        "        sx, sy = -sx, -sy\n"
+        "        nxt.append({'type':p['type'],'x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_pt_random_state(n_particles, types, grid_size, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'particle_system', 'difficulty': 'medium',
+            'primitive_glossary': _MP_PT_001_GLOSSARY, 'intervention_api': _MP_PT_API}
+    inst_A = {**base, 'id': 'world_mp_pt_001_A', 'pair_id': 'mp_pt_001', 'pair_member': 'A',
+              'hidden_rule': 'Each particle moves toward nearest opposite-type particle (Chebyshev, diagonal step).',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_pt_001_B', 'pair_id': 'mp_pt_001', 'pair_member': 'B',
+              'hidden_rule': 'Each particle moves AWAY from nearest opposite-type particle (Chebyshev, diagonal step negated).',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_pt_002():
+    """mp_pt_002: same-type clustering vs cross-type attraction. GRIV/WELN, 4 particles, 8x8."""
+    seed = 9012
+    n_particles, types, grid_size = 4, ['GRIV', 'WELN'], 8
+    n_train, n_test = 8, 4
+
+    _cheby_helpers = (
+        "    def wrap_delta(a, b):\n"
+        "        d = (b - a) % grid_size\n"
+        "        return d - grid_size if d > grid_size // 2 else d\n"
+        "    def cheby(p, q):\n"
+        "        return max(abs(wrap_delta(p['x'],q['x'])), abs(wrap_delta(p['y'],q['y'])))\n"
+        "    def step_toward(p, tgt):\n"
+        "        ddx = wrap_delta(p['x'], tgt['x'])\n"
+        "        ddy = wrap_delta(p['y'], tgt['y'])\n"
+        "        sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n"
+        "        sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n"
+        "        return sx, sy\n"
+    )
+    fn_src_A = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _cheby_helpers +
+        "    nxt = []\n"
+        "    for i, p in enumerate(state):\n"
+        "        same = [q for j,q in enumerate(state) if q['type']==p['type'] and j!=i]\n"
+        "        if not same:\n"
+        "            nxt.append(dict(p)); continue\n"
+        "        tgt = min(same, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "        sx, sy = step_toward(p, tgt)\n"
+        "        nxt.append({'type':p['type'],'x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _cheby_helpers +
+        "    nxt = []\n"
+        "    for p in state:\n"
+        "        other = 'WELN' if p['type']=='GRIV' else 'GRIV'\n"
+        "        targets = [q for q in state if q['type']==other]\n"
+        "        if not targets:\n"
+        "            nxt.append(dict(p)); continue\n"
+        "        tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "        sx, sy = step_toward(p, tgt)\n"
+        "        nxt.append({'type':p['type'],'x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_pt_random_state(n_particles, types, grid_size, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'particle_system', 'difficulty': 'medium',
+            'primitive_glossary': _MP_PT_002_GLOSSARY, 'intervention_api': _MP_PT_API}
+    inst_A = {**base, 'id': 'world_mp_pt_002_A', 'pair_id': 'mp_pt_002', 'pair_member': 'A',
+              'hidden_rule': 'Each particle seeks nearest same-type partner (Chebyshev, diagonal step).',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_pt_002_B', 'pair_id': 'mp_pt_002', 'pair_member': 'B',
+              'hidden_rule': 'Each particle seeks nearest opposite-type partner (Chebyshev, diagonal step).',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_pt_003():
+    """mp_pt_003: BLUNK pursues TROVE (TROVE still) vs TROVE pursues BLUNK (BLUNK still). 4 particles, 8x8."""
+    seed = 9013
+    n_particles, types, grid_size = 4, ['BLUNK', 'TROVE'], 8
+    n_train, n_test = 8, 4
+
+    _cheby_helpers = (
+        "    def wrap_delta(a, b):\n"
+        "        d = (b - a) % grid_size\n"
+        "        return d - grid_size if d > grid_size // 2 else d\n"
+        "    def cheby(p, q):\n"
+        "        return max(abs(wrap_delta(p['x'],q['x'])), abs(wrap_delta(p['y'],q['y'])))\n"
+        "    def step_toward(p, tgt):\n"
+        "        ddx = wrap_delta(p['x'], tgt['x'])\n"
+        "        ddy = wrap_delta(p['y'], tgt['y'])\n"
+        "        sx = 0 if ddx==0 else (1 if ddx>0 else -1)\n"
+        "        sy = 0 if ddy==0 else (1 if ddy>0 else -1)\n"
+        "        return sx, sy\n"
+    )
+    fn_src_A = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _cheby_helpers +
+        "    nxt = []\n"
+        "    for p in state:\n"
+        "        if p['type'] == 'BLUNK':\n"
+        "            targets = [q for q in state if q['type']=='TROVE']\n"
+        "            if not targets:\n"
+        "                nxt.append(dict(p)); continue\n"
+        "            tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "            sx, sy = step_toward(p, tgt)\n"
+        "            nxt.append({'type':'BLUNK','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "        else:  # TROVE stays still\n"
+        "            nxt.append(dict(p))\n"
+        "    return nxt"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state, grid_size=8):\n"
+        + _cheby_helpers +
+        "    nxt = []\n"
+        "    for p in state:\n"
+        "        if p['type'] == 'TROVE':\n"
+        "            targets = [q for q in state if q['type']=='BLUNK']\n"
+        "            if not targets:\n"
+        "                nxt.append(dict(p)); continue\n"
+        "            tgt = min(targets, key=lambda q: (cheby(p,q), q['x'], q['y']))\n"
+        "            sx, sy = step_toward(p, tgt)\n"
+        "            nxt.append({'type':'TROVE','x':(p['x']+sx)%grid_size,'y':(p['y']+sy)%grid_size})\n"
+        "        else:  # BLUNK stays still\n"
+        "            nxt.append(dict(p))\n"
+        "    return nxt"
+    )
+    rng = random.Random(seed)
+    states = [_pt_random_state(n_particles, types, grid_size, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    base = {'family': 'particle_system', 'difficulty': 'medium',
+            'primitive_glossary': _MP_PT_003_GLOSSARY, 'intervention_api': _MP_PT_API}
+    inst_A = {**base, 'id': 'world_mp_pt_003_A', 'pair_id': 'mp_pt_003', 'pair_member': 'A',
+              'hidden_rule': 'BLUNK pursues nearest TROVE (Chebyshev, diagonal step); TROVE stays still.',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_pt_003_B', 'pair_id': 'mp_pt_003', 'pair_member': 'B',
+              'hidden_rule': 'TROVE pursues nearest BLUNK (Chebyshev, diagonal step); BLUNK stays still.',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+_MP_SEQ_001_GLOSSARY = {'kreels': 'integers mod 7 in the sequence'}
+_MP_SEQ_002_GLOSSARY = {'luxels': 'integers mod 11 in the sequence'}
+_MP_SEQ_003_GLOSSARY = {'flips': 'integers mod 5 in the sequence'}
+
+
+def _make_paired_seq_001():
+    """mp_seq_001: Fibonacci-sum vs XOR, both mod 7. Seed length 2."""
+    seed, seed_len, mod = 9021, 2, 7
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(state[-1] + state[-2]) % 7]"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(state[-1] ^ state[-2]) % 7]"
+    )
+    rng = random.Random(seed)
+    states = [_seq_random_seed(seed_len, mod, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    api = list(_MP_SEQ_API)
+    base = {'family': 'pattern_puzzle', 'difficulty': 'easy',
+            'primitive_glossary': _MP_SEQ_001_GLOSSARY, 'intervention_api': api}
+    inst_A = {**base, 'id': 'world_mp_seq_001_A', 'pair_id': 'mp_seq_001', 'pair_member': 'A',
+              'hidden_rule': 'Append (last + second-to-last) mod 7.',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_seq_001_B', 'pair_id': 'mp_seq_001', 'pair_member': 'B',
+              'hidden_rule': 'Append (last XOR second-to-last) mod 7.',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_seq_002():
+    """mp_seq_002: sum vs product, both mod 11. Seed length 2."""
+    seed, seed_len, mod = 9022, 2, 11
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(state[-1] + state[-2]) % 11]"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(state[-1] * state[-2]) % 11]"
+    )
+    rng = random.Random(seed)
+    states = [_seq_random_seed(seed_len, mod, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    api = list(_MP_SEQ_API)
+    base = {'family': 'pattern_puzzle', 'difficulty': 'easy',
+            'primitive_glossary': _MP_SEQ_002_GLOSSARY, 'intervention_api': api}
+    inst_A = {**base, 'id': 'world_mp_seq_002_A', 'pair_id': 'mp_seq_002', 'pair_member': 'A',
+              'hidden_rule': 'Append (last + second-to-last) mod 11.',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_seq_002_B', 'pair_id': 'mp_seq_002', 'pair_member': 'B',
+              'hidden_rule': 'Append (last * second-to-last) mod 11.',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def _make_paired_seq_003():
+    """mp_seq_003: 2*last+prev vs last+2*prev, both mod 5. Seed length 2."""
+    seed, seed_len, mod = 9023, 2, 5
+    n_train, n_test = 8, 4
+
+    fn_src_A = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(2*state[-1] + state[-2]) % 5]"
+    )
+    fn_src_B = (
+        "def hidden_rule_fn(state):\n"
+        "    return state + [(state[-1] + 2*state[-2]) % 5]"
+    )
+    rng = random.Random(seed)
+    states = [_seq_random_seed(seed_len, mod, rng) for _ in range(n_train + n_test)]
+    ns_A = {}; exec(fn_src_A, ns_A); rule_A = ns_A['hidden_rule_fn']
+    ns_B = {}; exec(fn_src_B, ns_B); rule_B = ns_B['hidden_rule_fn']
+    obs_A = [{'state': s, 'next_state': rule_A(s)} for s in states]
+    obs_B = [{'state': s, 'next_state': rule_B(s)} for s in states]
+    api = list(_MP_SEQ_API)
+    base = {'family': 'pattern_puzzle', 'difficulty': 'easy',
+            'primitive_glossary': _MP_SEQ_003_GLOSSARY, 'intervention_api': api}
+    inst_A = {**base, 'id': 'world_mp_seq_003_A', 'pair_id': 'mp_seq_003', 'pair_member': 'A',
+              'hidden_rule': 'Append (2*last + second-to-last) mod 5.',
+              'hidden_rule_fn': fn_src_A,
+              'train_obs': obs_A[:n_train], 'test_obs': obs_A[n_train:]}
+    inst_B = {**base, 'id': 'world_mp_seq_003_B', 'pair_id': 'mp_seq_003', 'pair_member': 'B',
+              'hidden_rule': 'Append (last + 2*second-to-last) mod 5.',
+              'hidden_rule_fn': fn_src_B,
+              'train_obs': obs_B[:n_train], 'test_obs': obs_B[n_train:]}
+    return inst_A, inst_B
+
+
+def generate_minimal_pairs() -> list:
+    """Return all 18 minimal-pair instances (9 pairs x 2 members each).
+
+    Calls certify_pair on each pair before returning — raises AssertionError if any pair fails.
+    """
+    from worlds.minimal_pairs import certify_pair
+    pair_factories = [
+        _make_paired_ca_001,
+        _make_paired_ca_002,
+        _make_paired_ca_003,
+        _make_paired_pt_001,
+        _make_paired_pt_002,
+        _make_paired_pt_003,
+        _make_paired_seq_001,
+        _make_paired_seq_002,
+        _make_paired_seq_003,
+    ]
+    instances = []
+    for factory in pair_factories:
+        A, B = factory()
+        certify_pair(A, B)
+        instances.extend([A, B])
+    return instances
+
+
+# ---------------------------------------------------------------------------
 # generate_all and sample_instance
 # ---------------------------------------------------------------------------
 
