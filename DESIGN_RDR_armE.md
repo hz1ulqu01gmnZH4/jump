@@ -56,9 +56,28 @@ def cluster_runs(sigs: dict[run_id, tuple], theta: float = 0.95) -> list[set]:
 
 ```
 Ê(r,r') = g_r · g_{r'}                          # both right on a probe → agree
-        + (1 - g_r)(1 - g_{r'}) · κ             # both wrong → agree only by coincidence
+        + (1 - g_r)(1 - g_{r'}) · κ̄             # both wrong → agree only by coincidence
 ```
-where `κ` = probability two independent wrong answers coincide. Estimate `κ` empirically from the observed distribution of (wrong) outputs per probe; conservative fallback `κ = 1/(m_eff - 1)` with `m_eff` the effective number of distinct outputs seen on that probe.
+where `κ̄` = the probe-averaged probability that two **independent** wrong answers coincide. **`κ` is estimated from an independent reference population, NOT from the run population `R` being analyzed** (see next sub-section). The earlier spec ("estimate `κ` empirically from the observed distribution of wrong outputs per probe") is **withdrawn as circular** — see the bug note below.
+
+### κ estimation — independent reference population (revises the circular estimator)
+
+**Why the original estimator is wrong (circular).** Estimating `κ` from the very `sigs` being decomposed makes the estimator *blind to homogenization*. Under a homogenized population (all runs return the same wrong answer), the observed wrong-output diversity collapses, so any `κ` read from `R` is inflated toward agreement. Then `Ê → a`, the residual `H = max(a − Ê, 0) → 0`, and `δ = G − H` flips **positive** — exactly the failure GAP2 caught (`eval/demo_hg.py`, commit `b5c4a42`): `G=0.887  H=0.113  δ=+0.774` on a fully-homogenized world. A per-cell alphabet shortcut (`κ = 1/(k−1)`, e.g. `1/2` for a 3-value cell) is equally invalid: a prediction signature is a **whole-grid** `json.dumps(next_state)`, so the relevant output space for a 4×4 3-value CA is `3¹⁶ ≈ 43M`, and two independent wrong grids coincide with probability `~1/43M`, not `0.5`. Per-cell κ over-states `Ê`, under-states `H`, and again misses homogenization.
+
+**Definition restored.** `κ` must estimate `P(two independent wrong outputs coincide on a probe)`. "Independent" means *generated without knowledge of the test population or its instances*. The only sound source is therefore a reference population drawn outside `R`.
+
+**Options.**
+- **Option A — C-random reference, empirical per-probe coincidence (recommended).** Draw `N_ref` independent random hypotheses by reusing `c_random_agent` / the family random-rule samplers (`controls.py`, `worlds/gen._*_random_state`). Run each on the *same* probe grid `P_w` (never on `test_obs`, never on `hidden_rule_fn`) to get reference signatures `{ρ_j}`. For each probe `i`, take the reference outputs that **disagree with truth** (`ρ_j[i] ≠ t[i]`) and compute the empirical pairwise coincidence `κ_i = (#equal wrong-pairs)/(#wrong-pairs)`. The decomposition uses the scalar `κ̄ = mean_i κ_i`. Random hypotheses are independent of `R` by construction, so `κ_i` measures genuine accidental coincidence — including *natural* per-probe collisions (e.g. degenerate uniform probes where many rules emit the same grid), which a global constant cannot capture.
+- **Option B — family rule-bank reference.** Use the family's paired rule bank (the B-member rules from `generate_minimal_pairs()`) as the reference population. More structured than random, but the bank is tiny (≈3 rules/family) → too few wrong-pairs per probe to estimate `κ_i` stably, and "plausible" rules cluster, *understating* coincidence diversity. Rejected as primary; usable only as a supplementary stratum.
+- **Option C — analytic cardinality from the reference.** For each probe, count distinct reference outputs `m_eff,i` and set `κ_i = 1/(m_eff,i − 1)`. Grounds `m_eff` in an independent population (not `R`), so it is non-circular, but it assumes a *uniform* distribution over the `m_eff` outputs and so under-states coincidence when the wrong-output distribution is peaked. **Adopted as the per-probe fallback** when probe `i` has `< 2` reference wrong-outputs (so the empirical pairwise rate of Option A is undefined): `κ_i = 1/max(m_eff,i − 1, 1)`.
+
+**Recommendation: Option A** (empirical per-probe coincidence from a C-random reference), with **Option C as the per-probe fallback** for sparse probes. **`[Director決定待ち]`** — this changes *what `κ` measures* (test-population diversity → independent-reference coincidence), a direction-level decision. `N_ref`, the sweep grid, and exact signatures below are implementation details (CONFIRMED).
+
+**Rationale.** (a) *Non-circular:* the reference signatures are never the `sigs` under analysis (Hard-constraint 1), so homogenization in `R` cannot leak into `κ`. (b) *Right scale for whole-grid JSON outputs:* coincidence is measured directly on full `json.dumps(next_state)` signatures over `P_w`, so the `~1/43M` true scale is recovered empirically rather than mis-set by a per-cell alphabet. (c) *Tractable:* `N_ref` random rules × ~100 probes × sub-ms verification (`RDR`/Arm-D evidence) ⟹ well under the 5 s/world budget (Hard-constraint 2); `N_ref = 100` (floor 50) gives ≥ ~1.2 k wrong-pairs/probe on high-entropy probes. (d) *Validity preserved:* `κ̄` is computed **once per world** and passed *unchanged* into the observed decomposition, the null model, and every bootstrap resample, so `G/H/δ/Ā` keep their definitions and the only thing that changed is the (now independent) constant they share.
+
+**Null-model correction (same independence principle).** The parametric null (below) previously drew synthetic wrong outputs from the **test population's** empirical wrong distribution — also circular. It now draws from the **reference population's** per-probe wrong-output distribution `{ρ_j[i] : ρ_j[i] ≠ t[i]}`, keeping the null independent of homogenization in `R`. `E[H₀] ≈ 0` still holds under true conditional independence.
+
+**κ-sensitivity check (mandatory, all options).** Because `δ`'s sign can depend on `κ̄`, every world is re-decomposed over a κ-sweep spanning **≥ 10×**: `κ ∈ {0, κ̂/10, κ̂, 10·κ̂, κ_hi}` clamped to `[0, 0.5]`, where `κ̂` is the reference estimate and `κ_hi = 1/(k−1)` is the deliberately-inflated per-cell upper bound. Report the `sign(δ)` (equivalently `G>H` vs `H>G`) at each grid point. **If the classification is constant across the whole sweep → robust; if `sign(δ)` flips anywhere in the range → flag the world `AMBIGUOUS` and exclude it from the SC1 interaction.** This diagnostic is REQUIRED in the W4 verdict template (a `κ-robust? [Y/N]` column per world).
 
 Define the two scalar estimators:
 ```
@@ -73,12 +92,44 @@ So `Ā ≈ G + H`. **G is high when runs agree because they all found the truth;
 
 **Implementation sketch:**
 ```python
-# eval/hg.py (new, ~80 lines, pure-numeric; no harness change)
-def hg_decompose(sigs: dict, truth_sig: tuple, kappa_fn) -> dict:
-    """returns {'G':float,'H':float,'delta':float,'Abar':float, 'g':{run:float}}"""
-def hg_null_pvalue(g: dict, probe_alphabet, B=1000, seed=0) -> float: ...
-def hg_bootstrap_ci(sigs, truth_sig, kappa_fn, B=1000, seed=0) -> dict:  # 95% CIs on G,H,delta
+# eval/hg.py (~120 lines, pure-numeric; reuses controls.c_random_agent + worlds.probes; no harness change)
+
+def estimate_kappa_reference(instance: dict, probes: list, truth_sig: tuple,
+                             n_ref: int = 100, seed: int = 0) -> dict:
+    """Estimate per-probe wrong-output coincidence from an INDEPENDENT reference
+    population — never reads the test `sigs`.
+      1. Draw n_ref random hypotheses via c_random_agent / family random samplers
+         (seed = f'{instance.id}:kref:{seed}:{j}'), one rule each.
+      2. ref_sigs[j] = prediction_signature(rule_j, probes)         # same P_w as the test
+      3. For each probe i: W = [ref_sigs[j][i] for j if ref_sigs[j][i] != truth_sig[i]]
+           kappa_i = (#equal pairs in W)/(C(|W|,2))      if |W| >= 2   (Option A)
+                   = 1 / max(len(set(W_all_i)) - 1, 1)   if |W| <  2   (Option C fallback)
+      4. kappa_bar = mean_i kappa_i
+    Returns {'kappa': kappa_bar, 'kappa_i': [...], 'ref_wrong_dist': [W_i,...], 'n_ref': n_ref}.
+    MUST complete < 5 s/world (n_ref * len(probes) sub-ms verifications)."""
+
+def hg_decompose(sigs: dict, truth_sig: tuple, kappa: float) -> dict:
+    """kappa is now REQUIRED (scalar κ̄ from estimate_kappa_reference); no internal
+    estimation, no fallback default — raise if None (fail loud).
+    G,H,δ,Ā definitions unchanged. returns {'G','H','delta','Abar','g','kappa','n_pairs'}."""
+
+def hg_null_pvalue(sigs: dict, truth_sig: tuple, kappa: float,
+                   ref_wrong_dist: list, B=1000, seed=0) -> float:
+    """Parametric null under conditional independence. Synthetic wrong draws come from
+    ref_wrong_dist[i] (the REFERENCE population), NOT from the test sigs. Each null
+    population is scored with the SAME fixed `kappa`. p = P(H_null >= H_obs)."""
+
+def hg_bootstrap_ci(sigs, truth_sig, kappa: float, B=1000, seed=0) -> dict:
+    """Resample runs with replacement; pass the fixed reference `kappa` into every
+    hg_decompose call. 95% percentile CIs on G, H, delta. (approach unchanged)"""
+
+def hg_kappa_sensitivity(sigs, truth_sig, kappa_hat: float, k_alphabet: int) -> dict:
+    """Re-decompose over kappa in {0, κ̂/10, κ̂, 10·κ̂, 1/(k-1)} clamped to [0,0.5].
+    Returns {'grid':[...], 'sign_delta':[...], 'kappa_robust': bool}.
+    kappa_robust = all sign(delta) identical across the grid; else world is AMBIGUOUS."""
 ```
+
+**Caller wiring (per world).** Build `P_w` (Q1) → `truth_sig` → `kref = estimate_kappa_reference(...)` **once** → pass `kref['kappa']` to `hg_decompose`, `hg_bootstrap_ci`, and (with `kref['ref_wrong_dist']`) `hg_null_pvalue`, then run `hg_kappa_sensitivity`. The reference population is regenerated per world and discarded; it is the *only* κ source.
 **Falls through to NC2** (honest null) if the bootstrap CI on `δ` straddles 0 at every world — REQ-2 cannot adjudicate and needs redesign, exactly as `RDR §5` specifies.
 
 ---
@@ -176,8 +227,8 @@ Option B alone is a worse primary null: a fixed schedule still partially probes 
 ## Build order (W1–W4, per RDR §6) — ready to implement except where Q6 gates W3
 
 - **W1 (REQ-3):** `worlds/minimal_pairs.py` + extend `worlds/gen.py` rule bank to 3 paired rules/family via the shared-input-states construction; `certify_pair` as the gate. → **18 instances (3 pairs × 3 families).**
-- **W2 (REQ-1, REQ-2):** `worlds/probes.py` (probe grids + signatures) and `eval/hg.py` (G/H, null, CI). Pure additions; no `harness.py` change.
+- **W2 (REQ-1, REQ-2):** `worlds/probes.py` (probe grids + signatures) and `eval/hg.py` (`estimate_kappa_reference` + G/H, null, CI, κ-sensitivity). Pure additions; no `harness.py` change. κ comes only from the independent reference population (Q2).
 - **W3 (REQ-4):** run matrix `3 models × {ON, passive(A), [fixed(B)]} × 18 worlds × N(10–15) seeds`, raw-logged. **Exact loop shape gated on Q6.**
-- **W4 (REQ-5):** verdict template extending `verdicts/` — accuracy table augmented with per-world `G`, `H`, `δ`, `H>G?` flag; cross-model reproducibility printed as a **diagnostic axis** with mandatory `suspected homogenization` flag whenever accuracy is high but `H > G`.
+- **W4 (REQ-5):** verdict template extending `verdicts/` — accuracy table augmented with per-world `G`, `H`, `δ`, `H>G?` flag **and the mandatory `κ-robust? [Y/N]` column from the Q2 sensitivity sweep** (worlds flagged `AMBIGUOUS` are excluded from the SC1 interaction); cross-model reproducibility printed as a **diagnostic axis** with mandatory `suspected homogenization` flag whenever accuracy is high but `H > G`.
 
 **Completion check:** every REQ-1…REQ-5 item maps to a concrete file/estimator above; an implementer can begin W1, W2, W4 immediately and W3 once the User resolves Q6.
