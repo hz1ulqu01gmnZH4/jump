@@ -114,7 +114,7 @@ def _qwen_local_adapter(messages, tools_schema, seed=0, temp=1.0, top_k=20, top_
                 messages=messages,
                 tools=openai_tools,
                 tool_choice="auto",
-                max_tokens=32768,
+                max_tokens=65536,
                 temperature=temp,
                 top_p=top_p,
                 seed=seed,
