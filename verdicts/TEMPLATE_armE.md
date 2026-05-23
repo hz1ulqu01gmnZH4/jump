@@ -116,12 +116,14 @@ H-MAIN criterion: Δδ > 0 AND CI excludes 0 for ≥2 model pairs AND ≥2 famil
 
 ## Per-family summary vs controls
 
+<!-- Control baselines for world_mp_* instances — requires fresh run. Values above are for reference only and must be recomputed for the minimal-pair world set. -->
+
 | Family | n | Arm E acc | C-random | C-induce | C-retrieval | Δ(E – C-induce) |
 |--------|---|-----------|----------|----------|-------------|-----------------|
-| cellular_automata | 6 | 0.XX | 0.000 | 0.000 | 1.000 | 0.XX |
-| particle_system   | 6 | 0.XX | 0.000 | 0.067 | 1.000 | 0.XX |
-| pattern_puzzle    | 6 | 0.XX | 0.028 | 0.306 | 1.000 | 0.XX |
-| **overall**       | 18 | **0.XX** | 0.010 | 0.127 | 1.000 | **0.XX** |
+| cellular_automata | 6 | 0.XX | 0.XX | 0.XX | 0.XX | 0.XX |
+| particle_system   | 6 | 0.XX | 0.XX | 0.XX | 0.XX | 0.XX |
+| pattern_puzzle    | 6 | 0.XX | 0.XX | 0.XX | 0.XX | 0.XX |
+| **overall**       | 18 | **0.XX** | **0.XX** | **0.XX** | **0.XX** | **0.XX** |
 
 ---
 
